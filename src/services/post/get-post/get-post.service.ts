@@ -11,7 +11,7 @@ export const useGetPostService = () => {
     : Promise<GetPostResponse> => {
     try {
       setLoading(true);
-      const { data } = await ApiClient.get(`/posts/${slug}`);
+      const { data } = await ApiClient.get(`/posts/get-post/${slug}`);
 
       return data;
     } catch (error: any) {
