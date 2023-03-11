@@ -32,7 +32,7 @@ interface ITitle {
   content: string;
 }
 
-export interface GetProjectResponse {
+export interface IProject {
   title: string;
   slug: string;
   brief: string;

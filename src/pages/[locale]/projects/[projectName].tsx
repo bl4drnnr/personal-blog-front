@@ -7,8 +7,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import CodeHighlighter from '@components/CodeHighlighter/CodeHighlighter.component';
+import { IProject } from '@interfaces/project.interface';
 import DefaultLayout from '@layouts/Default.layout';
-import { GetProjectResponse } from '@services/get-project/get-project.interface';
 import {
   Container,
   ImageContainer,
@@ -27,7 +27,7 @@ import { generateLists } from '@utils/GenerateList.util';
 import { generateTableOfContents } from '@utils/GenerateToC.util';
 
 interface ProjectProps {
-  project: GetProjectResponse;
+  project: IProject;
   locale: string;
 }
 
@@ -100,10 +100,10 @@ const Project = ({ project, locale }: ProjectProps) => {
             </SideBarTableOfContents>
 
             <SideBarProjectInfo>
-              {/*<SideBarTitle>{t('projects:brief')}</SideBarTitle>*/}
+              <SideBarTitle>{t('projects:brief')}</SideBarTitle>
               <SideBarParagraph>{project.briefDescription}</SideBarParagraph>
 
-              {/*<SideBarTitle>{t('projects:projectPage')}</SideBarTitle>*/}
+              <SideBarTitle>{t('projects:projectPage')}</SideBarTitle>
               {
                 Object.entries(project.projectPages)
                   .map(([key, value]) => (
@@ -113,10 +113,10 @@ const Project = ({ project, locale }: ProjectProps) => {
                 ))
               }
 
-              {/*<SideBarTitle>{t('projects:license')}</SideBarTitle>*/}
-              {/*<SideBarParagraph>{t('projects:licensedBy')} {t(`${projectName}:license`)}</SideBarParagraph>*/}
+              <SideBarTitle>{t('projects:license')}</SideBarTitle>
+              <SideBarParagraph>{t('projects:licensedBy')} {project.license}</SideBarParagraph>
 
-              {/*<SideBarTitle>{t('projects:techStack')}</SideBarTitle>*/}
+              <SideBarTitle>{t('projects:techStack')}</SideBarTitle>
               <ImageWrapper>
                 {
                   project.techStack

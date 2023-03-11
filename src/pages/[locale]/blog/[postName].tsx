@@ -9,8 +9,8 @@ import Typewriter from 'typewriter-effect';
 
 import CodeHighlighter from '@components/CodeHighlighter/CodeHighlighter.component';
 import PostFooter from '@components/PostFooter/PostFooter.component';
+import { IPost } from '@interfaces/post.interface';
 import DefaultLayout from '@layouts/Default.layout';
-import { GetPostResponse } from '@services/get-post/get-post.interface';
 import {
   ArticleBodyWrapper,
   ArticleTitle, ImageContainer,
@@ -22,7 +22,7 @@ import { generateLists } from '@utils/GenerateList.util';
 import { generateTableOfContents } from '@utils/GenerateToC.util';
 
 interface PostProps {
-  post: GetPostResponse;
+  post: IPost;
   locale: string;
 }
 
@@ -102,7 +102,7 @@ const BlogPost = ({ locale, post }: PostProps) => {
 
           <TableOfContentsContainer className={locale === 'en' ? 'en' : 'non-en'}>
             <TableOfContentsTitle>
-              {/*{t('common:tocTitle')}*/}
+              {t('common:tocTitle')}
             </TableOfContentsTitle>
             {generateTableOfContents(post.toc)}
           </TableOfContentsContainer>

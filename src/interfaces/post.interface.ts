@@ -26,7 +26,7 @@ interface ITitle {
   content: string;
 }
 
-export interface GetPostResponse {
+export interface IPost {
   title: string;
   slug: string;
   tags: string;
