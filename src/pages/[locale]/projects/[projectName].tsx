@@ -1,13 +1,11 @@
 import React, { RefObject } from 'react';
 
-// import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import CodeHighlighter from '@components/CodeHighlighter/CodeHighlighter.component';
 import DefaultLayout from '@layouts/Default.layout';
-import { makeStaticProps } from '@lib/getStatic';
 import { GetProjectResponse } from '@services/get-project/get-project.interface';
 import {
   Container,
@@ -23,202 +21,156 @@ import {
   SideBarTableOfContents,
   SideBarTitle
 } from '@styles/project.style';
-import { generateLists } from '@utils/GeneraeList.util';
+import { generateLists } from '@utils/GenerateList.util';
+import { generateTableOfContents } from '@utils/GenerateToC.util';
 
 interface ProjectProps {
   project: GetProjectResponse;
+  locale: string;
 }
 
-const Project = ({ project }: ProjectProps) => {
-  // const { t } = useTranslation();
+const Project = ({ project, locale }: ProjectProps) => {
   const router = useRouter();
 
-  // const [listTocRefs, setListTocRefs] = React.useState<RefObject<unknown>[]>([]);
-  // const [refNames, setRefNames] = React.useState<Array<string>>([]);
-  //
-  // const getRefByName = (refName: string | undefined): any => {
-  //   let matchingRef = null;
-  //   refNames.forEach((item, index) => {
-  //     if (item === refName && !refName.includes('.')) {
-  //       matchingRef = listTocRefs[index];
-  //     } else {
-  //       const splitRefName = refName?.split('.');
-  //       if (splitRefName && splitRefName[splitRefName.length - 1] === item) {
-  //         matchingRef = listTocRefs[index];
-  //       }
-  //     }
-  //   });
-  //   return matchingRef;
-  // };
-  //
-  // const generateTableOfContents = (toc: any, parentKeyName?: string) => {
-  //   const CreateTableOfContents = ({ toc, parentKeyName }: { toc: any, parentKeyName?: string }): JSX.Element => {
-  //     return (
-  //       <ol className={'table-of-contents-ol'}>
-  //         {Object.entries(toc).map(([key, value]: any) => {
-  //           const keyName = parentKeyName ? `${parentKeyName}.${key}` : key;
-  //           if (typeof value === 'string') {
-  //             return (
-  //               <li
-  //                 className={'table-of-contents-li'}
-  //                 key={key}
-  //                 onClick={() => scrollTo(getRefByName(t(`${projectName}:toc.${keyName}`) as string))}
-  //               >
-  //                 {t(`${projectName}:toc.${keyName}`)}
-  //               </li>
-  //             );
-  //           } else {
-  //             return (
-  //               <li
-  //                 className={'table-of-contents-li'}
-  //                 key={key}
-  //               >
-  //                 <span onClick={() => scrollTo(getRefByName(keyName))}>{key}</span>
-  //                 {generateTableOfContents(value, keyName)}
-  //               </li>
-  //             );
-  //           }
-  //         })}
-  //       </ol>
-  //     );
-  //   };
-  //
-  //   return <CreateTableOfContents toc={toc} parentKeyName={parentKeyName} />;
-  // };
-  //
-  // const scrollTo = (ref: any) => {
-  //   if (ref && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  // };
-  //
-  // const isArticleCode = (object: any) => {
-  //   return 'lang' in object;
-  // };
-  //
-  // React.useEffect(() => {
-  //   // @ts-ignore
-  //   const availableprojects = process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',');
-  //   if (!availableprojects.includes(projectName)) handleRedirect('/404').then();
-  //
-  //   let quantityOfTitles = 0;
-  //   const allRefs: Array<string> = [];
-  //
-  //   const contentObj: ProjectContentObject[] = t(`${projectName}:content`, { returnObjects: true });
-  //
-  //   contentObj.forEach((item: ProjectContentObject | string) => {
-  //     if (
-  //       typeof item !== 'string' &&
-  //       (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle')
-  //     ) {
-  //       quantityOfTitles += 1;
-  //       allRefs.push(item.content as string);
-  //     }
-  //   });
-  //
-  //   setListTocRefs(Array(quantityOfTitles).fill(null).map(() => React.createRef()));
-  //
-  //   setRefNames(allRefs);
-  // }, [t]);
-  //
-  // const handleRedirect = async (path: string) => {
-  //   await router.push(`/${locale}${path}`);
-  // };
+  const [listTocRefs, setListTocRefs] = React.useState<RefObject<unknown>[]>([]);
+  const [refNames, setRefNames] = React.useState<Array<string>>([]);
+
+  const getRefByName = (refName: string | undefined): any => {
+    let matchingRef = null;
+    refNames.forEach((item, index) => {
+      if (item === refName && !refName.includes('.')) {
+        matchingRef = listTocRefs[index];
+      } else {
+        const splitRefName = refName?.split('.');
+        if (splitRefName && splitRefName[splitRefName.length - 1] === item) {
+          matchingRef = listTocRefs[index];
+        }
+      }
+    });
+    return matchingRef;
+  };
+
+  React.useEffect(() => {
+    // @ts-ignore
+    const availableProjects = process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',');
+    if (!availableProjects.includes(project.slug)) handleRedirect('/404').then();
+
+    let quantityOfTitles = 0;
+    const allRefs: Array<string> = [];
+
+    project.content.forEach((item) => {
+      if (
+        typeof item !== 'string' &&
+        (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle')
+      ) {
+        quantityOfTitles += 1;
+        allRefs.push(item.content as string);
+      }
+    });
+
+    setListTocRefs(Array(quantityOfTitles).fill(null).map(() => React.createRef()));
+
+    setRefNames(allRefs);
+  }, []);
+
+  const handleRedirect = async (path: string) => {
+    await router.push(`/${locale}${path}`);
+  };
 
   return (
     <>
-      {JSON.stringify(project, null, 2)}
-      {/*<Head>*/}
-      {/*  <title>{t('pages:home.name')} | {t(`${projectName}:title`)}</title>*/}
-      {/*  <meta name={'keywords'} content={t(`${projectName}:tags`) as string} />*/}
-      {/*  <meta name={'description'} content={t(`${projectName}:description`) as string} />*/}
-      {/*  <meta charSet={'utf-8'} />*/}
-      {/*</Head>*/}
-      {/*<DefaultLayout locale={locale} translation={t}>*/}
-      {/*  <Container className={locale === 'en' ? 'en' : 'non-en'}>*/}
-      {/*    <ProjectTitle>{t(`${projectName}:title`)}</ProjectTitle>*/}
-      {/*    <ProjectBrief>{t(`${projectName}:brief`)}</ProjectBrief>*/}
-      {/*    <ProjectHr />*/}
+      <Head>
+        <title> | {project.title}</title>
+        <meta name={'keywords'} content={project.tags} />
+        <meta name={'description'} content={project.description} />
+        <meta charSet={'utf-8'} />
+      </Head>
+      <DefaultLayout locale={locale}>
+        <Container className={locale === 'en' ? 'en' : 'non-en'}>
+          <ProjectTitle>{project.title}</ProjectTitle>
+          <ProjectBrief>{project.brief}</ProjectBrief>
+          <ProjectHr />
 
-      {/*    <SideBar>*/}
-      {/*      <SideBarTableOfContents>*/}
-      {/*        {generateTableOfContents(t(`${projectName}:toc`, { returnObjects: true }))}*/}
-      {/*      </SideBarTableOfContents>*/}
+          <SideBar>
+            <SideBarTableOfContents>
+              {generateTableOfContents(project.toc)}
+            </SideBarTableOfContents>
 
-      {/*      <SideBarProjectInfo>*/}
-      {/*        <SideBarTitle>{t('projects:brief')}</SideBarTitle>*/}
-      {/*        <SideBarParagraph>{t(`${projectName}:briefDescription`)}</SideBarParagraph>*/}
+            <SideBarProjectInfo>
+              {/*<SideBarTitle>{t('projects:brief')}</SideBarTitle>*/}
+              <SideBarParagraph>{project.briefDescription}</SideBarParagraph>
 
-      {/*        <SideBarTitle>{t('projects:projectPage')}</SideBarTitle>*/}
-      {/*        {*/}
-      {/*          Object.entries(t(`${projectName}:projectPages`,*/}
-      {/*            { returnObjects: true }) as ProjectPageProps[]*/}
-      {/*          ).map(([key, value]) => (*/}
-      {/*            <SideBarParagraph key={value.link}>*/}
-      {/*              <a className={'inline-link en'} href={value.link}>{value.text}</a>*/}
-      {/*            </SideBarParagraph>*/}
-      {/*          ))*/}
-      {/*        }*/}
+              {/*<SideBarTitle>{t('projects:projectPage')}</SideBarTitle>*/}
+              {
+                Object.entries(project.projectPages)
+                  .map(([key, value]) => (
+                  <SideBarParagraph key={value.link}>
+                    <a className={'inline-link en'} href={value.link}>{value.text}</a>
+                  </SideBarParagraph>
+                ))
+              }
 
-      {/*        <SideBarTitle>{t('projects:license')}</SideBarTitle>*/}
-      {/*        <SideBarParagraph>{t('projects:licensedBy')} {t(`${projectName}:license`)}</SideBarParagraph>*/}
+              {/*<SideBarTitle>{t('projects:license')}</SideBarTitle>*/}
+              {/*<SideBarParagraph>{t('projects:licensedBy')} {t(`${projectName}:license`)}</SideBarParagraph>*/}
 
-      {/*        <SideBarTitle>{t('projects:techStack')}</SideBarTitle>*/}
-      {/*        <ImageWrapper>*/}
-      {/*          {*/}
-      {/*            (t(`${projectName}:techStack`, { returnObjects: true }) as TechStackProps[])*/}
-      {/*              .map((item: TechStackProps, index) => (*/}
-      {/*                <Image*/}
-      {/*                  key={index}*/}
-      {/*                  src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/technologies-badges/${item.src}.svg`}*/}
-      {/*                  className={'tech-stack-img'}*/}
-      {/*                  width={item.width}*/}
-      {/*                  height={item.height}*/}
-      {/*                  alt={item.src}*/}
-      {/*                />*/}
-      {/*              ))*/}
-      {/*          }*/}
-      {/*        </ImageWrapper>*/}
-      {/*      </SideBarProjectInfo>*/}
-      {/*    </SideBar>*/}
+              {/*<SideBarTitle>{t('projects:techStack')}</SideBarTitle>*/}
+              <ImageWrapper>
+                {
+                  project.techStack
+                    .map((item, index) => (
+                      <Image
+                        key={index}
+                        src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/technologies-badges/${item.src}.svg`}
+                        className={'tech-stack-img'}
+                        width={item.width}
+                        height={item.height}
+                        alt={item.src}
+                      />
+                    ))
+                }
+              </ImageWrapper>
+            </SideBarProjectInfo>
+          </SideBar>
 
 
-      {/*    {*/}
-      {/*      (t(`${projectName}:content`, { returnObjects: true }) as ProjectContentObject[])*/}
-      {/*        .map((item: ProjectContentObject | string, index) => (*/}
-      {/*          <div key={index}>*/}
-      {/*            {typeof item === 'string' ? (*/}
-      {/*              <ProjectParagraph*/}
-      {/*                dangerouslySetInnerHTML={{ __html: item }}*/}
-      {/*              />*/}
-      {/*            ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (*/}
-      {/*              <ProjectParagraph*/}
-      {/*                className={item.type}*/}
-      {/*                ref={getRefByName(item.content)}*/}
-      {/*              >{item.content}</ProjectParagraph>*/}
-      {/*            ) : ((isArticleCode(item)) ? (*/}
-      {/*              <CodeHighlighter*/}
-      {/*                language={item.lang}*/}
-      {/*                code={item.content}*/}
-      {/*              />*/}
-      {/*            ) : ((item.type === 'list-bullet' || item.type === 'list-numeric') ? (*/}
-      {/*              generateLists(item.items, locale, item.type, item.style)*/}
-      {/*            ) : (*/}
-      {/*              ((item.type === 'picture') ? (*/}
-      {/*                <ImageContainer className={`${item.width}`}>*/}
-      {/*                  <Image*/}
-      {/*                    src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${projectName}/${item.resource}`}*/}
-      {/*                    alt={item.resource as string}*/}
-      {/*                    className={'image'}*/}
-      {/*                    fill*/}
-      {/*                  />*/}
-      {/*                </ImageContainer>*/}
-      {/*              ) : (<></>))*/}
-      {/*              )*/}
-      {/*            ))}*/}
-      {/*          </div>*/}
-      {/*        ))*/}
-      {/*    }*/}
-      {/*  </Container>*/}
-      {/*</DefaultLayout>*/}
+          {
+            project.content
+              .map((item, index) => (
+                <div key={index}>
+                  {typeof item === 'string' ? (
+                    <ProjectParagraph
+                      dangerouslySetInnerHTML={{ __html: item }}
+                    />
+                  ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (
+                    <ProjectParagraph
+                      className={item.type}
+                      ref={getRefByName(item.content)}
+                    >{item.content}</ProjectParagraph>
+                  ) : (( 'lang' in item && 'content' in item ) ? (
+                    <CodeHighlighter
+                      language={item.lang}
+                      code={item.content}
+                    />
+                  ) : ((item.type === 'list-bullet' || item.type === 'list-numeric') ? (
+                    generateLists(item.items, locale, item.type, item.style)
+                  ) : (
+                    ((item.type === 'picture') ? (
+                      <ImageContainer className={`${item.width}`}>
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${project.slug}/${item.resource}`}
+                          alt={item.resource as string}
+                          className={'image'}
+                          fill
+                        />
+                      </ImageContainer>
+                    ) : (<></>))
+                    )
+                  ))}
+                </div>
+              ))
+          }
+        </Container>
+      </DefaultLayout>
     </>
   );
 };
@@ -238,7 +190,7 @@ export async function getStaticPaths() {
     });
   });
 
-  return { paths, fallback: true };
+  return { paths, fallback: false };
 }
 
 

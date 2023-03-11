@@ -1,6 +1,5 @@
 import React, { RefObject } from 'react';
 
-import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -9,7 +8,6 @@ import Typewriter from 'typewriter-effect';
 import CodeHighlighter from '@components/CodeHighlighter/CodeHighlighter.component';
 import PostFooter from '@components/PostFooter/PostFooter.component';
 import DefaultLayout from '@layouts/Default.layout';
-import { makeStaticProps } from '@lib/getStatic';
 import { GetPostResponse } from '@services/get-post/get-post.interface';
 import {
   ArticleBodyWrapper,
@@ -18,7 +16,8 @@ import {
   TableOfContentsContainer,
   TableOfContentsTitle
 } from '@styles/post.style';
-import { generateLists } from '@utils/GeneraeList.util';
+import { generateLists } from '@utils/GenerateList.util';
+import { generateTableOfContents } from '@utils/GenerateToC.util';
 
 interface PostProps {
   post: GetPostResponse;
@@ -34,176 +33,134 @@ const BlogPost = ({ locale, post }: PostProps) => {
 
   const [listRefs, setListRefs] = React.useState<RefObject<unknown>[]>([]);
   const [refNames, setRefNames] = React.useState<Array<string>>([]);
-  
-  // const generateTableOfContents = (toc: any, parentKeyName?: string) => {
-  //   const CreateTableOfContents = ({ toc, parentKeyName }: { toc: any, parentKeyName?: string }): JSX.Element => {
-  //     return (
-  //       <ol className={'table-of-contents-ol'}>
-  //         {Object.entries(toc).map(([key, value]: any) => {
-  //           const keyName = parentKeyName ? `${parentKeyName}.${key}` : key;
-  //           if (typeof value === 'string') {
-  //             return (
-  //               <li
-  //                 className={'table-of-contents-li'}
-  //                 key={key}
-  //                 onClick={() => scrollTo(getRefByName(t(`${postName}:toc.${keyName}`) as string))}
-  //               >
-  //                 {t(`${postName}:toc.${keyName}`)}
-  //               </li>
-  //             );
-  //           } else {
-  //             return (
-  //               <li
-  //                 className={'table-of-contents-li'}
-  //                 key={key}
-  //               >
-  //                 <span onClick={() => scrollTo(getRefByName(keyName))}>{key}</span>
-  //                 {generateTableOfContents(value, keyName)}
-  //               </li>
-  //             );
-  //           }
-  //         })}
-  //       </ol>
-  //     );
-  //   };
-  //
-  //   return <CreateTableOfContents toc={toc} parentKeyName={parentKeyName} />;
-  // };
-  //
-  // const scrollTo = (ref: any) => {
-  //   if (ref && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  // };
-  //
-  // const getRefByName = (refName: string | undefined): any => {
-  //   let matchingRef = null;
-  //   refNames.forEach((item, index) => {
-  //     if (item === refName && !refName.includes('.')) {
-  //       matchingRef = listRefs[index];
-  //     } else {
-  //       const splitRefName = refName?.split('.');
-  //       if (splitRefName && splitRefName[splitRefName.length - 1] === item) {
-  //         matchingRef = listRefs[index];
-  //       }
-  //     }
-  //   });
-  //   return matchingRef;
-  // };
-  //
-  // const isArticleCode = (object: any) => {
-  //   return 'lang' in object;
-  // };
-  //
-  // React.useEffect(() => {
-  //   // @ts-ignore
-  //   const availablePosts = process.env.NEXT_PUBLIC_AVAILABLE_POSTS.split(',');
-  //   if (!availablePosts.includes(postName)) handleRedirect('/404').then();
-  //
-  //   let quantityOfTitles = 0;
-  //   const allRefs: Array<string> = [];
-  //
-  //   const contentObj: ArticleContentObject[] = t(`${postName}:content`, { returnObjects: true });
-  //
-  //   contentObj.forEach((item: ArticleContentObject | string) => {
-  //     if (
-  //       typeof item !== 'string' &&
-  //       (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle')
-  //     ) {
-  //       quantityOfTitles += 1;
-  //       allRefs.push(item.content as string);
-  //     }
-  //   });
-  //
-  //   setListRefs(Array(quantityOfTitles).fill(null).map(() => React.createRef()));
-  //
-  //   setRefNames(allRefs);
-  // }, [t]);
+
+  const scrollTo = (ref: any) => {
+    if (ref && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const getRefByName = (refName: string | undefined): any => {
+    let matchingRef = null;
+    refNames.forEach((item, index) => {
+      if (item === refName && !refName.includes('.')) {
+        matchingRef = listRefs[index];
+      } else {
+        const splitRefName = refName?.split('.');
+        if (splitRefName && splitRefName[splitRefName.length - 1] === item) {
+          matchingRef = listRefs[index];
+        }
+      }
+    });
+    return matchingRef;
+  };
+
+  React.useEffect(() => {
+    // @ts-ignore
+    const availablePosts = process.env.NEXT_PUBLIC_AVAILABLE_POSTS.split(',');
+    if (!availablePosts.includes(post.slug)) handleRedirect('/404').then();
+
+    let quantityOfTitles = 0;
+    const allRefs: Array<string> = [];
+
+    post.content.forEach((item) => {
+      if (
+        typeof item !== 'string' &&
+        (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle')
+      ) {
+        quantityOfTitles += 1;
+        allRefs.push(item.content as string);
+      }
+    });
+
+    setListRefs(Array(quantityOfTitles).fill(null).map(() => React.createRef()));
+
+    setRefNames(allRefs);
+  }, []);
 
   return (
     <>
-      {JSON.stringify(post, null, 2)}
-      {/*<Head>*/}
-      {/*  <title>{t('pages:home.name')} | {t(`${postName}:title`)}</title>*/}
-      {/*  <meta name={'keywords'} content={t(`${postName}:tags`) as string} />*/}
-      {/*  <meta name={'description'} content={t(`${postName}:description`) as string} />*/}
-      {/*  <meta charSet={'utf-8'} />*/}
-      {/*</Head>*/}
-      {/*<DefaultLayout locale={locale} translation={t}>*/}
-      {/*  <ArticleBodyWrapper className={locale === 'en' ? 'en' : 'non-en'}>*/}
-      {/*    <ArticleTitle>*/}
-      {/*      <Typewriter*/}
-      {/*        onInit={(typewriter) => {*/}
-      {/*          typewriter*/}
-      {/*            .changeDelay(75)*/}
-      {/*            .typeString(t(`${postName}:title`))*/}
-      {/*            .start();*/}
-      {/*        }}*/}
-      {/*      />*/}
-      {/*    </ArticleTitle>*/}
+      <Head>
+        <title> | {post.title}</title>
+        <meta name={'keywords'} content={post.tags} />
+        <meta name={'description'} content={post.description} />
+        <meta charSet={'utf-8'} />
+      </Head>
+      <DefaultLayout locale={locale}>
+        <ArticleBodyWrapper className={locale === 'en' ? 'en' : 'non-en'}>
+          <ArticleTitle>
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter
+                  .changeDelay(75)
+                  .typeString(post.title)
+                  .start();
+              }}
+            />
+          </ArticleTitle>
 
-      {/*    <ArticleTitle className={'intro'}>*/}
-      {/*      {t(`${postName}:intro`)}*/}
-      {/*    </ArticleTitle>*/}
+          <ArticleTitle className={'intro'}>
+            {post.intro}
+          </ArticleTitle>
 
-      {/*    <TableOfContentsContainer className={locale === 'en' ? 'en' : 'non-en'}>*/}
-      {/*      <TableOfContentsTitle>*/}
-      {/*        {t('common:tocTitle')}*/}
-      {/*      </TableOfContentsTitle>*/}
-      {/*      {generateTableOfContents(t(`${postName}:toc`, { returnObjects: true }))}*/}
-      {/*    </TableOfContentsContainer>*/}
+          <TableOfContentsContainer className={locale === 'en' ? 'en' : 'non-en'}>
+            <TableOfContentsTitle>
+              {/*{t('common:tocTitle')}*/}
+            </TableOfContentsTitle>
+            {generateTableOfContents(post.toc)}
+          </TableOfContentsContainer>
 
-      {/*    {*/}
-      {/*      (t(`${postName}:content`, { returnObjects: true }) as ArticleContentObject[])*/}
-      {/*        .map((item: ArticleContentObject | string, index) => (*/}
-      {/*          <div key={index}>*/}
-      {/*            {typeof item === 'string' ? (*/}
-      {/*              <PostParagraph*/}
-      {/*                dangerouslySetInnerHTML={{ __html: item }}*/}
-      {/*              />*/}
-      {/*            ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (*/}
-      {/*              <PostParagraph*/}
-      {/*                className={item.type}*/}
-      {/*                ref={getRefByName(item.content)}*/}
-      {/*              >{item.content}</PostParagraph>*/}
-      {/*            ) : ((isArticleCode(item)) ? (*/}
-      {/*              <CodeHighlighter language={item.lang} code={item.content} />*/}
-      {/*            ) : ((item.type === 'list-bullet' || item.type === 'list-numeric') ? (*/}
-      {/*              generateLists(item.items, locale, item.type, item.style)*/}
-      {/*            ) : (*/}
-      {/*              ((item.type === 'picture') ? (*/}
-      {/*                <ImageContainer className={`${item.width}`}>*/}
-      {/*                  <Image*/}
-      {/*                    src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${postName}/${item.resource}`}*/}
-      {/*                    alt={item.resource as string}*/}
-      {/*                    className={'image'}*/}
-      {/*                    fill*/}
-      {/*                  />*/}
-      {/*                </ImageContainer>*/}
-      {/*              ) : (<></>))*/}
-      {/*              )*/}
-      {/*            ))}*/}
-      {/*          </div>*/}
-      {/*        ))*/}
-      {/*    }*/}
+          {
+            post.content
+              .map((item, index) => (
+                <div key={index}>
+                  {typeof item === 'string' ? (
+                    <PostParagraph
+                      dangerouslySetInnerHTML={{ __html: item }}
+                    />
+                  ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (
+                    <PostParagraph
+                      className={item.type}
+                      ref={getRefByName(item.content)}
+                    >{item.content}</PostParagraph>
+                  ) : (('lang' in item && 'content' in item) ? (
+                    <CodeHighlighter language={item.lang} code={item.content} />
+                  ) : ((item.type === 'list-bullet' || item.type === 'list-numeric') ? (
+                    generateLists(item.items, locale, item.type, item.style)
+                  ) : (
+                    ((item.type === 'picture') ? (
+                      <ImageContainer className={`${item.width}`}>
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${post.slug}/${item.resource}`}
+                          alt={item.resource as string}
+                          className={'image'}
+                          fill
+                        />
+                      </ImageContainer>
+                    ) : (<></>))
+                    )
+                  ))}
+                </div>
+              ))
+          }
 
-      {/*    <TableOfContentsContainer className={`${locale === 'en' ? 'en' : 'non-en'} contact-and-references`}>*/}
-      {/*      {*/}
-      {/*        Object.entries(t(`${postName}:references`, { returnObjects: true }) as ReferenceProps[]).map(([key, value]) => (*/}
-      {/*          <ul key={key}>*/}
-      {/*            <li className={'table-of-contents-ul'}>*/}
-      {/*              <a href={value.link}>{value.name}</a>*/}
-      {/*            </li>*/}
-      {/*          </ul>*/}
-      {/*        ))*/}
-      {/*      }*/}
-      {/*    </TableOfContentsContainer>*/}
+          <TableOfContentsContainer className={`${locale === 'en' ? 'en' : 'non-en'} contact-and-references`}>
+            {
+              Object.entries(post.references).map(([key, value]) => (
+                <ul key={key}>
+                  <li className={'table-of-contents-ul'}>
+                    <a href={value.link}>{value.name}</a>
+                  </li>
+                </ul>
+              ))
+            }
+          </TableOfContentsContainer>
 
-      {/*    <PostFooter*/}
-      {/*      timestamp={t(`${postName}:timestamp`) as string}*/}
-      {/*      message={t(`${postName}:footer`) as string}*/}
-      {/*      locale={locale}*/}
-      {/*    />*/}
-      {/*  </ArticleBodyWrapper>*/}
-      {/*</DefaultLayout>*/}
+          <PostFooter
+            timestamp={post.timestamp}
+            message={post.footer}
+            locale={locale}
+          />
+        </ArticleBodyWrapper>
+      </DefaultLayout>
     </>
   );
 };
@@ -223,7 +180,7 @@ export async function getStaticPaths() {
     });
   });
 
-  return { paths, fallback: true };
+  return { paths, fallback: false };
 }
 
 

@@ -1,4 +1,4 @@
 export interface ChangeLanguageProps {
-  defaultLanguage: string;
+  defaultLanguage?: string;
   path: string;
 }

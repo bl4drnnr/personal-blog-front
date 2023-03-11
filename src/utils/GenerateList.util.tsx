@@ -40,10 +40,10 @@ export const generateLists = (
   );
 
   const CreatedList = ({
-                         items,
-                         type,
-                         style
-                       }: {
+    items,
+    type,
+    style
+  }: {
     items: any,
     type?: string | undefined,
     style?: string | undefined

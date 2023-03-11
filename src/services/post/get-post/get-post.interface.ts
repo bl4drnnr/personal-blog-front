@@ -12,6 +12,7 @@ interface IPicture {
 interface IList {
   type: 'list-numeric' | 'list-bullet';
   items: Array<any>;
+  style: string;
 }
 
 interface ICode {

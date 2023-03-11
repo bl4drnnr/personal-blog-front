@@ -18,6 +18,7 @@ interface IPicture {
 interface IList {
   type: 'list-numeric' | 'list-bullet';
   items: Array<any>;
+  style: string;
 }
 
 interface ICode {
@@ -35,6 +36,7 @@ export interface GetProjectResponse {
   title: string;
   slug: string;
   brief: string;
+  tags: string;
   description: string;
   searchTags: Array<string>;
   briefDescription: string;

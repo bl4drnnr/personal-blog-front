@@ -1,5 +1,5 @@
 export interface FooterProps {
-  locale: string;
-  translation: any;
+  locale?: string;
+  translation?: any;
 }
 

@@ -22,22 +22,11 @@ export async function getI18nProps(
     'components',
     'errors',
     'common',
-    'projects',
-    // @ts-ignore
-    ...process.env.NEXT_PUBLIC_AVAILABLE_POSTS.split(','),
-    // @ts-ignore
-    ...process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',')
+    'projects'
   ]) {
   const locale = await ctx?.params?.locale || 'en';
-  const postName = await ctx?.params?.postName || null;
-  const projectName = await ctx?.params?.projectName || null;
 
-  return {
-    ...(await serverSideTranslations(locale, ns)),
-    locale,
-    postName,
-    projectName
-  };
+  return { ...(await serverSideTranslations(locale, ns)), locale };
 }
 
 
