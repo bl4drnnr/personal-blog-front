@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -27,9 +28,10 @@ import { generateTableOfContents } from '@utils/GenerateToC.util';
 interface ProjectProps {
   project: GetProjectResponse;
   locale: string;
+  translation: any;
 }
 
-const Project = ({ project, locale }: ProjectProps) => {
+const Project = ({ project, locale, translation }: ProjectProps) => {
   const router = useRouter();
 
   const [listTocRefs, setListTocRefs] = React.useState<RefObject<unknown>[]>([]);
@@ -85,7 +87,7 @@ const Project = ({ project, locale }: ProjectProps) => {
         <meta name={'description'} content={project.description} />
         <meta charSet={'utf-8'} />
       </Head>
-      <DefaultLayout locale={locale}>
+      <DefaultLayout locale={locale} translation={translation}>
         <Container className={locale === 'en' ? 'en' : 'non-en'}>
           <ProjectTitle>{project.title}</ProjectTitle>
           <ProjectBrief>{project.brief}</ProjectBrief>
@@ -196,21 +198,21 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: any }) {
   const { locale, projectName } = params;
+  const ns = ['common', 'components', 'pages', 'projects'];
 
   const headers = new Headers();
-  const apiUsername = process.env.DATA_API_USERNAME;
-  const apiPassword = process.env.DATA_API_PASSWORD;
-  const apiUrl = process.env.LOCAL_DATA_API_URL;
 
-  headers.set('Authorization', 'Basic ' + Buffer.from(apiUsername + ':' + apiPassword).toString('base64'));
+  headers.set('Authorization', 'Basic ' + Buffer.from(
+    process.env.DATA_API_USERNAME + ':' + process.env.DATA_API_PASSWORD
+  ).toString('base64'));
 
   const res = await fetch(
-    `${apiUrl}/projects/${locale}/${projectName}`,
+    `${process.env.LOCAL_DATA_API_URL}/projects/${locale}/${projectName}`,
     { headers }
   );
   const project = await res.json();
 
-  return { props: { project, locale } };
+  return { props: { project, locale, ...(await serverSideTranslations(locale, ns)) } };
 }
 
 

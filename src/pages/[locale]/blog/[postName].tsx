@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -22,9 +23,10 @@ import { generateTableOfContents } from '@utils/GenerateToC.util';
 interface PostProps {
   post: GetPostResponse;
   locale: string;
+  translation: any
 }
 
-const BlogPost = ({ locale, post }: PostProps) => {
+const BlogPost = ({ locale, post, translation }: PostProps) => {
   const router = useRouter();
 
   const handleRedirect = async (path: string) => {
@@ -84,7 +86,7 @@ const BlogPost = ({ locale, post }: PostProps) => {
         <meta name={'description'} content={post.description} />
         <meta charSet={'utf-8'} />
       </Head>
-      <DefaultLayout locale={locale}>
+      <DefaultLayout locale={locale} translation={translation}>
         <ArticleBodyWrapper className={locale === 'en' ? 'en' : 'non-en'}>
           <ArticleTitle>
             <Typewriter
@@ -186,21 +188,21 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: any }) {
   const { locale, postName } = params;
+  const ns = ['common', 'components', 'pages', 'projects'];
 
   const headers = new Headers();
-  const apiUsername = process.env.DATA_API_USERNAME;
-  const apiPassword = process.env.DATA_API_PASSWORD;
-  const apiUrl = process.env.LOCAL_DATA_API_URL;
 
-  headers.set('Authorization', 'Basic ' + Buffer.from(apiUsername + ':' + apiPassword).toString('base64'));
+  headers.set('Authorization', 'Basic ' + Buffer.from(
+    process.env.DATA_API_USERNAME + ':' + process.env.DATA_API_PASSWORD
+  ).toString('base64'));
 
   const res = await fetch(
-    `${apiUrl}/posts/${locale}/${postName}`,
+    `${process.env.LOCAL_DATA_API_URL}/posts/${locale}/${postName}`,
     { headers }
   );
   const post = await res.json();
 
-  return { props: { post, locale } };
+  return { props: { post, locale, ...(await serverSideTranslations(locale, ns)) } };
 }
 
 
