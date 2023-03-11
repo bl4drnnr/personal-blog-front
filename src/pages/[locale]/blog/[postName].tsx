@@ -10,7 +10,7 @@ import CodeHighlighter from '@components/CodeHighlighter/CodeHighlighter.compone
 import PostFooter from '@components/PostFooter/PostFooter.component';
 import DefaultLayout from '@layouts/Default.layout';
 import { makeStaticProps } from '@lib/getStatic';
-import { getPostService } from '@services/get-post/get-post.service';
+import { GetPostResponse } from '@services/get-post/get-post.interface';
 import {
   ArticleBodyWrapper,
   ArticleTitle, ImageContainer,
@@ -21,36 +21,20 @@ import {
 import { generateLists } from '@utils/GeneraeList.util';
 
 interface PostProps {
+  post: GetPostResponse;
   locale: string;
-  postName: string;
 }
 
-interface ReferenceProps {
-  name: string;
-  link: string;
-}
-
-interface ArticleContentObject {
-  type?: string | undefined;
-  lang?: string | undefined;
-  content?: string | undefined;
-  resource?: string | undefined;
-  width?: string | undefined;
-  style?: string | undefined;
-  items?: Array<any>
-}
-
-const BlogPost = ({ postName }: PostProps) => {
-  // const { t } = useTranslation();
+const BlogPost = ({ locale, post }: PostProps) => {
   const router = useRouter();
 
-  // const handleRedirect = async (path: string) => {
-  //   await router.push(`/${locale}${path}`);
-  // };
-  //
-  // const [listRefs, setListRefs] = React.useState<RefObject<unknown>[]>([]);
-  // const [refNames, setRefNames] = React.useState<Array<string>>([]);
-  //
+  const handleRedirect = async (path: string) => {
+    await router.push(`/${locale}${path}`);
+  };
+
+  const [listRefs, setListRefs] = React.useState<RefObject<unknown>[]>([]);
+  const [refNames, setRefNames] = React.useState<Array<string>>([]);
+  
   // const generateTableOfContents = (toc: any, parentKeyName?: string) => {
   //   const CreateTableOfContents = ({ toc, parentKeyName }: { toc: any, parentKeyName?: string }): JSX.Element => {
   //     return (
@@ -136,6 +120,7 @@ const BlogPost = ({ postName }: PostProps) => {
 
   return (
     <>
+      {JSON.stringify(post, null, 2)}
       {/*<Head>*/}
       {/*  <title>{t('pages:home.name')} | {t(`${postName}:title`)}</title>*/}
       {/*  <meta name={'keywords'} content={t(`${postName}:tags`) as string} />*/}
@@ -223,17 +208,6 @@ const BlogPost = ({ postName }: PostProps) => {
   );
 };
 
-// export const getServerSideProps = async (ctx: any) => {
-//   const staticProps = await makeStaticProps()(ctx);
-//   const props = staticProps.props;
-//
-//   return {
-//     props: {
-//       ...props
-//     }
-//   };
-// };
-
 export async function getStaticPaths() {
   // @ts-ignore
   const languages = process.env.NEXT_PUBLIC_AVAILABLE_LANGUAGES.split(',');
@@ -256,10 +230,20 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: { params: any }) {
   const { locale, postName } = params;
 
-  const { getPost } = getPostService();
-  const post = await getPost({ slug: postName, locale });
+  const headers = new Headers();
+  const apiUsername = process.env.DATA_API_USERNAME;
+  const apiPassword = process.env.DATA_API_PASSWORD;
+  const apiUrl = process.env.LOCAL_DATA_API_URL;
 
-  return { props: { post } };
+  headers.set('Authorization', 'Basic ' + Buffer.from(apiUsername + ':' + apiPassword).toString('base64'));
+
+  const res = await fetch(
+    `${apiUrl}/posts/${locale}/${postName}`,
+    { headers }
+  );
+  const post = await res.json();
+
+  return { props: { post, locale } };
 }
 
 

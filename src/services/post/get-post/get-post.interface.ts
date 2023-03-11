@@ -32,6 +32,7 @@ export interface GetPostResponse {
   type: Array<string>;
   description: string;
   pageDescription: string;
+  searchTags: Array<string>;
   intro: string;
   timestamp: string;
   footer?: string;

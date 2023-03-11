@@ -32,10 +32,9 @@
       ],
       "@services/*": [
         "src/services/*",
-        "src/services/post/*"
+        "src/services/post/*",
+        "src/services/project/*"
       ],
-      "@api-client": ["src/services/api.client.ts"],
-      "@api": ["src/api/api.ts"],
       "@lib/*": ["src/lib/*"],
       "@i18config": ["next-i18next.config.js"],
       "@layouts/*": ["src/layouts/*"],

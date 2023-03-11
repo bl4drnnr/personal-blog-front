@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import CodeHighlighter from '@components/CodeHighlighter/CodeHighlighter.component';
 import DefaultLayout from '@layouts/Default.layout';
 import { makeStaticProps } from '@lib/getStatic';
-import { getProjectService } from '@services/project/get-project/get-project.service';
+import { GetProjectResponse } from '@services/get-project/get-project.interface';
 import {
   Container,
   ImageContainer,
@@ -25,39 +25,11 @@ import {
 } from '@styles/project.style';
 import { generateLists } from '@utils/GeneraeList.util';
 
-interface BadgeProps {
-  src: string;
-  width: number;
-  height: number;
-}
-
 interface ProjectProps {
-  locale: string;
-  projectName: string;
+  project: GetProjectResponse;
 }
 
-interface ProjectContentObject {
-  type?: string | undefined;
-  lang?: string | undefined;
-  content?: string | undefined;
-  resource?: string | undefined;
-  width?: string | undefined;
-  style?: string | undefined;
-  items?: Array<any>
-}
-
-interface TechStackProps {
-  src: string;
-  width: number;
-  height: number;
-}
-
-interface ProjectPageProps {
-  link: string;
-  text: string;
-}
-
-const Project = ({ projectName }: ProjectProps) => {
+const Project = ({ project }: ProjectProps) => {
   // const { t } = useTranslation();
   const router = useRouter();
 
@@ -153,6 +125,7 @@ const Project = ({ projectName }: ProjectProps) => {
 
   return (
     <>
+      {JSON.stringify(project, null, 2)}
       {/*<Head>*/}
       {/*  <title>{t('pages:home.name')} | {t(`${projectName}:title`)}</title>*/}
       {/*  <meta name={'keywords'} content={t(`${projectName}:tags`) as string} />*/}
@@ -250,17 +223,6 @@ const Project = ({ projectName }: ProjectProps) => {
   );
 };
 
-// export const getServerSideProps = async (ctx: any) => {
-//   const staticProps = await makeStaticProps()(ctx);
-//   const props = staticProps.props;
-//
-//   return {
-//     props: {
-//       ...props
-//     }
-//   };
-// };
-
 export async function getStaticPaths() {
   // @ts-ignore
   const languages = process.env.NEXT_PUBLIC_AVAILABLE_LANGUAGES.split(',');
@@ -283,8 +245,18 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: { params: any }) {
   const { locale, projectName } = params;
 
-  const { getProject } = getProjectService();
-  const project = await getProject({ slug: projectName, locale });
+  const headers = new Headers();
+  const apiUsername = process.env.DATA_API_USERNAME;
+  const apiPassword = process.env.DATA_API_PASSWORD;
+  const apiUrl = process.env.LOCAL_DATA_API_URL;
+
+  headers.set('Authorization', 'Basic ' + Buffer.from(apiUsername + ':' + apiPassword).toString('base64'));
+
+  const res = await fetch(
+    `${apiUrl}/projects/${locale}/${projectName}`,
+    { headers }
+  );
+  const project = await res.json();
 
   return { props: { project } };
 }
