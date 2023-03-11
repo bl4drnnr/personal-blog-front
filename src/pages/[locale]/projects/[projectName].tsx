@@ -210,7 +210,7 @@ export async function getStaticProps({ params }: { params: any }) {
   );
   const project = await res.json();
 
-  return { props: { project } };
+  return { props: { project, locale } };
 }
 
 

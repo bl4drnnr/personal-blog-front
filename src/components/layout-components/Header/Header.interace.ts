@@ -1,5 +1,5 @@
 export interface HeaderProps {
-  locale?: string;
-  translation?: any;
+  locale: string;
+  translation: any;
 }
 

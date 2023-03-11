@@ -43,23 +43,23 @@ const Home = ({ locale }: HomeProps) => {
   const [interestingPosts, setInterestingPosts] = React.useState<PostProps[]>([]);
   const [scroll, setScroll] = React.useState(false);
 
-  React.useEffect(() => {
-    // @ts-ignore
-    const allInterestingPosts = process.env.NEXT_PUBLIC_INTERESTING_POSTS.split(',');
-    const posts: PostProps[] = [];
-
-    allInterestingPosts.forEach((post) => {
-      posts.push({
-        title: t(`${post}:title`),
-        description: t(`${post}:pageDescription`),
-        link: `/blog/${post}`,
-        timestamp: t(`${post}:timestamp`),
-        searchTags: t(`${post}:searchTags`, { returnObjects: true })
-      });
-    });
-
-    setInterestingPosts(posts);
-  }, []);
+  // React.useEffect(() => {
+  //   // @ts-ignore
+  //   const allInterestingPosts = process.env.NEXT_PUBLIC_INTERESTING_POSTS.split(',');
+  //   const posts: PostProps[] = [];
+  //
+  //   allInterestingPosts.forEach((post) => {
+  //     posts.push({
+  //       title: t(`${post}:title`),
+  //       description: t(`${post}:pageDescription`),
+  //       link: `/blog/${post}`,
+  //       timestamp: t(`${post}:timestamp`),
+  //       searchTags: t(`${post}:searchTags`, { returnObjects: true })
+  //     });
+  //   });
+  //
+  //   setInterestingPosts(posts);
+  // }, []);
 
   React.useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -133,21 +133,21 @@ const Home = ({ locale }: HomeProps) => {
             </InterestingPosts>
 
 
-            {interestingPosts.map((post, key) => (
-              <BlogPostPreview
-                key={key}
-                onClick={() => handleRedirect(post.link)}
-              >
-                <BlogPostTitle>{post.title}</BlogPostTitle>
-                <BlogPostDescription>{post.description}</BlogPostDescription>
-                <BlogPostTimestamp>{post.timestamp}</BlogPostTimestamp>
-                <PostTagsWrapper>
-                  {post.searchTags.map((item, index) => (
-                    <PostTag key={index}>{item}</PostTag>
-                  ))}
-                </PostTagsWrapper>
-              </BlogPostPreview>
-            ))}
+            {/*{interestingPosts.map((post, key) => (*/}
+            {/*  <BlogPostPreview*/}
+            {/*    key={key}*/}
+            {/*    onClick={() => handleRedirect(post.link)}*/}
+            {/*  >*/}
+            {/*    <BlogPostTitle>{post.title}</BlogPostTitle>*/}
+            {/*    <BlogPostDescription>{post.description}</BlogPostDescription>*/}
+            {/*    <BlogPostTimestamp>{post.timestamp}</BlogPostTimestamp>*/}
+            {/*    <PostTagsWrapper>*/}
+            {/*      {post.searchTags.map((item, index) => (*/}
+            {/*        <PostTag key={index}>{item}</PostTag>*/}
+            {/*      ))}*/}
+            {/*    </PostTagsWrapper>*/}
+            {/*  </BlogPostPreview>*/}
+            {/*))}*/}
           </BlogPostsContainer>
         </Container>
       </DefaultLayout>
