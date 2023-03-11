@@ -8,8 +8,8 @@ export default async (
   res: NextApiResponse
 ) => {
   try {
-    const { slug } = req.query;
-    const { data } = await Api.get(`/posts/${slug}`);
+    const { slug, locale } = req.query;
+    const { data } = await Api.get(`/projects/${locale}/${slug}`);
 
     return res.json(data);
   } catch (error: any) {

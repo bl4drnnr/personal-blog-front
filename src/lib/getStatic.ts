@@ -28,7 +28,7 @@ export async function getI18nProps(
     // @ts-ignore
     ...process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',')
   ]) {
-  const locale = await ctx?.params?.locale;
+  const locale = await ctx?.params?.locale || 'en';
   const postName = await ctx?.params?.postName || null;
   const projectName = await ctx?.params?.projectName || null;
 
