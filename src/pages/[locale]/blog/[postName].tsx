@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
 
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -23,11 +24,11 @@ import { generateTableOfContents } from '@utils/GenerateToC.util';
 interface PostProps {
   post: GetPostResponse;
   locale: string;
-  translation: any
 }
 
-const BlogPost = ({ locale, post, translation }: PostProps) => {
+const BlogPost = ({ locale, post }: PostProps) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleRedirect = async (path: string) => {
     await router.push(`/${locale}${path}`);
@@ -35,10 +36,6 @@ const BlogPost = ({ locale, post, translation }: PostProps) => {
 
   const [listRefs, setListRefs] = React.useState<RefObject<unknown>[]>([]);
   const [refNames, setRefNames] = React.useState<Array<string>>([]);
-
-  const scrollTo = (ref: any) => {
-    if (ref && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   const getRefByName = (refName: string | undefined): any => {
     let matchingRef = null;
@@ -86,7 +83,7 @@ const BlogPost = ({ locale, post, translation }: PostProps) => {
         <meta name={'description'} content={post.description} />
         <meta charSet={'utf-8'} />
       </Head>
-      <DefaultLayout locale={locale} translation={translation}>
+      <DefaultLayout locale={locale} translation={t}>
         <ArticleBodyWrapper className={locale === 'en' ? 'en' : 'non-en'}>
           <ArticleTitle>
             <Typewriter

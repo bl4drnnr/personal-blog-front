@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
 
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -28,11 +29,11 @@ import { generateTableOfContents } from '@utils/GenerateToC.util';
 interface ProjectProps {
   project: GetProjectResponse;
   locale: string;
-  translation: any;
 }
 
-const Project = ({ project, locale, translation }: ProjectProps) => {
+const Project = ({ project, locale }: ProjectProps) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [listTocRefs, setListTocRefs] = React.useState<RefObject<unknown>[]>([]);
   const [refNames, setRefNames] = React.useState<Array<string>>([]);
@@ -87,7 +88,7 @@ const Project = ({ project, locale, translation }: ProjectProps) => {
         <meta name={'description'} content={project.description} />
         <meta charSet={'utf-8'} />
       </Head>
-      <DefaultLayout locale={locale} translation={translation}>
+      <DefaultLayout locale={locale} translation={t}>
         <Container className={locale === 'en' ? 'en' : 'non-en'}>
           <ProjectTitle>{project.title}</ProjectTitle>
           <ProjectBrief>{project.brief}</ProjectBrief>

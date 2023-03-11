@@ -241,19 +241,19 @@ const Blog = ({ locale }: BlogProps) => {
                   <PostTimestamp>{post.timestamp}</PostTimestamp>
                   <PostDescription>{post.description}</PostDescription>
                   <PostTags>
-                    {post.searchTags.map((item, index) => (
-                      <PostTag key={index}>{item}</PostTag>
-                    ))}
-                    {post.postType.map((typeItem, index) => (
-                      <Image
-                        key={index}
-                        className={'icon'}
-                        src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${typeItem}.png`}
-                        alt={'icon'}
-                        width={22}
-                        height={22}
-                      />
-                    ))}
+                    {/*{post.searchTags.map((item, index) => (*/}
+                    {/*  <PostTag key={index}>{item}</PostTag>*/}
+                    {/*))}*/}
+                    {/*{post.postType.map((typeItem, index) => (*/}
+                    {/*  <Image*/}
+                    {/*    key={index}*/}
+                    {/*    className={'icon'}*/}
+                    {/*    src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${typeItem}.png`}*/}
+                    {/*    alt={'icon'}*/}
+                    {/*    width={22}*/}
+                    {/*    height={22}*/}
+                    {/*  />*/}
+                    {/*))}*/}
                   </PostTags>
                 </FoundPostWrapper>
               </BlogIntroWrapper>
@@ -264,30 +264,30 @@ const Blog = ({ locale }: BlogProps) => {
             </BlogPostsTitle>
           ) : (
             <TestimonialGrid>
-              {allPosts.map((post, key) => (
-                post.show && (
-                  <TestimonialArticle key={key} onClick={() => handleRedirect(post.link)}>
-                    <PostTitle>{post.title}</PostTitle>
-                    <PostTimestamp>{post.timestamp}</PostTimestamp>
-                    <PostDescription>{post.description}</PostDescription>
-                    <PostTags>
-                      {post.searchTags.map((item, index) => (
-                        <PostTag key={index}>{item}</PostTag>
-                      ))}
-                      {post.postType.map((typeItem, index) => (
-                        <Image
-                          key={index}
-                          className={'icon'}
-                          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${typeItem}.png`}
-                          alt={'icon'}
-                          width={22}
-                          height={22}
-                        />
-                      ))}
-                    </PostTags>
-                  </TestimonialArticle>
-                )
-              ))}
+              {/*{allPosts.map((post, key) => (*/}
+              {/*  post.show && (*/}
+              {/*    <TestimonialArticle key={key} onClick={() => handleRedirect(post.link)}>*/}
+              {/*      <PostTitle>{post.title}</PostTitle>*/}
+              {/*      <PostTimestamp>{post.timestamp}</PostTimestamp>*/}
+              {/*      <PostDescription>{post.description}</PostDescription>*/}
+              {/*      <PostTags>*/}
+              {/*        {post.searchTags.map((item, index) => (*/}
+              {/*          <PostTag key={index}>{item}</PostTag>*/}
+              {/*        ))}*/}
+              {/*        {post.postType.map((typeItem, index) => (*/}
+              {/*          <Image*/}
+              {/*            key={index}*/}
+              {/*            className={'icon'}*/}
+              {/*            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${typeItem}.png`}*/}
+              {/*            alt={'icon'}*/}
+              {/*            width={22}*/}
+              {/*            height={22}*/}
+              {/*          />*/}
+              {/*        ))}*/}
+              {/*      </PostTags>*/}
+              {/*    </TestimonialArticle>*/}
+              {/*  )*/}
+              {/*))}*/}
             </TestimonialGrid>
 
           ))}
