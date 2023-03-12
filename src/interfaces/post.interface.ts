@@ -35,9 +35,10 @@ export interface IPost {
   pageDescription: string;
   searchTags: Array<string>;
   intro: string;
-  timestamp: string;
   footer?: string;
   toc: object;
   content: Array<string | IPicture | IList | ICode | ITitle>;
   references: Array<ILink>;
+  createdAt: string;
+  updatedAt: string;
 }

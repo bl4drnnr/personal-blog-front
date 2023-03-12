@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Typewriter from 'typewriter-effect';
 
+import BasicButton from '@components/BasicButton/BasicButton.component';
 import BasicInput from '@components/BasicInput/BasicInput.component';
 import { IPost } from '@interfaces/post.interface';
 import DefaultLayout from '@layouts/Default.layout';
@@ -40,12 +41,10 @@ const Blog = ({ locale }: BlogProps) => {
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = React.useState('');
-  // const [dateSort, setDateSort] = React.useState('');
-  // const [nameSort, setNameSort] = React.useState('');
   const [postTypes, setPostTypes] = React.useState<Array<string>>([]);
   const [page, setPage] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(10);
-  const [order, setOrder] = React.useState('created_at');
+  const [order, setOrder] = React.useState('Created At');
   const [orderBy, setOrderBy] = React.useState('ASC');
 
   const [foundPosts, setFoundPosts] = React.useState<IPost[]>([]);
@@ -54,55 +53,38 @@ const Blog = ({ locale }: BlogProps) => {
   const { loading, getPosts } = useGetPostsService();
 
   React.useEffect(() => {
+    const orderOption = order === 'Created At' ? 'created_at' : 'title';
     fetchPosts({
-      page,
-      pageSize,
-      order,
-      orderBy,
-      locale
+      page, pageSize, order: orderOption, orderBy, locale
     }).then(({ rows, count }) => {
       setAllPosts(rows);
     });
   }, []);
 
   React.useEffect(() => {
+    const orderOption = order === 'Created At' ? 'created_at' : 'title';
     fetchPosts({
-      page,
-      pageSize,
-      order,
-      orderBy,
-      locale,
-      searchQuery
+      page, pageSize, order: orderOption, orderBy, locale, searchQuery, postTypes
     }).then(({ rows, count }) => {
       setFoundPosts(rows);
     });
   }, [searchQuery]);
 
   React.useEffect(() => {
+    const orderOption = order === 'Created At' ? 'created_at' : 'title';
     fetchPosts({
-      page,
-      pageSize,
-      order,
-      orderBy,
-      locale,
-      searchQuery,
-      postTypes
+      page, pageSize, order: orderOption, orderBy, locale, searchQuery, postTypes
     }).then(({ rows, count }) => {
       setAllPosts(rows);
     });
-  }, [postTypes]);
+  }, [order, orderBy]);
 
   const handleRedirect = async (path: string) => {
     await router.push(`/${locale}${path}`);
   };
 
   const fetchPosts = async ({
-    page,
-    pageSize,
-    order,
-    locale,
-    orderBy,
-    searchQuery
+    page, pageSize, order, locale, orderBy, searchQuery, postTypes
   }: {
     page: number;
     pageSize: number;
@@ -113,66 +95,24 @@ const Blog = ({ locale }: BlogProps) => {
     postTypes?: Array<string>
   }) => {
     return await getPosts({
-      page, pageSize, order, locale, orderBy, searchQuery, postTypes: postTypes.join()
+      page, pageSize, order, locale, orderBy, searchQuery, postTypes: postTypes?.join()
     });
   };
 
-  // const sortByDate = (date: string) => {
-  //   const currentPosts = allPosts;
-  //
-  //   if (date !== '' && date === 'ASC') {
-  //     setDateSort('DESC');
-  //     currentPosts.sort((a, b) => dayjs(b.timestamp).diff(a.timestamp));
-  //   }
-  //   else {
-  //     setDateSort('ASC');
-  //     currentPosts.sort((a, b) => dayjs(a.timestamp).diff(b.timestamp));
-  //   }
-  //
-  //   setAllPosts(currentPosts);
-  // };
+  const sortByType = (sortType: string) => {
+    const t = [...postTypes];
 
-  // const sortByName = (sortType: string) => {
-  //   const currentPosts = allPosts;
-  //
-  //   if (sortType !== '' && sortType === 'A -> Z') {
-  //     setNameSort('Z -> A');
-  //     currentPosts.sort((a, b) => b.title.localeCompare(a.title));
-  //   } else {
-  //     setNameSort('A -> Z');
-  //     currentPosts.sort((a, b) => a.title.localeCompare(b.title));
-  //   }
-  //
-  //   setAllPosts(currentPosts);
-  // };
+    if (t.includes(sortType)) t.splice(t.indexOf(sortType), 1);
+    else t.push(sortType);
 
-  // const sortByType = (sortType: string) => {
-  //   const t = [...postTypeSort];
-  //
-  //   if (t.includes(sortType)) t.splice(t.indexOf(sortType), 1);
-  //   else t.push(sortType);
-  //
-  //   setPostTypeSort(t);
-  //
-  //   const localTheory = t.includes('theory');
-  //   const localPractice = t.includes('practice');
-  //
-  //   const sortedPosts: PostProps[] = allPosts.map((post) => {
-  //     const hasPractice = post.postType.includes('practice');
-  //     const hasTheory = post.postType.includes('theory');
-  //     const showPost = (localPractice && hasPractice) || (localTheory && hasTheory);
-  //
-  //     if (t.length === 0) {
-  //       return { ...post, show: true };
-  //     } else {
-  //       if (localTheory && localPractice) return { ...post, show: hasPractice && hasTheory };
-  //       else if (showPost) return { ...post, show: true };
-  //       else return { ...post, show: false };
-  //     }
-  //   });
-  //
-  //   setAllPosts(sortedPosts);
-  // };
+    setPostTypes(t);
+
+    fetchPosts({
+      page, pageSize, order, locale, orderBy, searchQuery, postTypes: t
+    }).then(({ rows, count }) => {
+      setAllPosts(rows);
+    });
+  };
 
   return (
     <>
@@ -209,44 +149,44 @@ const Blog = ({ locale }: BlogProps) => {
             />
             <SettingsWrapper>
               <ButtonWrapper>
-                {/*<BasicButton*/}
-                {/*  text={dateSort !== '' ? dateSort : 'ASC/DESC'}*/}
-                {/*  onClick={() => sortByDate(dateSort)}*/}
-                {/*/>*/}
+                <BasicButton
+                  text={orderBy}
+                  onClick={() => setOrderBy(orderBy === 'ASC' ? 'DESC' : 'ASC')}
+                />
               </ButtonWrapper>
               <ButtonWrapper>
-                {/*<BasicButton*/}
-                {/*  text={nameSort !== '' ? nameSort : 'A-Z'}*/}
-                {/*  onClick={() => sortByName(nameSort)}*/}
-                {/*/>*/}
+                <BasicButton
+                  text={order}
+                  onClick={() => setOrder(order === 'Created At' ? 'Title' : 'Created At')}
+                />
               </ButtonWrapper>
               <ButtonWrapper>
-                {/*<BasicButton*/}
-                {/*  text={*/}
-                {/*    <Image*/}
-                {/*      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/practice.png`}*/}
-                {/*      alt={'icon'}*/}
-                {/*      width={22}*/}
-                {/*      height={22}*/}
-                {/*    />*/}
-                {/*  }*/}
-                {/*  active={postTypeSort.includes('practice')}*/}
-                {/*  onClick={() => sortByType('practice')}*/}
-                {/*/>*/}
+                <BasicButton
+                  text={
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/practice.png`}
+                      alt={'icon'}
+                      width={22}
+                      height={22}
+                    />
+                  }
+                  active={postTypes.includes('practice')}
+                  onClick={() => sortByType('practice')}
+                />
               </ButtonWrapper>
               <ButtonWrapper>
-                {/*<BasicButton*/}
-                {/*  text={*/}
-                {/*    <Image*/}
-                {/*      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/theory.png`}*/}
-                {/*      alt={'icon'}*/}
-                {/*      width={22}*/}
-                {/*      height={22}*/}
-                {/*    />*/}
-                {/*  }*/}
-                {/*  active={postTypeSort.includes('theory')}*/}
-                {/*  onClick={() => sortByType('theory')}*/}
-                {/*/>*/}
+                <BasicButton
+                  text={
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/theory.png`}
+                      alt={'icon'}
+                      width={22}
+                      height={22}
+                    />
+                  }
+                  active={postTypes.includes('theory')}
+                  onClick={() => sortByType('theory')}
+                />
               </ButtonWrapper>
             </SettingsWrapper>
           </InputWrapper>
@@ -260,7 +200,7 @@ const Blog = ({ locale }: BlogProps) => {
               >
                 <FoundPostWrapper>
                   <PostTitle>{post.title}</PostTitle>
-                  <PostTimestamp>{post.timestamp}</PostTimestamp>
+                  <PostTimestamp>{dayjs(post.createdAt).format('YYYY-MM-DD')}</PostTimestamp>
                   <PostDescription>{post.description}</PostDescription>
                   <PostTags>
                     {post.searchTags.map((item, index) => (
@@ -289,7 +229,7 @@ const Blog = ({ locale }: BlogProps) => {
               {allPosts.map((post, key) => (
                 <TestimonialArticle key={key} onClick={() => handleRedirect(`/blog/${post.slug}`)}>
                   <PostTitle>{post.title}</PostTitle>
-                  <PostTimestamp>{post.timestamp}</PostTimestamp>
+                  <PostTimestamp>{dayjs(post.createdAt).format('YYYY-MM-DD')}</PostTimestamp>
                   <PostDescription>{post.description}</PostDescription>
                   <PostTags>
                     {post.searchTags.map((item, index) => (
