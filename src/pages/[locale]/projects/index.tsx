@@ -9,8 +9,10 @@ import Typewriter from 'typewriter-effect';
 import BasicButton from '@components/BasicButton/BasicButton.component';
 import BasicInput from '@components/BasicInput/BasicInput.component';
 import Modal from '@components/Modal/Modal.component';
+import { IProject } from '@interfaces/project.interface';
 import DefaultLayout from '@layouts/Default.layout';
 import { getStaticPaths, makeStaticProps } from '@lib/getStatic';
+import { useGetProjectsService } from '@services/get-projects.service';
 import {
   Container,
   Title,
@@ -28,15 +30,6 @@ import {
   PostTags, FoundProjectWrapper, ButtonWrapper
 } from '@styles/projects.style';
 
-interface ProjectProps {
-  title: string;
-  brief: string;
-  description: string;
-  link: string;
-  icon: string;
-  searchTags: string[];
-}
-
 interface ProjectPageProps {
   locale: string;
 }
@@ -45,63 +38,62 @@ const Projects = ({ locale }: ProjectPageProps) => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const [searchString, setSearchString] = React.useState('');
-  const [nameSort, setNameSort] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [page, setPage] = React.useState(0);
+  const [pageSize, setPageSize] = React.useState(10);
+  const [order, setOrder] = React.useState('By Created At');
+  const [orderBy, setOrderBy] = React.useState('ASC');
   const [showFiltersModal, setShowFiltersModal] = React.useState(false);
 
-  const [allProjects, setAllProjects] = React.useState<ProjectProps[]>([]);
-  const [foundProjects, setFoundProjects] = React.useState<ProjectProps[]>([]);
+  const [allProjects, setAllProjects] = React.useState<IProject[]>([]);
+  const [foundProjects, setFoundProjects] = React.useState<IProject[]>([]);
+
+  const { loading, getProjects } = useGetProjectsService();
 
   React.useEffect(() => {
-  //   // @ts-ignore
-  //   const allAvailableProjects = process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',');
-  //   const projects: ProjectProps[] = [];
-  //
-  //   allAvailableProjects.forEach((project) => {
-  //     projects.push({
-  //       title: t(`${project}:title`),
-  //       brief: t(`${project}:brief`),
-  //       description: t(`${project}:description`),
-  //       link: `/projects/${project}`,
-  //       icon: 'fire.png',
-  //       searchTags: t(`${project}:searchTags`, { returnObjects: true }),
-  //     });
-  //   });
-  //
-  //   setAllProjects(projects);
+    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
+    fetchProjects({
+      page, pageSize, order: orderOption, orderBy, locale
+    }).then(({ rows, count }) => {
+      setAllProjects(rows);
+    });
   }, []);
 
   React.useEffect(() => {
-    const foundSearchProjects: ProjectProps[] = [];
-
-    allProjects.forEach((project) => {
-      if (
-        (searchString && project.title.toLowerCase().includes(searchString.toLowerCase())) ||
-        (searchString && project.searchTags.join(',').includes(searchString.toLowerCase()))
-      ) {
-        foundSearchProjects.push(project);
-      }
+    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
+    fetchProjects({
+      page, pageSize, order: orderOption, orderBy, locale, searchQuery
+    }).then(({ rows, count }) => {
+      setFoundProjects(rows);
     });
+  }, [searchQuery]);
 
-    setFoundProjects(foundSearchProjects);
-  }, [searchString]);
+  React.useEffect(() => {
+    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
+    fetchProjects({
+      page, pageSize, order: orderOption, orderBy, locale, searchQuery
+    }).then(({ rows, count }) => {
+      setAllProjects(rows);
+    });
+  }, [order, orderBy]);
 
   const handleRedirect = async (path: string) => {
     await router.push(`/${locale}${path}`);
   };
 
-  const sortByName = (sortType: string) => {
-    const currentProjects = allProjects;
-
-    if (sortType !== '' && sortType === 'A -> Z') {
-      setNameSort('Z -> A');
-      currentProjects.sort((a, b) => b.title.localeCompare(a.title));
-    } else {
-      setNameSort('A -> Z');
-      currentProjects.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    setAllProjects(currentProjects);
+  const fetchProjects = async ({
+    page, pageSize, order, locale, orderBy, searchQuery
+  }: {
+    page: number;
+    pageSize: number;
+    order: string;
+    locale: string;
+    orderBy: string;
+    searchQuery?: string
+  }) => {
+    return await getProjects({
+      page, pageSize, order, locale, orderBy, searchQuery
+    });
   };
 
   return (
@@ -109,7 +101,7 @@ const Projects = ({ locale }: ProjectPageProps) => {
       <Head>
         <title>{t('pages:home.name')} | {t('pages:projects.title')}</title>
       </Head>
-      <DefaultLayout locale={locale} translation={t}>
+      <DefaultLayout locale={locale} translation={t} loading={loading}>
         <ProjectsWrapper>
           <ProjectTitle>
             <Typewriter
@@ -130,15 +122,21 @@ const Projects = ({ locale }: ProjectPageProps) => {
           <InputWrapper>
             <BasicInput
               locale={locale}
-              value={searchString}
+              value={searchQuery}
               placeholder={t('common:searchProjects')}
-              onChange={(e) => setSearchString(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <SettingsWrapper>
               <ButtonWrapper>
                 <BasicButton
-                  text={nameSort !== '' ? nameSort : 'A-Z'}
-                  onClick={() => sortByName(nameSort)}
+                  text={orderBy}
+                  onClick={() => setOrderBy(orderBy === 'ASC' ? 'DESC' : 'ASC')}
+                />
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <BasicButton
+                  text={order}
+                  onClick={() => setOrder(order === 'By Created At' ? 'By Title' : 'By Created At')}
                 />
               </ButtonWrapper>
               <ButtonWrapper>
@@ -160,18 +158,18 @@ const Projects = ({ locale }: ProjectPageProps) => {
             </SettingsWrapper>
           </InputWrapper>
 
-          {foundProjects.length > 0 ? (
+          {(foundProjects.length > 0 && searchQuery.length > 0) ? (
             foundProjects.map((project, index) => (
               <ProjectsWrapper
                 key={index}
                 className={'found-projects'}
-                onClick={() => handleRedirect(project.link)}
+                onClick={() => handleRedirect(`/projects/${project.slug}`)}
               >
                 <FoundProjectWrapper>
                   <FlexWrapper>
                     <Image
                       className={'icon'}
-                      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${project.icon}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/fire.png`}
                       alt={'Fire'}
                       width={22}
                       height={22}
@@ -181,14 +179,14 @@ const Projects = ({ locale }: ProjectPageProps) => {
                   <Title>{project.brief}</Title>
                   <Description>{project.description}</Description>
                   <PostTags>
-                    {project.searchTags.map((item, index) => (
+                    {project.projectTags.map((item, index) => (
                       <PostTag key={index}>{item}</PostTag>
                     ))}
                   </PostTags>
                 </FoundProjectWrapper>
               </ProjectsWrapper>
             ))
-          ) : ((foundProjects.length === 0 && searchString.length > 0) ? (
+          ) : ((foundProjects.length === 0 && searchQuery.length > 0) ? (
             <ProjectTitle>
               {t('common:projectsNotFound')}
             </ProjectTitle>
@@ -196,16 +194,16 @@ const Projects = ({ locale }: ProjectPageProps) => {
             allProjects.map((_, index) => {
               if ((index + 1) % 5 === 1 || index === 0) {
                 return (
-                  <TestimonialGrid>
+                  <TestimonialGrid key={index}>
                     {allProjects.slice(index, index + 5).map((project, idx) => (
                       <TestimonialArticle
                         key={idx}
-                        onClick={() => handleRedirect(project.link)}
+                        onClick={() => handleRedirect(`/projects/${project.slug}`)}
                       >
                         <FlexWrapper>
                           <Image
                             className={'icon'}
-                            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${project.icon}`}
+                            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/fire.png`}
                             alt={'Fire'}
                             width={22}
                             height={22}
@@ -215,7 +213,7 @@ const Projects = ({ locale }: ProjectPageProps) => {
                         <Title>{project.brief}</Title>
                         <Description>{project.description}</Description>
                         <PostTags>
-                          {project.searchTags.map((item, index) => (
+                          {project.projectTags.map((item, index) => (
                             <PostTag key={index}>{item}</PostTag>
                           ))}
                         </PostTags>

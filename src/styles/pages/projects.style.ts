@@ -168,11 +168,8 @@ export const SettingsWrapper = styled.div`
 
 export const ButtonWrapper = styled.div`
   width: 100%;
-  :nth-child(1) {
-    margin-right: 5px;
-  }
   :nth-child(2) {
-    margin-left: 5px;
+    margin: 0 5px;
   }
 `;
 

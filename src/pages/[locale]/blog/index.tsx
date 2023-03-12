@@ -44,7 +44,7 @@ const Blog = ({ locale }: BlogProps) => {
   const [postTypes, setPostTypes] = React.useState<Array<string>>([]);
   const [page, setPage] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(10);
-  const [order, setOrder] = React.useState('Created At');
+  const [order, setOrder] = React.useState('By Created At');
   const [orderBy, setOrderBy] = React.useState('ASC');
 
   const [foundPosts, setFoundPosts] = React.useState<IPost[]>([]);
@@ -53,7 +53,7 @@ const Blog = ({ locale }: BlogProps) => {
   const { loading, getPosts } = useGetPostsService();
 
   React.useEffect(() => {
-    const orderOption = order === 'Created At' ? 'created_at' : 'title';
+    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
     fetchPosts({
       page, pageSize, order: orderOption, orderBy, locale
     }).then(({ rows, count }) => {
@@ -62,7 +62,7 @@ const Blog = ({ locale }: BlogProps) => {
   }, []);
 
   React.useEffect(() => {
-    const orderOption = order === 'Created At' ? 'created_at' : 'title';
+    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
     fetchPosts({
       page, pageSize, order: orderOption, orderBy, locale, searchQuery, postTypes
     }).then(({ rows, count }) => {
@@ -71,7 +71,7 @@ const Blog = ({ locale }: BlogProps) => {
   }, [searchQuery]);
 
   React.useEffect(() => {
-    const orderOption = order === 'Created At' ? 'created_at' : 'title';
+    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
     fetchPosts({
       page, pageSize, order: orderOption, orderBy, locale, searchQuery, postTypes
     }).then(({ rows, count }) => {
@@ -91,8 +91,8 @@ const Blog = ({ locale }: BlogProps) => {
     order: string;
     locale: string;
     orderBy: string;
-    searchQuery?: string
-    postTypes?: Array<string>
+    searchQuery?: string;
+    postTypes?: Array<string>;
   }) => {
     return await getPosts({
       page, pageSize, order, locale, orderBy, searchQuery, postTypes: postTypes?.join()
@@ -157,7 +157,7 @@ const Blog = ({ locale }: BlogProps) => {
               <ButtonWrapper>
                 <BasicButton
                   text={order}
-                  onClick={() => setOrder(order === 'Created At' ? 'Title' : 'Created At')}
+                  onClick={() => setOrder(order === 'By Created At' ? 'By Title' : 'By Created At')}
                 />
               </ButtonWrapper>
               <ButtonWrapper>

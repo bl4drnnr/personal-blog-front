@@ -154,7 +154,7 @@ const BlogPost = ({ locale, post }: PostProps) => {
           </TableOfContentsContainer>
 
           <PostFooter
-            timestamp={post.timestamp}
+            timestamp={post.createdAt}
             message={post.footer}
             locale={locale}
           />
