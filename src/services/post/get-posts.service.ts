@@ -12,13 +12,27 @@ interface IAllPosts {
 export const useGetPostsService = () => {
   const [loading, setLoading] = React.useState(false);
 
-  const getPosts = async (
-    { page, pageSize, order }:
-    { page: number, pageSize: number, order: string }
+  const getPosts = async ({
+      page,
+      pageSize,
+      order,
+      locale,
+      orderBy,
+      searchQuery,
+      postTypes
+    }: {
+      page: number;
+      pageSize: number;
+      order: string;
+      locale: string;
+      orderBy: string;
+      searchQuery?: string;
+      postTypes?: string;
+    }
   ): Promise<IAllPosts> => {
     try {
       setLoading(true);
-      const { data } = await ApiClient.get(`/posts/all/${page}/${pageSize}/${order}`);
+      const { data } = await ApiClient.get(`/posts/all/${locale}/${page}/${pageSize}/${order}/${orderBy}?searchQuery=${searchQuery}&postTypes=${postTypes}`);
 
       return data;
     } catch (error: any) {

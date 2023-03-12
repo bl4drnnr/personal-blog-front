@@ -52,7 +52,7 @@ const Projects = ({ locale }: ProjectPageProps) => {
   const [allProjects, setAllProjects] = React.useState<ProjectProps[]>([]);
   const [foundProjects, setFoundProjects] = React.useState<ProjectProps[]>([]);
 
-  // React.useEffect(() => {
+  React.useEffect(() => {
   //   // @ts-ignore
   //   const allAvailableProjects = process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',');
   //   const projects: ProjectProps[] = [];
@@ -69,7 +69,7 @@ const Projects = ({ locale }: ProjectPageProps) => {
   //   });
   //
   //   setAllProjects(projects);
-  // }, []);
+  }, []);
 
   React.useEffect(() => {
     const foundSearchProjects: ProjectProps[] = [];
@@ -181,9 +181,9 @@ const Projects = ({ locale }: ProjectPageProps) => {
                   <Title>{project.brief}</Title>
                   <Description>{project.description}</Description>
                   <PostTags>
-                    {/*{project.searchTags.map((item, index) => (*/}
-                    {/*  <PostTag key={index}>{item}</PostTag>*/}
-                    {/*))}*/}
+                    {project.searchTags.map((item, index) => (
+                      <PostTag key={index}>{item}</PostTag>
+                    ))}
                   </PostTags>
                 </FoundProjectWrapper>
               </ProjectsWrapper>
@@ -193,39 +193,38 @@ const Projects = ({ locale }: ProjectPageProps) => {
               {t('common:projectsNotFound')}
             </ProjectTitle>
           ) : (
-            <></>
-            // allProjects.map((_, index) => {
-            //   if ((index + 1) % 5 === 1 || index === 0) {
-            //     return (
-            //       <TestimonialGrid>
-            //         {allProjects.slice(index, index + 5).map((project, idx) => (
-            //           <TestimonialArticle
-            //             key={idx}
-            //             onClick={() => handleRedirect(project.link)}
-            //           >
-            //             <FlexWrapper>
-            //               <Image
-            //                 className={'icon'}
-            //                 src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${project.icon}`}
-            //                 alt={'Fire'}
-            //                 width={22}
-            //                 height={22}
-            //               />
-            //               <Name>{project.title}</Name>
-            //             </FlexWrapper>
-            //             <Title>{project.brief}</Title>
-            //             <Description>{project.description}</Description>
-            //             <PostTags>
-            //               {project.searchTags.map((item, index) => (
-            //                 <PostTag key={index}>{item}</PostTag>
-            //               ))}
-            //             </PostTags>
-            //           </TestimonialArticle>
-            //         ))}
-            //       </TestimonialGrid>
-            //     );
-            //   }
-            // })
+            allProjects.map((_, index) => {
+              if ((index + 1) % 5 === 1 || index === 0) {
+                return (
+                  <TestimonialGrid>
+                    {allProjects.slice(index, index + 5).map((project, idx) => (
+                      <TestimonialArticle
+                        key={idx}
+                        onClick={() => handleRedirect(project.link)}
+                      >
+                        <FlexWrapper>
+                          <Image
+                            className={'icon'}
+                            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/icons/${project.icon}`}
+                            alt={'Fire'}
+                            width={22}
+                            height={22}
+                          />
+                          <Name>{project.title}</Name>
+                        </FlexWrapper>
+                        <Title>{project.brief}</Title>
+                        <Description>{project.description}</Description>
+                        <PostTags>
+                          {project.searchTags.map((item, index) => (
+                            <PostTag key={index}>{item}</PostTag>
+                          ))}
+                        </PostTags>
+                      </TestimonialArticle>
+                    ))}
+                  </TestimonialGrid>
+                );
+              }
+            })
           ))}
         </Container>
       </DefaultLayout>
