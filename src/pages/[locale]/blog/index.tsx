@@ -1,10 +1,10 @@
 import React from 'react';
 
 import dayjs from 'dayjs';
-import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import Typewriter from 'typewriter-effect';
 
 import BasicButton from '@components/BasicButton/BasicButton.component';
@@ -44,8 +44,8 @@ const Blog = ({ locale }: BlogProps) => {
   const [postTypes, setPostTypes] = React.useState<Array<string>>([]);
   const [page, setPage] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(10);
-  const [order, setOrder] = React.useState('By Created At');
-  const [orderBy, setOrderBy] = React.useState('ASC');
+  const [order, setOrder] = React.useState<'By creation date' | 'By title'>('By creation date');
+  const [orderBy, setOrderBy] = React.useState<'ASC' | 'DESC'>('ASC');
 
   const [foundPosts, setFoundPosts] = React.useState<IPost[]>([]);
   const [allPosts, setAllPosts] = React.useState<IPost[]>([]);
@@ -53,28 +53,28 @@ const Blog = ({ locale }: BlogProps) => {
   const { loading, getPosts } = useGetPostsService();
 
   React.useEffect(() => {
-    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
+    const orderOption = order === 'By creation date' ? 'created_at' : 'title';
     fetchPosts({
       page, pageSize, order: orderOption, orderBy, locale
-    }).then(({ rows, count }) => {
+    }).then(({ rows }) => {
       setAllPosts(rows);
     });
   }, []);
 
   React.useEffect(() => {
-    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
+    const orderOption = order === 'By creation date' ? 'created_at' : 'title';
     fetchPosts({
       page, pageSize, order: orderOption, orderBy, locale, searchQuery, postTypes
-    }).then(({ rows, count }) => {
+    }).then(({ rows }) => {
       setFoundPosts(rows);
     });
   }, [searchQuery]);
 
   React.useEffect(() => {
-    const orderOption = order === 'By Created At' ? 'created_at' : 'title';
+    const orderOption = order === 'By creation date' ? 'created_at' : 'title';
     fetchPosts({
       page, pageSize, order: orderOption, orderBy, locale, searchQuery, postTypes
-    }).then(({ rows, count }) => {
+    }).then(({ rows }) => {
       setAllPosts(rows);
     });
   }, [order, orderBy]);
@@ -94,13 +94,16 @@ const Blog = ({ locale }: BlogProps) => {
     searchQuery?: string;
     postTypes?: Array<string>;
   }) => {
+    const joinedPostsTypes = postTypes && postTypes.length > 0 ? postTypes?.join() : '';
     return await getPosts({
-      page, pageSize, order, locale, orderBy, searchQuery, postTypes: postTypes?.join()
+      page, pageSize, order, locale, orderBy, searchQuery, postTypes: joinedPostsTypes
     });
   };
 
   const sortByType = (sortType: string) => {
     const t = [...postTypes];
+
+    const orderOption = order === 'By creation date' ? 'created_at' : 'title';
 
     if (t.includes(sortType)) t.splice(t.indexOf(sortType), 1);
     else t.push(sortType);
@@ -108,8 +111,8 @@ const Blog = ({ locale }: BlogProps) => {
     setPostTypes(t);
 
     fetchPosts({
-      page, pageSize, order, locale, orderBy, searchQuery, postTypes: t
-    }).then(({ rows, count }) => {
+      page, pageSize, order: orderOption, locale, orderBy, searchQuery, postTypes: t
+    }).then(({ rows }) => {
       setAllPosts(rows);
     });
   };
@@ -157,7 +160,7 @@ const Blog = ({ locale }: BlogProps) => {
               <ButtonWrapper>
                 <BasicButton
                   text={order}
-                  onClick={() => setOrder(order === 'By Created At' ? 'By Title' : 'By Created At')}
+                  onClick={() => setOrder(order === 'By creation date' ? 'By title' : 'By creation date')}
                 />
               </ButtonWrapper>
               <ButtonWrapper>

@@ -8,10 +8,12 @@ export default async (
   res: NextApiResponse
 ) => {
   try {
-    const { page, pageSize, order, locale, orderBy, searchQuery, postTypes } = req.query;
-    const { data } = await Api.get(
-      `/posts/all/${locale}/${page}/${pageSize}/${order}/${orderBy}?searchQuery=${searchQuery}&postTypes=${postTypes}`
-    );
+    const { page, pageSize, order, language, orderBy, searchQuery, postTypes } = req.query;
+
+    let requestLink = '/posts/all?' +
+      `language=${language}&page=${page}&pageSize=${pageSize}&order=${order}&orderBy=${orderBy}&searchQuery=${searchQuery}&postTypes=${postTypes}`;
+
+    const { data } = await Api.get(requestLink);
 
     return res.json(data);
   } catch (error: any) {

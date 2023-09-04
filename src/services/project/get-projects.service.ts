@@ -30,7 +30,11 @@ export const useGetProjectsService = () => {
   ): Promise<IAllProjects> => {
     try {
       setLoading(true);
-      const { data } = await ApiClient.get(`/projects/all/${locale}/${page}/${pageSize}/${order}/${orderBy}?searchQuery=${searchQuery}`);
+
+      const requestLink = '/projects/all?' +
+        `language=${locale}&page=${page}&pageSize=${pageSize}&order=${order}&orderBy=${orderBy}&searchQuery=${searchQuery}`;
+
+      const { data } = await ApiClient.get(requestLink);
 
       return data;
     } catch (error: any) {

@@ -32,7 +32,11 @@ export const useGetPostsService = () => {
   ): Promise<IAllPosts> => {
     try {
       setLoading(true);
-      const { data } = await ApiClient.get(`/posts/all/${locale}/${page}/${pageSize}/${order}/${orderBy}?searchQuery=${searchQuery || ''}&postTypes=${postTypes || ''}`);
+
+      const requestLink = '/posts/all?' +
+        `language=${locale}&page=${page}&pageSize=${pageSize}&order=${order}&orderBy=${orderBy}&searchQuery=${searchQuery}&postTypes=${postTypes}`;
+
+      const { data } = await ApiClient.get(requestLink);
 
       return data;
     } catch (error: any) {

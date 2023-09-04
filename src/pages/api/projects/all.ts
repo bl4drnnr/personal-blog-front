@@ -8,10 +8,12 @@ export default async (
   res: NextApiResponse
 ) => {
   try {
-    const { page, pageSize, order, locale, orderBy, searchQuery } = req.query;
-    const { data } = await Api.get(
-      `/projects/all/${locale}/${page}/${pageSize}/${order}/${orderBy}?searchQuery=${searchQuery}`
-    );
+    const { page, pageSize, order, language, orderBy, searchQuery } = req.query;
+
+    const requestLink = '/projects/all?' +
+      `language=${language}&page=${page}&pageSize=${pageSize}&order=${order}&orderBy=${orderBy}&searchQuery=${searchQuery}`;
+
+    const { data } = await Api.get(requestLink);
 
     return res.json(data);
   } catch (error: any) {
