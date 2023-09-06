@@ -111,9 +111,9 @@ const BlogPost = ({ locale, post }: PostProps) => {
             post.content
               .map((item, index) => (
                 <div key={index}>
-                  {typeof item === 'string' ? (
+                  {item.type === 'paragraph' ? (
                     <PostParagraph
-                      dangerouslySetInnerHTML={{ __html: item }}
+                      dangerouslySetInnerHTML={{ __html: item.content }}
                     />
                   ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (
                     <PostParagraph
@@ -165,16 +165,27 @@ const BlogPost = ({ locale, post }: PostProps) => {
 };
 
 export async function getStaticPaths() {
-  // @ts-ignore
-  const languages = process.env.NEXT_PUBLIC_AVAILABLE_LANGUAGES.split(',');
-  // @ts-ignore
-  const posts = process.env.NEXT_PUBLIC_AVAILABLE_POSTS.split(',');
+  const headers = new Headers();
+
+  headers.set('Authorization', 'Basic ' + Buffer.from(
+    process.env.DATA_API_USERNAME + ':' + process.env.DATA_API_PASSWORD
+  ).toString('base64'));
+
+  const res = await fetch(
+    `${process.env.LOCAL_DATA_API_URL}/posts/get-all-slugs`,
+    { headers }
+  );
+
+  const slugs = await res.json();
+
+  const languages = ['pl', 'ru', 'en'];
 
   const paths: { params: { postName: string; locale: string; }; }[] = [];
-  languages.forEach((lang) => {
-    posts.forEach((post) => {
+
+  languages.forEach((lang: string) => {
+    slugs.forEach((slug: string) => {
       paths.push({
-        params: { postName: post, locale: lang }
+        params: { postName: slug, locale: lang }
       });
     });
   });
@@ -183,7 +194,7 @@ export async function getStaticPaths() {
 }
 
 
-export async function getStaticProps({ params }: { params: any }) {
+export async function getStaticProps({ params }: { params: { locale: string; postName: string } }) {
   const { locale, postName } = params;
   const ns = ['common', 'components', 'pages', 'projects'];
 
@@ -194,9 +205,10 @@ export async function getStaticProps({ params }: { params: any }) {
   ).toString('base64'));
 
   const res = await fetch(
-    `${process.env.LOCAL_DATA_API_URL}/posts/${locale}/${postName}`,
+    `${process.env.LOCAL_DATA_API_URL}/posts/get-by-slug?language=${locale}&slug=${postName}`,
     { headers }
   );
+
   const post = await res.json();
 
   return { props: { post, locale, ...(await serverSideTranslations(locale, ns)) } };

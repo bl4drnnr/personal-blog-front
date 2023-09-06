@@ -164,7 +164,7 @@ const About = ({ locale }: AboutProps) => {
             </AboutParagraph>
             <SharingUl>
               {
-                Object.entries(t('pages:about.sharingKnowledge', { returnObjects: true }) as string)
+                Object.entries(t('pages:about.sharingKnowledge', { returnObjects: true }) as Array<string | object>)
                   .map(([key, value]) => (
                     <SharingLi
                       key={key}

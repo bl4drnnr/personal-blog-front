@@ -140,9 +140,9 @@ const Project = ({ project, locale }: ProjectProps) => {
             project.content
               .map((item, index) => (
                 <div key={index}>
-                  {typeof item === 'string' ? (
+                  {item.type === 'paragraph' ? (
                     <ProjectParagraph
-                      dangerouslySetInnerHTML={{ __html: item }}
+                      dangerouslySetInnerHTML={{ __html: item.content }}
                     />
                   ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (
                     <ProjectParagraph
@@ -179,16 +179,27 @@ const Project = ({ project, locale }: ProjectProps) => {
 };
 
 export async function getStaticPaths() {
-  // @ts-ignore
-  const languages = process.env.NEXT_PUBLIC_AVAILABLE_LANGUAGES.split(',');
-  // @ts-ignore
-  const projects = process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',');
+  const headers = new Headers();
+
+  headers.set('Authorization', 'Basic ' + Buffer.from(
+    process.env.DATA_API_USERNAME + ':' + process.env.DATA_API_PASSWORD
+  ).toString('base64'));
+
+  const res = await fetch(
+    `${process.env.LOCAL_DATA_API_URL}/projects/get-all-slugs`,
+    { headers }
+  );
+
+  const slugs = await res.json();
+
+  const languages = ['pl', 'ru', 'en'];
 
   const paths: { params: { projectName: string; locale: string; }; }[] = [];
-  languages.forEach((lang) => {
-    projects.forEach((project) => {
+
+  languages.forEach((lang: string) => {
+    slugs.forEach((slug: string) => {
       paths.push({
-        params: { projectName: project, locale: lang }
+        params: { projectName: slug, locale: lang }
       });
     });
   });
@@ -208,7 +219,7 @@ export async function getStaticProps({ params }: { params: any }) {
   ).toString('base64'));
 
   const res = await fetch(
-    `${process.env.LOCAL_DATA_API_URL}/projects/${locale}/${projectName}`,
+    `${process.env.LOCAL_DATA_API_URL}/projects/get-by-slug?language=${locale}&slug=${projectName}`,
     { headers }
   );
   const project = await res.json();

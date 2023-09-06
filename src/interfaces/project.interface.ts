@@ -32,6 +32,12 @@ interface ITitle {
   content: string;
 }
 
+interface IParagraph {
+  type: 'paragraph',
+  content: string;
+}
+
+
 export interface IProject {
   title: string;
   slug: string;
@@ -44,5 +50,5 @@ export interface IProject {
   techStack: Array<ITechStack>;
   projectPages: Array<IProjectPage>;
   toc: object;
-  content: Array<string | IPicture | IList | ICode | ITitle>;
+  content: Array<IParagraph | IPicture | IList | ICode | ITitle>;
 }

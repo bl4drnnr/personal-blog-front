@@ -26,6 +26,11 @@ interface ITitle {
   content: string;
 }
 
+interface IParagraph {
+  type: 'paragraph',
+  content: string;
+}
+
 export interface IPost {
   title: string;
   slug: string;
@@ -37,7 +42,7 @@ export interface IPost {
   intro: string;
   footer?: string;
   toc: object;
-  content: Array<string | IPicture | IList | ICode | ITitle>;
+  content: Array<IParagraph | IPicture | IList | ICode | ITitle>;
   references: Array<ILink>;
   createdAt: string;
   updatedAt: string;
