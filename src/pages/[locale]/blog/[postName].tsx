@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -12,8 +12,17 @@ import PostFooter from '@components/PostFooter/PostFooter.component';
 import { IPost } from '@interfaces/post.interface';
 import DefaultLayout from '@layouts/Default.layout';
 import {
+  getImageLink,
+  isItemCode,
+  isItemList,
+  isItemParagraph,
+  isItemPicture,
+  isItemTitle
+} from '@lib/checkType';
+import {
   ArticleBodyWrapper,
-  ArticleTitle, ImageContainer,
+  ArticleTitle,
+  ImageContainer,
   PostParagraph,
   TableOfContentsContainer,
   TableOfContentsTitle
@@ -34,51 +43,10 @@ const BlogPost = ({ locale, post }: PostProps) => {
     await router.push(`/${locale}${path}`);
   };
 
-  const [listRefs, setListRefs] = React.useState<RefObject<unknown>[]>([]);
-  const [refNames, setRefNames] = React.useState<Array<string>>([]);
-
-  const getRefByName = (refName: string | undefined): any => {
-    let matchingRef = null;
-    refNames.forEach((item, index) => {
-      if (item === refName && !refName.includes('.')) {
-        matchingRef = listRefs[index];
-      } else {
-        const splitRefName = refName?.split('.');
-        if (splitRefName && splitRefName[splitRefName.length - 1] === item) {
-          matchingRef = listRefs[index];
-        }
-      }
-    });
-    return matchingRef;
-  };
-
-  React.useEffect(() => {
-    // @ts-ignore
-    const availablePosts = process.env.NEXT_PUBLIC_AVAILABLE_POSTS.split(',');
-    if (!availablePosts.includes(post.slug)) handleRedirect('/404').then();
-
-    let quantityOfTitles = 0;
-    const allRefs: Array<string> = [];
-
-    post.content.forEach((item) => {
-      if (
-        typeof item !== 'string' &&
-        (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle')
-      ) {
-        quantityOfTitles += 1;
-        allRefs.push(item.content as string);
-      }
-    });
-
-    setListRefs(Array(quantityOfTitles).fill(null).map(() => React.createRef()));
-
-    setRefNames(allRefs);
-  }, []);
-
   return (
     <>
       <Head>
-        <title> | {post.title}</title>
+        <title>Mikhail Bahdashych | {post.title}</title>
         <meta name={'keywords'} content={post.tags} />
         <meta name={'description'} content={post.description} />
         <meta charSet={'utf-8'} />
@@ -111,37 +79,39 @@ const BlogPost = ({ locale, post }: PostProps) => {
             post.content
               .map((item, index) => (
                 <div key={index}>
-                  {item.type === 'paragraph' ? (
+                  {isItemParagraph(item) ? (
                     <PostParagraph
                       dangerouslySetInnerHTML={{ __html: item.content }}
                     />
-                  ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (
-                    <PostParagraph
-                      className={item.type}
-                      ref={getRefByName(item.content)}
-                    >{item.content}</PostParagraph>
-                  ) : (('lang' in item && 'content' in item) ? (
-                    <CodeHighlighter language={item.lang} code={item.content} />
-                  ) : ((item.type === 'list-bullet' || item.type === 'list-numeric') ? (
+                  ) : isItemTitle(item) ? (
+                    <PostParagraph className={item.type}>
+                      {item.content}
+                    </PostParagraph>
+                  ) : isItemCode(item) ? (
+                    <CodeHighlighter
+                      language={item.lang}
+                      code={item.content}
+                    />
+                  ) : isItemList(item) ? (
                     generateLists(item.items, locale, item.type, item.style)
-                  ) : (
-                    ((item.type === 'picture') ? (
-                      <ImageContainer className={`${item.width}`}>
+                  ) : isItemPicture(item) ? (
+                      <ImageContainer className={item.width}>
                         <Image
-                          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${post.slug}/${item.resource}`}
+                          src={getImageLink(item, post.slug)}
                           alt={item.resource as string}
                           className={'image'}
                           fill
                         />
                       </ImageContainer>
-                    ) : (<></>))
-                    )
-                  ))}
+                    ) : null
+                  }
                 </div>
               ))
           }
 
-          <TableOfContentsContainer className={`${locale === 'en' ? 'en' : 'non-en'} contact-and-references`}>
+          <TableOfContentsContainer
+            className={`${locale === 'en' ? 'en' : 'non-en'} contact-and-references`}
+          >
             {
               Object.entries(post.references).map(([key, value]) => (
                 <ul key={key}>

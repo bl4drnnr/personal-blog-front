@@ -113,7 +113,7 @@ export const ArticleBodyWrapper = styled.div`
     li:first-child {
       margin-top: 0.6em;
     }
-    ::before {
+    &::before {
       content: counters(item, ".") ". ";
       display: table-cell;
       padding-right: 0.6em;

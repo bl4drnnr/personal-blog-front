@@ -45,7 +45,8 @@
       "@api-client": ["src/services/api.client.ts"],
       "@api": ["src/api/api.ts"],
       "@exceptions/*": ["src/api/exceptions/*"],
-      "@exception-handler": ["src/api/ExceptionHandler.ts"]
+      "@exception-handler": ["src/api/ExceptionHandler.ts"],
+      "@enums/*": ["src/enums/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src"],

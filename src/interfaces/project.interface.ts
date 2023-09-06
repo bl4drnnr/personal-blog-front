@@ -1,42 +1,4 @@
-interface ITechStack {
-  src: string;
-  width: number;
-  height: number;
-}
-
-interface IProjectPage {
-  link: string;
-  text: string;
-}
-
-interface IPicture {
-  type: 'picture';
-  width: string;
-  resource: string;
-}
-
-interface IList {
-  type: 'list-numeric' | 'list-bullet';
-  items: Array<any>;
-  style: string;
-}
-
-interface ICode {
-  type: 'code';
-  lang: string;
-  content: string;
-}
-
-interface ITitle {
-  type: 'title' | 'subtitle' | 'subsubtitle';
-  content: string;
-}
-
-interface IParagraph {
-  type: 'paragraph',
-  content: string;
-}
-
+import { ICode, IList, IParagraph, IPicture, IProjectPage, ITechStack, ITitle } from '@interfaces/common-elems.interface';
 
 export interface IProject {
   title: string;

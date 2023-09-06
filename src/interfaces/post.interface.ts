@@ -1,35 +1,4 @@
-interface ILink {
-  name: string;
-  link: string;
-}
-
-interface IPicture {
-  type: 'picture';
-  width: string;
-  resource: string;
-}
-
-interface IList {
-  type: 'list-numeric' | 'list-bullet';
-  items: Array<any>;
-  style: string;
-}
-
-interface ICode {
-  type: 'code';
-  lang: string;
-  content: string;
-}
-
-interface ITitle {
-  type: 'title' | 'subtitle' | 'subsubtitle';
-  content: string;
-}
-
-interface IParagraph {
-  type: 'paragraph',
-  content: string;
-}
+import { ICode, ILink, IList, IParagraph, IPicture, ITitle } from '@interfaces/common-elems.interface';
 
 export interface IPost {
   title: string;

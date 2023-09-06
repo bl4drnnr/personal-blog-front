@@ -9,6 +9,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import CodeHighlighter from '@components/CodeHighlighter/CodeHighlighter.component';
 import { IProject } from '@interfaces/project.interface';
 import DefaultLayout from '@layouts/Default.layout';
+import { isItemCode, isItemList, isItemParagraph, isItemPicture, isItemTitle } from '@lib/checkType';
 import {
   Container,
   ImageContainer,
@@ -35,47 +36,6 @@ const Project = ({ project, locale }: ProjectProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const [listTocRefs, setListTocRefs] = React.useState<RefObject<unknown>[]>([]);
-  const [refNames, setRefNames] = React.useState<Array<string>>([]);
-
-  const getRefByName = (refName: string | undefined): any => {
-    let matchingRef = null;
-    refNames.forEach((item, index) => {
-      if (item === refName && !refName.includes('.')) {
-        matchingRef = listTocRefs[index];
-      } else {
-        const splitRefName = refName?.split('.');
-        if (splitRefName && splitRefName[splitRefName.length - 1] === item) {
-          matchingRef = listTocRefs[index];
-        }
-      }
-    });
-    return matchingRef;
-  };
-
-  React.useEffect(() => {
-    // @ts-ignore
-    const availableProjects = process.env.NEXT_PUBLIC_AVAILABLE_PROJECTS.split(',');
-    if (!availableProjects.includes(project.slug)) handleRedirect('/404').then();
-
-    let quantityOfTitles = 0;
-    const allRefs: Array<string> = [];
-
-    project.content.forEach((item) => {
-      if (
-        typeof item !== 'string' &&
-        (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle')
-      ) {
-        quantityOfTitles += 1;
-        allRefs.push(item.content as string);
-      }
-    });
-
-    setListTocRefs(Array(quantityOfTitles).fill(null).map(() => React.createRef()));
-
-    setRefNames(allRefs);
-  }, []);
-
   const handleRedirect = async (path: string) => {
     await router.push(`/${locale}${path}`);
   };
@@ -83,7 +43,7 @@ const Project = ({ project, locale }: ProjectProps) => {
   return (
     <>
       <Head>
-        <title> | {project.title}</title>
+        <title>Mikhail Bahdashcyh | {project.title}</title>
         <meta name={'keywords'} content={project.tags} />
         <meta name={'description'} content={project.description} />
         <meta charSet={'utf-8'} />
@@ -140,25 +100,23 @@ const Project = ({ project, locale }: ProjectProps) => {
             project.content
               .map((item, index) => (
                 <div key={index}>
-                  {item.type === 'paragraph' ? (
+                  {isItemParagraph(item) ? (
                     <ProjectParagraph
                       dangerouslySetInnerHTML={{ __html: item.content }}
                     />
-                  ) : (item.type === 'title' || item.type === 'subtitle' || item.type === 'subsubtitle') ? (
+                  ) : isItemTitle(item) ? (
                     <ProjectParagraph
                       className={item.type}
-                      ref={getRefByName(item.content)}
                     >{item.content}</ProjectParagraph>
-                  ) : (( 'lang' in item && 'content' in item ) ? (
+                  ) : isItemCode(item) ? (
                     <CodeHighlighter
                       language={item.lang}
                       code={item.content}
                     />
-                  ) : ((item.type === 'list-bullet' || item.type === 'list-numeric') ? (
+                  ) : isItemList(item) ? (
                     generateLists(item.items, locale, item.type, item.style)
-                  ) : (
-                    ((item.type === 'picture') ? (
-                      <ImageContainer className={`${item.width}`}>
+                  ) : isItemPicture(item) ? (
+                      <ImageContainer className={item.width}>
                         <Image
                           src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${project.slug}/${item.resource}`}
                           alt={item.resource as string}
@@ -166,9 +124,8 @@ const Project = ({ project, locale }: ProjectProps) => {
                           fill
                         />
                       </ImageContainer>
-                    ) : (<></>))
-                    )
-                  ))}
+                    ) : null
+                  }
                 </div>
               ))
           }
