@@ -42,6 +42,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@interfaces/*": ["src/interfaces/*"],
+      "@custom-types/*": ["src/types/*"],
       "@api-client": ["src/services/api.client.ts"],
       "@api": ["src/api/api.ts"],
       "@exceptions/*": ["src/api/exceptions/*"],

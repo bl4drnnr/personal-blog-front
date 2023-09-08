@@ -24,17 +24,6 @@ export const ProjectTitle = styled.h1`
   }
 `;
 
-export const ProjectsDescription = styled.p`
-  color: rgb(${(props) => props.theme.colors.textColor});
-  font-size: 24px;
-  font-weight: 100;
-  text-align: center;
-  
-  &.margins {
-    margin: 25px 0;
-  }
-`;
-
 export const FlexWrapper = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -125,7 +114,7 @@ export const TestimonialArticle = styled.article`
   transition: .2s;
   border: 1px solid rgba(${(props) => props.theme.colors.textColor}, .25);
 
-  :hover {
+  &:hover {
     border: 1px solid rgba(${(props) => props.theme.colors.primaryLight});
   }
   
@@ -198,7 +187,7 @@ export const FoundProjectWrapper = styled.div`
   cursor: pointer;
   transition: .2s;
 
-  :hover {
+  &:hover {
     border: 1px solid rgba(${(props) => props.theme.colors.primaryLight});
   }
 `;

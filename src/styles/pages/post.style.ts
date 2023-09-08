@@ -93,7 +93,7 @@ export const ArticleBodyWrapper = styled.div`
     transition: .2s;
     margin-left: 20px;
 
-    :hover {
+    &:hover {
       cursor: pointer;
     }
   }
@@ -107,12 +107,14 @@ export const ArticleBodyWrapper = styled.div`
     margin-bottom: 0.6em;
     transition: .2s;
 
-    :hover {
+    &:hover {
       cursor: pointer;
     }
+      
     li:first-child {
       margin-top: 0.6em;
     }
+      
     &::before {
       content: counters(item, ".") ". ";
       display: table-cell;

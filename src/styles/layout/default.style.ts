@@ -7,15 +7,18 @@ export const MainWrapper = styled.div`
   background: rgb(${(props) => props.theme.colors.lightBackground});
   
   .inline-link {
+    color: rgb(${(props) => props.theme.colors.primaryDark});
+    text-decoration: underline;
+    
     &.en {
       font-family: 'Charter', sans-serif;
     }
+    
     &.non-en {
       font-family: 'Crimson', serif;
     }
-    color: rgb(${(props) => props.theme.colors.primaryDark});
-    text-decoration: underline;
-    :hover {
+    
+    &:hover {
       cursor: pointer;
     }
   }

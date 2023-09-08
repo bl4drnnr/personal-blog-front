@@ -24,25 +24,15 @@ export const BlogPostsTitle = styled.h1`
   }
 `;
 
-export const BlogPostsDescription = styled.p`
-  color: rgb(${(props) => props.theme.colors.textColor});
-  font-size: 24px;
-  font-weight: 100;
-  text-align: center;
-  
-  &.margins {
-    margin: 25px 0;
-  }
-`;
-
 export const InputWrapper = styled.div`
-  width: 35%;
+  width: 45%;
   margin: 0 auto;
 
   @media only screen and (max-width: 780px) {
     width: 90%;
   }
 `;
+
 
 export const AllPostsWrapper = styled.div`
   width: 100%;
@@ -74,7 +64,7 @@ export const FoundPostWrapper = styled.div`
   cursor: pointer;
   transition: .2s;
 
-  :hover {
+  &:hover {
     border: 1px solid rgba(${(props) => props.theme.colors.primaryLight});
   }
 `;
@@ -104,7 +94,7 @@ export const TestimonialArticle = styled.article`
   transition: .2s;
   border: 1px solid rgba(${(props) => props.theme.colors.textColor}, .25);
 
-  :hover {
+  &:hover {
     border: 1px solid rgba(${(props) => props.theme.colors.primaryLight});
   }
 `;
@@ -137,10 +127,10 @@ export const SettingsWrapper = styled.div`
 
 export const ButtonWrapper = styled.div`
   width: 100%;
-  :nth-child(2) {
+  &:nth-child(2) {
     margin: 0 5px;
   }
-  :nth-child(3) {
+  &:nth-child(3) {
     margin-right: 5px;
   }
 `;

@@ -109,7 +109,7 @@ export const TimelineItemWrapper = styled.div`
   transition: .2s;
   border: 1px solid rgba(0, 0, 0, 0);
   
-  :hover {
+  &:hover {
     cursor: pointer;
     border: 1px solid rgba(${(props) => props.theme.colors.textColor}, .25);
   }
@@ -165,7 +165,7 @@ export const TestimonialArticle = styled.article`
   transition: .2s;
   border: 1px solid rgba(${(props) => props.theme.colors.textColor}, .25);
 
-  :hover {
+  &:hover {
     border: 1px solid rgba(${(props) => props.theme.colors.primaryLight});
   }
   

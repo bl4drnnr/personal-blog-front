@@ -2,10 +2,10 @@ import React from 'react';
 
 import { ApiClient } from '@api-client';
 import { ExceptionHandler } from '@exception-handler';
-import { IPost } from '@interfaces/post.interface';
+import { IPostPreview } from '@interfaces/post-preview.interface';
 
 interface IAllPosts {
-  rows: IPost[];
+  rows: IPostPreview[];
   count: number
 }
 

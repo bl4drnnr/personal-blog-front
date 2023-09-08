@@ -56,7 +56,8 @@ export const HrefLink = styled.a`
   font-family: 'Charter', sans-serif;
   color: rgb(${(props) => props.theme.colors.primaryDark});
   text-decoration: underline;
-  :hover {
+  
+  &:hover {
     cursor: pointer;
   }
 `;

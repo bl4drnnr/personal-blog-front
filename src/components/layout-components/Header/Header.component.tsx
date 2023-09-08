@@ -81,9 +81,9 @@ export const Header = ({ locale, translation }: HeaderProps) => {
               <MobileLink
                 onClick={() => handleRedirect('/blog')}
               >{translation('components:header.blog')}</MobileLink>
-              <MobileLink
-                onClick={() => handleRedirect('/projects')}
-              >{translation('components:header.projects')}</MobileLink>
+              {/*<MobileLink*/}
+              {/*  onClick={() => handleRedirect('/projects')}*/}
+              {/*>{translation('components:header.projects')}</MobileLink>*/}
               <MobileLink
                 onClick={() => handleRedirect('/about')}
               >{translation('components:header.about')}</MobileLink>
@@ -97,9 +97,9 @@ export const Header = ({ locale, translation }: HeaderProps) => {
         <Link
           onClick={() => handleRedirect('/blog')}
         >{translation('components:header.blog')}</Link>
-        <Link
-          onClick={() => handleRedirect('/projects')}
-        >{translation('components:header.projects')}</Link>
+        {/*<Link*/}
+        {/*  onClick={() => handleRedirect('/projects')}*/}
+        {/*>{translation('components:header.projects')}</Link>*/}
         <Link
           onClick={() => handleRedirect('/about')}
         >{translation('components:header.about')}</Link>

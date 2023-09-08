@@ -141,14 +141,19 @@ export async function getStaticPaths() {
     process.env.DATA_API_USERNAME + ':' + process.env.DATA_API_PASSWORD
   ).toString('base64'));
 
-  const res = await fetch(
+  const slugsRes = await fetch(
     `${process.env.LOCAL_DATA_API_URL}/posts/get-all-slugs`,
     { headers }
   );
 
-  const slugs = await res.json();
+  const slugs = await slugsRes.json();
 
-  const languages = ['pl', 'ru', 'en'];
+  const langRes = await fetch(
+    `${process.env.LOCAL_DATA_API_URL}/posts/get-available-languages`,
+    { headers }
+  );
+
+  const languages = await langRes.json();
 
   const paths: { params: { postName: string; locale: string; }; }[] = [];
 
