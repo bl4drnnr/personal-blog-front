@@ -32,8 +32,7 @@
       ],
       "@services/*": [
         "src/services/*",
-        "src/services/post/*",
-        "src/services/project/*"
+        "src/services/post/*"
       ],
       "@lib/*": ["src/lib/*"],
       "@i18config": ["next-i18next.config.js"],

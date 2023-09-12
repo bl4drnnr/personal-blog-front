@@ -11,11 +11,6 @@
     "description": "Here you will find the collection of knowledge that has been grabbed by me for the entire my career. Theory and practice. The best way to learn something is to start teach others, right? Well then, here you are!",
     "alexandriaLibrary": "My own Library of Alexandria"
   },
-  "projects": {
-    "title": "Projects",
-    "description": "The way I create",
-    "description2": "Here is the list of projects that have been created by me. There, you will find documentation, source code, general idea and/or my inspiration and implementation."
-  },
   "about": {
     "title": "About",
     "thanks": "Thank you!",

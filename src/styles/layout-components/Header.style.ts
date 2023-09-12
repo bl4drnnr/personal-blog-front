@@ -26,7 +26,7 @@ export const Box = styled.div`
 
 export const Link = styled.h3`
   color: rgba(${(props) => props.theme.colors.textColor});
-  font-family: "Charter", sans-serif;
+  font-family: 'Charter', sans-serif;
   font-weight: 100;
   transition: .2s;
   cursor: pointer;

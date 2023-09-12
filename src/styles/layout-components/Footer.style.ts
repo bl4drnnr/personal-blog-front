@@ -24,7 +24,7 @@ export const Box = styled.div`
 
 export const Text = styled.p`
   color: rgba(${(props) => props.theme.colors.textColor});
-  font-family: "Charter", sans-serif;
+  font-family: 'Charter', sans-serif;
   font-weight: 200;
   width: 100%;
 `;

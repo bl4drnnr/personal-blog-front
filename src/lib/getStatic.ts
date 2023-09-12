@@ -21,8 +21,7 @@ export async function getI18nProps(
     'pages',
     'components',
     'errors',
-    'common',
-    'projects'
+    'common'
   ]) {
   const locale = await ctx?.params?.locale || 'en';
 

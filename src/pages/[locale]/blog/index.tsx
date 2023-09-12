@@ -143,7 +143,6 @@ const Blog = ({ locale }: BlogProps) => {
         <title>{t('pages:home.name')} | {t('pages:blog.title')}</title>
       </Head>
       <DefaultLayout locale={locale} translation={t} loading={loading}>
-
         <AllPostsWrapper className={locale === 'en' ? 'en' : 'non-en'}>
           <InputWrapper>
             <BasicInput

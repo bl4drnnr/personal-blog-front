@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   &.en {
     p, li, ul {
-      font-family: "Charter", sans-serif;
+      font-family: 'Charter', sans-serif;
     }
   }
   &.non-en {
@@ -29,7 +29,7 @@ export const SharingUl = styled.ul`
 `;
 
 export const SharingLi = styled.li`
-  font-family: "Charter", sans-serif;
+  font-family: 'Charter', sans-serif;
   margin: 15px 0;
   color: rgb(${(props) => props.theme.colors.textColor});
   font-size: 1.1em;

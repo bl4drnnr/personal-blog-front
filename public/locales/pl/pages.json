@@ -11,11 +11,6 @@
     "description": "Tutaj znajdziesz zbiór wiedzy, którą zbierałem przez całą moją karierę. Teoria i praktyka. Najlepszym sposobem na nauczenie się czegoś jest rozpoczęcie nauczania innych, prawda? Jasne, po to tutaj jesteś!",
     "alexandriaLibrary": "Moja własna Biblioteka Aleksandryjska"
   },
-  "projects": {
-    "title": "Projekty",
-    "description": "Sposób, w jaki tworzę",
-    "description2": "Oto lista projektów, które zostały stworzone przeze mnie. Znajdziesz tam dokumentację, kod źródłowy, ogólny pomysł i/lub moje inspiracje i realizację."
-  },
   "about": {
     "title": "O blogu",
     "thanks": "Dziękuję!",

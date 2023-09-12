@@ -171,7 +171,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: { locale: string; postName: string } }) {
   const { locale, postName } = params;
-  const ns = ['common', 'components', 'pages', 'projects'];
+  const ns = ['common', 'components', 'pages'];
 
   const headers = new Headers();
 
