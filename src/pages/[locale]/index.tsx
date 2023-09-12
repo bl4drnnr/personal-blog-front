@@ -67,6 +67,19 @@ const Home = ({ locale }: HomeProps) => {
     });
   }, []);
 
+  const getLocale = (currentLocale: string) => {
+    switch (currentLocale) {
+      case 'en':
+        return 'en';
+      case 'ru':
+        return 'non-en';
+      case 'pl':
+        return 'non-en';
+      default:
+        return 'en';
+    }
+  };
+
   const handleRedirect = async (path: string) => {
     await router.push(`/${locale}${path}`);
   };
@@ -121,7 +134,7 @@ const Home = ({ locale }: HomeProps) => {
 
           </IntroTextBox>
 
-          <BlogPostsContainer className={locale === 'en' ? 'en' : 'non-en'}>
+          <BlogPostsContainer className={getLocale(locale)}>
             <InterestingPosts>
               {t('pages:home.interestingPosts')} <Image
                 className={'icon'}

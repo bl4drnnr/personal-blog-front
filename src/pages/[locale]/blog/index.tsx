@@ -54,6 +54,19 @@ const Blog = ({ locale }: BlogProps) => {
 
   const { loading, getPosts } = useGetPostsService();
 
+  const getLocale = (currentLocale: string) => {
+    switch (currentLocale) {
+      case 'en':
+        return 'en';
+      case 'ru':
+        return 'non-en';
+      case 'pl':
+        return 'non-en';
+      default:
+        return 'en';
+    }
+  };
+
   React.useEffect(() => {
     initFetchPosts({
       q: searchQuery,
@@ -143,7 +156,7 @@ const Blog = ({ locale }: BlogProps) => {
         <title>{t('pages:home.name')} | {t('pages:blog.title')}</title>
       </Head>
       <DefaultLayout locale={locale} translation={t} loading={loading}>
-        <AllPostsWrapper className={locale === 'en' ? 'en' : 'non-en'}>
+        <AllPostsWrapper className={getLocale(locale)}>
           <InputWrapper>
             <BasicInput
               locale={locale}

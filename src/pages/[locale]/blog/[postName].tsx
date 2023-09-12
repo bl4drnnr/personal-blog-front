@@ -39,6 +39,19 @@ const BlogPost = ({ locale, post }: PostProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 
+  const getLocale = (currentLocale: string) => {
+    switch (currentLocale) {
+      case 'en':
+        return 'en';
+      case 'ru':
+        return 'non-en';
+      case 'pl':
+        return 'non-en';
+      default:
+        return 'en';
+    }
+  };
+
   const handleRedirect = async (path: string) => {
     await router.push(`/${locale}${path}`);
   };
@@ -52,7 +65,7 @@ const BlogPost = ({ locale, post }: PostProps) => {
         <meta charSet={'utf-8'} />
       </Head>
       <DefaultLayout locale={locale} translation={t}>
-        <ArticleBodyWrapper className={locale === 'en' ? 'en' : 'non-en'}>
+        <ArticleBodyWrapper className={getLocale(locale)}>
           <ArticleTitle>
             <Typewriter
               onInit={(typewriter) => {
@@ -68,7 +81,7 @@ const BlogPost = ({ locale, post }: PostProps) => {
             {post.intro}
           </ArticleTitle>
 
-          <TableOfContentsContainer className={locale === 'en' ? 'en' : 'non-en'}>
+          <TableOfContentsContainer className={getLocale(locale)}>
             <TableOfContentsTitle>
               {t('common:tocTitle')}
             </TableOfContentsTitle>
@@ -110,7 +123,7 @@ const BlogPost = ({ locale, post }: PostProps) => {
           }
 
           <TableOfContentsContainer
-            className={`${locale === 'en' ? 'en' : 'non-en'} contact-and-references`}
+            className={`${getLocale(locale)} contact-and-references`}
           >
             {
               Object.entries(post.references).map(([key, value]) => (

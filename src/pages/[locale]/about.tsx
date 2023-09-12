@@ -111,6 +111,19 @@ const About = ({ locale }: AboutProps) => {
     );
   };
 
+  const getLocale = (currentLocale: string) => {
+    switch (currentLocale) {
+      case 'en':
+        return 'en';
+      case 'ru':
+        return 'non-en';
+      case 'pl':
+        return 'non-en';
+      default:
+        return 'en';
+    }
+  };
+
   const handleRedirect = async (path: string) => {
     await router.push(path);
   };
@@ -135,7 +148,7 @@ const About = ({ locale }: AboutProps) => {
         <meta name={'description'} content={'Hello there! My name is Mikhail Bahdashych and this is my personal blog - place where I share my thoughts and knowledge. Hope you will find something interesting.'} />
       </Head>
       <DefaultLayout locale={locale} translation={t}>
-        <Container className={locale === 'en' ? 'en' : 'non-en'}>
+        <Container className={getLocale(locale)}>
           <Box>
             <AboutTitle>
               <Typewriter
