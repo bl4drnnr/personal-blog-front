@@ -34,13 +34,12 @@
                   </div>
                 </div>
               </div>
-              <component-link
-                type="button"
+              <component-button-link
                 iconType="button"
                 buttonBg="#fff"
                 [title]="isFullscreen ? 'Close Fullscreen' : 'Fullscreen'"
                 (buttonClick)="toggleFullscreen()"
-              ></component-link>
+              ></component-button-link>
               <hr class="blog-detail-divider" />
               <ng-container *ngIf="toc.length > 0">
                 <nav class="blog-detail-toc">

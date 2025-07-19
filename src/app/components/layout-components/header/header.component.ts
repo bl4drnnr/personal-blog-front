@@ -8,9 +8,6 @@ import { HeaderLink } from '@interface/header-link.interface';
 })
 export class HeaderComponent {
   @Input() heroTitle = 'Welcome to LUCH';
-  @Input() ctaText = 'Get Started';
-  @Input() ctaLink = 'https://webflow.com/templates/designers/valdis-zhvaginsh';
-  @Input() ctaTarget = '_blank';
   @Input() navigationLinks: HeaderLink[] = [
     { title: 'Home', link: '/home' },
     { title: 'Projects', link: '/projects' },

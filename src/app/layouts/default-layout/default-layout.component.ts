@@ -20,6 +20,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
   @Input() showHomePageLink: boolean = false;
   @Input() hideScrollProgressBar: boolean = false;
   @Input() showHeader: boolean = true;
+  @Input() showFooter: boolean = true;
   @Input() preventPicChange: boolean = false;
 
   scrollProgress = 0;

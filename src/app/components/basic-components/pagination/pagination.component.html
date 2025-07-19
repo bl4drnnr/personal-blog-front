@@ -1,21 +1,21 @@
 <div class="pagination-container">
   <div class="pagination-line"></div>
   <div class="pagination-buttons">
-    <component-link
-      [link]="'#'"
+    <component-button-link
+      [buttonBg]="'#fff'"
       [title]="'Previous'"
       textPosition="left"
       iconType="button"
-      (click)="prevPage(); $event.preventDefault()"
+      (buttonClick)="prevPage()"
       [class.disabled]="currentPage === 1">
-    </component-link>
-    <component-link
-      [link]="'#'"
+    </component-button-link>
+    <component-button-link
+    [buttonBg]="'#fff'"
       [title]="'Next'"
       textPosition="right"
       iconType="button"
-      (click)="nextPage(); $event.preventDefault()"
+      (buttonClick)="nextPage()"
       [class.disabled]="currentPage === totalPages">
-    </component-link>
+    </component-button-link>
   </div>
 </div> 

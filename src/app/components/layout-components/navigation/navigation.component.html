@@ -131,7 +131,7 @@
         <h1>{{ heroTitle }}</h1>
         <p *ngIf="heroDesc" class="row-hero-desc">{{ heroDesc }}</p>
         <div *ngIf="showHomePageLink" class="home-page-link-wrapper">
-          <component-link 
+          <component-link-block 
             [link]="'/home'" 
             [title]="'Back Home'" 
             textPosition="left" 

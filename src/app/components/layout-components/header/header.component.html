@@ -16,7 +16,7 @@
     </div>
     <div data-w-id="hero-button-animation" class="row-bg-main-wrapper">
       <div class="hero-button-wrapper">
-        <a [href]="ctaLink" [target]="ctaTarget" class="hero-button">{{ ctaText }}</a>
+        <a href="/siteflow" target="_self" class="hero-button">get started</a>
       </div>
       <div class="row-bg-main-lines">
         <div class="row-bg-main-line-v star-line-1"></div>
@@ -28,22 +28,22 @@
     <div class="hero-text-wrapper">
       <div class="row-text-wrapper row-text-wrapper-bottom">
         <nav class="button-wrapper button-wrapper-grid">
-          <component-link
+          <component-link-block
             *ngFor="let link of navigationLinks"
             [link]="link.link"
             [title]="link.title"
             textPosition="right"
             iconType="button">
-          </component-link>
+          </component-link-block>
         </nav>
         <div class="link-wrapper link-wrapper-alt">
-          <component-link
+          <component-link-block
             *ngFor="let link of legalLinks"
             [link]="link.link"
             [title]="link.title"
             textPosition="left"
             iconType="link">
-          </component-link>
+          </component-link-block>
         </div>
       </div>
     </div>

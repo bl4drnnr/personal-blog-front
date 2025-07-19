@@ -46,3 +46,7 @@ package-lock.json
 .angular/
 articles-slugs.txt
 .env.*
+
+.claude/
+CLAUDE.md
+mikhails-marvelous-site-a5eede.webflow/

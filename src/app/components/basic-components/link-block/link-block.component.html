@@ -1,5 +1,4 @@
 <a 
-  *ngIf="type === 'link'"
   [href]="link" 
   class="w-inline-block" 
   [ngClass]="iconType === 'button' ? 'button-link' : 'link-block'"
@@ -19,23 +18,3 @@
     <p>{{ title }}</p>
   </ng-container>
 </a>
-<button
-  *ngIf="type === 'button'"
-  type="button"
-  class="w-inline-block button-link"
-  (click)="onClick($event)"
-  [ngStyle]="buttonBg ? { 'background': buttonBg } : {}"
->
-  <ng-container *ngIf="textPosition === 'left'">
-    <p>{{ title }}</p>
-  </ng-container>
-  <div 
-    *ngIf="iconType !== 'none'"
-    class="button-icon-wrapper"
-  >
-    <div class="button-icon-circle"></div>
-  </div>
-  <ng-container *ngIf="textPosition === 'right'">
-    <p>{{ title }}</p>
-  </ng-container>
-</button>

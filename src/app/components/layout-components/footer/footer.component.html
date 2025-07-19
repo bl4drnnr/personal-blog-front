@@ -7,7 +7,7 @@
       </div>
       <div class="row-bg-main-wrapper">
         <div class="hero-button-wrapper">
-          <a href="https://webflow.com/templates/designers/valdis-zhvaginsh" target="_blank" class="hero-button w-button">get started</a>
+          <a href="/siteflow" class="hero-button w-button">get started</a>
         </div>
         <div class="row-bg-main-lines">
           <div class="row-bg-main-line-v star-line-1"></div>
@@ -19,22 +19,22 @@
       <div class="hero-text-wrapper">
         <div class="row-text-wrapper row-text-wrapper-footer">
           <nav class="button-wrapper button-wrapper-grid">
-            <component-link
+            <component-link-block
               *ngFor="let link of footerNavigationLinks"
               [link]="link.link"
               [title]="link.title"
               textPosition="right"
               iconType="button">
-            </component-link>
+            </component-link-block>
           </nav>
           <div class="link-wrapper link-wrapper-alt">
-            <component-link
+            <component-link-block
               *ngFor="let link of footerLegalLinks"
               [link]="link.link"
               [title]="link.title"
               textPosition="left"
               iconType="link">
-            </component-link>
+            </component-link-block>
           </div>
         </div>
       </div>

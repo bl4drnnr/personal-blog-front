@@ -26,7 +26,7 @@
   margin-top: 1rem;
 }
 
-.pagination-buttons component-link.disabled {
+.pagination-buttons component-button-link.disabled {
   opacity: 0.5;
   pointer-events: none;
 }
@@ -39,7 +39,7 @@
   .pagination-buttons {
     margin-top: 0.5rem;
   }
-  .pagination-buttons component-link {
+  .pagination-buttons component-button-link {
     padding: 0.5rem 0.5rem;
   }
 } 
