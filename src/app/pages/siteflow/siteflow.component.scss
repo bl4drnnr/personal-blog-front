@@ -1,271 +1,135 @@
-@import './animations.scss';\n\n// Siteflow Component Styles - Enhanced with Webflow animations
-.flow-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 0;
-  width: 100%;
+#siteflow-homepage-tile, 
+#siteflow-style-guide-tile {
+  grid-area: span 2 / span 1 / span 2 / span 1;
+}
+
+#siteflow-siteflow-tile {
+  grid-area: span 1 / span 1 / span 1 / span 1;
 }
 
 .flow-item-wrapper {
-  position: relative;
-  width: 100%;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease-out forwards;
+  
+  &[data-delay="0"] { animation-delay: 0ms; }
+  &[data-delay="100"] { animation-delay: 100ms; }
+  &[data-delay="200"] { animation-delay: 200ms; }
+  &[data-delay="300"] { animation-delay: 300ms; }
+  &[data-delay="400"] { animation-delay: 400ms; }
+  &[data-delay="500"] { animation-delay: 500ms; }
+  &[data-delay="600"] { animation-delay: 600ms; }
+  &[data-delay="700"] { animation-delay: 700ms; }
+  &[data-delay="800"] { animation-delay: 800ms; }
+  &[data-delay="900"] { animation-delay: 900ms; }
+  &[data-delay="1000"] { animation-delay: 1000ms; }
+  &[data-delay="1100"] { animation-delay: 1100ms; }
+  &[data-delay="1200"] { animation-delay: 1200ms; }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .flow-item {
-  position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 2rem;
-  transition: box-shadow 0.2s ease-out, transform 0.3s ease, border-color 0.2s ease-out;
-  overflow: hidden;
-  min-height: 200px;
-  width: 100%;
-  height: 100%;
+  background-color: white;
+  color: var(--colors-global--primary-color);
+  border-radius: var(--border-radii-global--border-radius-3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   cursor: pointer;
+  position: relative;
   
   &:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.3), 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.15);
-    border-color: rgba(255, 255, 255, 0.2);
     
     .flow-overlay {
       opacity: 1;
     }
-    
-    .flow-scroll {
-      transform: scaleX(1);
-    }
-    
-    .link-flow {
-      color: rgba(255, 255, 255, 0.9);
-      letter-spacing: 0.05em;
-    }
   }
-  
-  &.flow-item-primary {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  &.flow-item-secondary {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-    border-color: rgba(255, 255, 255, 0.15);
-  }
-  
-  &.flow-item-primary-shadow {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-}
-
-.flow-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  text-decoration: none;
-  display: block;
 }
 
 .flow-icon-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  
-  &.flow-icon-wrapper-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-  
-  &.flow-icon-wrapper-tetriary {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  }
-  
-  &.flow-icon-wrapper-secondary-alt {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  }
+  flex-shrink: 0;
+  background-color: var(--colors-global--primary-color);
+  z-index: 5;
+  pointer-events: none;
 }
 
 .flow-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  .icon-image {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
-  }
+  width: 14px;
+  height: 14px;
 }
 
-.link-flow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  font-family: 'Inter', sans-serif;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.75rem;
-  letter-spacing: 0.0238em;
-  text-transform: uppercase;
-  font-weight: 500;
-  line-height: 1;
-  transition: color 0.2s ease-out, letter-spacing 0.2s ease-out;
-  
-  &.link-flow-tetriary {
-    .flow-link-icon-line {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    }
-  }
+.icon-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
-.flow-link-text {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
+
+.flow-link {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  text-decoration: none;
 }
 
-.flow-link-icon-wrapper {
-  display: flex;
-  align-items: center;
+.flow-grid {
+  padding: 1.5rem;
+  background-color: var(--colors-global--body-color);
+  min-height: 100vh;
 }
 
-.flow-link-icon-line {
-  width: 16px;
-  height: 2px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 1px;
-  transition: width 0.2s ease-out, background 0.2s ease-out;
-  
-  &.flow-link-icon-line-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-  
-  &.flow-link-icon-line-tertiary {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  }
+.row-content-title {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 5;
+  pointer-events: none;
 }
 
-.row-heading-small {
+.tile-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #ffffff;
-  margin: 0 0 0.5rem 0;
-}
-
-.row-text-description {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--colors-global--primary-color);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
-.nav-link-tag {
-  display: inline-block;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: #ffffff;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-  animation: pulseGlow 2s ease-in-out infinite alternate;
-  box-shadow: 0 0 10px rgba(240, 147, 251, 0.3);
+
+.flow-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: var(--border-radii-global--border-radius-3);
 }
 
 .flow-scroll {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s ease-out;
-  z-index: 4;
-}
-
-.flow-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
+  background: rgba(255, 255, 255, 0.1);
   opacity: 0;
-  transition: opacity 0.3s ease-out;
-  pointer-events: none;
-  z-index: 2;
+  transition: opacity 0.3s ease;
 }
-
-// Enhanced responsive adjustments
-@media (max-width: 992px) {
-  .flow-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
-  
-  .flow-item {
-    padding: 1.75rem;
-    min-height: 180px;
-    
-    &:hover {
-      transform: translateY(-1px);
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .flow-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1.5rem 0;
-  }
-  
-  .flow-item {
-    padding: 1.5rem;
-    min-height: 160px;
-    border-radius: 12px;
-  }
-  
-  .row-heading-small {
-    font-size: 1.125rem;
-  }
-  
-  .link-flow {
-    font-size: 0.7rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .flow-grid {
-    gap: 0.75rem;
-  }
-  
-  .flow-item {
-    padding: 1.25rem;
-    min-height: 140px;
-    
-    &:hover {
-      transform: none;
-    }
-  }
-  
-  .flow-icon-wrapper {
-    width: 40px;
-    height: 40px;
-    
-    .icon-image {
-      width: 20px;
-      height: 20px;
-    }
-  }
-} 

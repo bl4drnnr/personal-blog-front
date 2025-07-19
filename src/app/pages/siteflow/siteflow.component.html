@@ -8,67 +8,29 @@
   [showHeader]="false"
   [preventPicChange]="true"
 >
-  <section id="flow" class="section section-scroll">
-    <div class="row-content">
-      <div class="row-bg-global">
-        <div class="row-bg row-bg-body"></div>
-      </div>
-      <div class="flow-grid">
-        <div 
-          *ngFor="let tile of siteflowTiles; let i = index" 
-          class="flow-item-wrapper"
-          [id]="'w-node-flow-' + i"
-        >
-          <div class="flow-item" 
-               [class.flow-item-primary]="tile.isPrimary"
-               [class.flow-item-secondary]="tile.isSecondary"
-               [class.flow-item-primary-shadow]="tile.isPrimaryShadow"
-               [attr.data-tile-index]="i">
-            <a [routerLink]="tile.link" class="flow-link" role="button" [attr.aria-label]="'Navigate to ' + tile.title"></a>
-            <div class="row-content">
-              <div class="row-text-wrapper row-text-wrapper-bento">
-                <div class="flow-icon-wrapper" 
-                     [class.flow-icon-wrapper-gradient]="!tile.isPrimary && !tile.isSecondary && !tile.isPrimaryShadow"
-                     [class.flow-icon-wrapper-tetriary]="tile.isPrimary || tile.isPrimaryShadow"
-                     [class.flow-icon-wrapper-secondary-alt]="tile.isSecondary">
-                  <div class="flow-icon">
-                    <img [src]="'assets/images/' + tile.icon" 
-                         loading="lazy" 
-                         [alt]="tile.iconAlt" 
-                         class="icon-image"
-                         width="24"
-                         height="24">
-                  </div>
-                </div>
-                <div class="link-flow" 
-                     [class.link-flow-tetriary]="tile.isPrimary || tile.isPrimaryShadow">
-                  <div class="flow-link-text-wrapper">
-                    <div class="flow-link-text">
-                      <p>Open</p>
-                    </div>
-                  </div>
-                  <div class="flow-link-icon-wrapper">
-                    <div class="flow-link-icon-line" 
-                         [class.flow-link-icon-line-primary]="!tile.isPrimary && !tile.isPrimaryShadow"
-                         [class.flow-link-icon-line-tertiary]="tile.isPrimary || tile.isPrimaryShadow"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="row-text-max row-text-max-5">
-                <div class="row-text-wrapper">
-                  <div class="row-text">
-                    <p class="row-heading row-heading-small">{{ tile.title }}</p>
-                    <p *ngIf="tile.description" class="row-text-description">{{ tile.description }}</p>
-                    <div *ngIf="tile.tag" class="nav-link-tag">{{ tile.tag }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flow-scroll"></div>
-            <div class="flow-overlay"></div>
+  <div class="flow-grid flow-grid-siteflow">
+    <div 
+      class="flow-item-wrapper" 
+      *ngFor="let tile of siteflowTiles; let i = index"
+      [attr.data-delay]="i * 100"
+      [id]="getFlowItemId(i)"
+    >
+      <div class="flow-item">
+        <a [routerLink]="tile.link" class="flow-link"></a>
+        
+        <div class="flow-icon-wrapper">
+          <div class="flow-icon">
+            <img [src]="'assets/images/' + tile.icon" [alt]="tile.iconAlt" class="icon-image" />
           </div>
         </div>
+        
+        <div class="row-content-title">
+          <h3 class="tile-title">{{ tile.title }}</h3>
+        </div>
+        
+        <div class="flow-scroll"></div>
+        <div class="flow-overlay"></div>
       </div>
     </div>
-  </section>
+  </div>
 </default-layout> 
