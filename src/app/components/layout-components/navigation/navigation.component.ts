@@ -87,7 +87,11 @@ export class NavigationComponent {
   }
 
   get isFooterBackgroundActive(): boolean {
-    return this.isFooterReached && !this.hideScrollProgressBar && !this.preventPicChange;
+    return (
+      this.isFooterReached &&
+      !this.hideScrollProgressBar &&
+      !this.preventPicChange
+    );
   }
 
   scrollToTop(): void {
