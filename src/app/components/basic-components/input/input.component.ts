@@ -1,19 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'basic-input',
+  selector: 'component-input',
   templateUrl: './input.component.html',
-  styleUrl: './input.component.scss'
+  styleUrls: ['./input.component.scss']
 })
 export class InputComponent {
-  @Input() label: string;
-  @Input() type = 'text';
-  @Input() placeholder: string;
-  @Input() value: string;
-
+  @Input() placeholder: string = 'Search projects...';
+  @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>();
 
-  onInput() {
+  onInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.value = input.value;
     this.valueChange.emit(this.value);
   }
 }

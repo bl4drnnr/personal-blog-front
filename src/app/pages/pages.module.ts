@@ -1,81 +1,56 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from '@pages/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentsModule } from '@components/components.module';
-import { PageNotFoundComponent } from '@pages/page-not-found/page-not-found.component';
 import { LayoutsModule } from '@layouts/layouts.module';
-import { AboutComponent } from '@pages/about/about.component';
-import { ContactComponent } from '@pages/contact/contact.component';
-import { PrivacyPolicyComponent } from '@pages/policies/privacy-policy/privacy-policy.component';
-import { TacComponent } from '@pages/policies/tac/tac.component';
-import { ArticleComponent } from '@pages/article/article.component';
-import { CategoryComponent } from '@pages/category/category.component';
+import { HomeComponent } from '@pages/home/home.component';
 import { BlogComponent } from '@pages/blog/blog.component';
-import { NewslettersComponent } from './newsletters/newsletters.component';
+import { BlogDetailComponent } from '@pages/blog-detail/blog-detail.component';
+import { ProjectsComponent } from '@pages/projects/projects.component';
+import { ProjectDetailComponent } from '@pages/project-detail/project-detail.component';
+import { ContactComponent } from '@pages/contact/contact.component';
+import { NotFoundComponent } from '@pages/not-found/not-found.component';
+import { SubscribeComponent } from '@pages/subscribe/subscribe.component';
+import { SiteflowComponent } from '@pages/siteflow/siteflow.component';
+import { StyleGuideComponent } from '@pages/legal/style-guide.component';
+import { LicensesComponent } from '@pages/legal/licenses.component';
+import { ChangelogComponent } from '@pages/legal/changelog.component';
+import { InstructionsComponent } from '@pages/legal/instructions.component';
+import { AboutMeComponent } from '@pages/about-me/about-me.component';
 
 const components: any = [
   HomeComponent,
-  PageNotFoundComponent,
-  AboutComponent,
-  ContactComponent,
-  PrivacyPolicyComponent,
-  TacComponent,
-  ArticleComponent,
-  CategoryComponent,
   BlogComponent,
-  NewslettersComponent
+  BlogDetailComponent,
+  ProjectsComponent,
+  ProjectDetailComponent,
+  ContactComponent,
+  NotFoundComponent,
+  SubscribeComponent,
+  SiteflowComponent,
+  StyleGuideComponent,
+  LicensesComponent,
+  ChangelogComponent,
+  InstructionsComponent,
+  AboutMeComponent
 ];
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'home',
-    redirectTo: ''
-  },
-  {
-    path: 'index',
-    redirectTo: ''
-  },
-  {
-    path: 'about',
-    component: AboutComponent
-  },
-  {
-    path: 'contact',
-    component: ContactComponent
-  },
-  {
-    path: 'policies/privacy-policy',
-    component: PrivacyPolicyComponent
-  },
-  {
-    path: 'policies/terms-and-conditions',
-    component: TacComponent
-  },
-  {
-    path: 'article/:slug',
-    component: ArticleComponent
-  },
-  {
-    path: 'category/:category',
-    component: CategoryComponent
-  },
-  {
-    path: 'blog',
-    component: BlogComponent
-  },
-  {
-    path: 'newsletters/:action/:newslettersId',
-    component: NewslettersComponent
-  },
-  {
-    path: '**',
-    component: PageNotFoundComponent
-  }
+  { path: '', component: HomeComponent },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
+  { path: 'blog', component: BlogComponent },
+  { path: 'blog/:slug', component: BlogDetailComponent },
+  { path: 'projects', component: ProjectsComponent },
+  { path: 'projects/:slug', component: ProjectDetailComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'subscribe', component: SubscribeComponent },
+  { path: 'siteflow', component: SiteflowComponent },
+  { path: 'legal/style-guide', component: StyleGuideComponent },
+  { path: 'legal/licenses', component: LicensesComponent },
+  { path: 'legal/changelog', component: ChangelogComponent },
+  { path: 'legal/instructions', component: InstructionsComponent },
+  { path: 'about-me', component: AboutMeComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

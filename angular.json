@@ -3,43 +3,21 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bahdashych-on-security-front": {
+    "personal-blog-front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
+          "style": "scss"
         }
       },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "i18n": {
-        "sourceLocale": {
-          "code": "en"
-        },
-        "locales": {
-          "pl": {
-            "translation": "src/locale/messages.pl.xlf",
-            "baseHref": "/pl/"
-          },
-          "ru": {
-            "translation": "src/locale/messages.ru.xlf",
-            "baseHref": "/ru/"
-          }
-        }
-      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/bahdashych-on-security-front",
+            "outputPath": "dist/personal-blog-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -51,66 +29,31 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["src/libs/styles"]
-            },
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": {
-              "routesFile": "articles-slugs.txt"
-            },
-            "ssr": {
-              "entry": "server.ts"
-            },
-            "localize": true,
-            "i18nMissingTranslation": "warning",
-            "i18nDuplicateTranslation": "warning"
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/app/environments/environment.development.ts",
-                  "with": "src/app/environments/environment.production.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": false,
-              "aot": true,
-              "progress": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2mb",
-                  "maximumError": "3mb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "localize": [
-                "en"
-              ],
-              "baseHref": "/en/",
-              "fileReplacements": [
-                {
-                  "replace": "src/app/environments/environment.production.ts",
-                  "with": "src/app/environments/environment.development.ts"
-                }
-              ]
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -119,24 +62,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "bahdashych-on-security-front:build:production"
+              "buildTarget": "personal-blog-front:build:production"
             },
             "development": {
-              "buildTarget": "bahdashych-on-security-front:build:development"
+              "buildTarget": "personal-blog-front:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
+          "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "bahdashych-on-security-front:build",
-            "format": "xlf2",
-            "outputPath": "src/locale",
-            "targetFiles": [
-              "messages.pl.xlf",
-              "messages.ru.xlf"
-            ]
+            "buildTarget": "personal-blog-front:build"
           }
         },
         "test": {

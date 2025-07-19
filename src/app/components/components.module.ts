@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { PagesComponentsModule } from '@components/pages-components.module';
-import { BasicComponentsModule } from '@components/basic-components.module';
-import { LayoutComponentsModule } from '@components/layout-components.module';
+import { BasicComponentsModule } from '@components/basic-components/basic-components.module';
+import { LayoutComponentsModule } from '@components/layout-components/layout-components.module';
+import { PagesComponentsModule } from '@components/pages-components/pages-components.module';
 
 @NgModule({
-  exports: [
-    PagesComponentsModule,
+  imports: [
     BasicComponentsModule,
-    LayoutComponentsModule
+    LayoutComponentsModule,
+    PagesComponentsModule
   ],
-  imports: [CommonModule, NgOptimizedImage],
-  declarations: []
+  exports: [
+    BasicComponentsModule,
+    LayoutComponentsModule,
+    PagesComponentsModule
+  ]
 })
 export class ComponentsModule {}

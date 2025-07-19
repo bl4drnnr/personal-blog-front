@@ -1,469 +1,190 @@
-@import 'variables';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Inter+Tight:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap');
 
-:root {
-  --background: #1a1a1a;
-  --main-font: Montserrat, sans-serif;
-  --secondary-font: "Roboto Mono", sans-serif;
-  --lines: #727272;
-  --standard-heading: 1rem;
-  --standard-subheading: .75rem;
-  --dividers: rgba(255, 255, 255, .07);
-  --button: rgba(255, 255, 255, .6);
+/* Import the Webflow CSS */
+@import 'assets/normalize.css';
+@import 'assets/webflow.css';
+@import 'assets/styles.css';
+@import 'highlight.js/styles/github.css';
+
+/* Angular-specific styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background-color: var(--background);
-  color: #333;
-  font-size: .75vw;
-  line-height: 20px;
-  padding: 0;
-  margin: 0;
+  font-family: 'Inter Tight', sans-serif;
+  background-color: #f4f4f4;
+  color: #212121;
+  line-height: 1.333;
+  letter-spacing: -0.0178em;
 }
 
-h1 {
-  font-family: Montserrat, sans-serif;
-  color: #fff;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.5;
+/* Angular router outlet styles */
+router-outlet {
+  display: block;
 }
 
-h2 {
-  color: #fff;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-family: Montserrat, sans-serif;
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 1.5;
+/* Component styles */
+app-navigation {
+  display: block;
 }
 
-h3 {
-  color: #fff;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-family: Montserrat, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-h4 {
-  color: #fff;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-family: Montserrat, sans-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-h5 {
-  color: #fff;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-family: Montserrat, sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-h6 {
-  color: #fff;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-family: Montserrat, sans-serif;
-  font-size: .75rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-p {
-  font-family: var(--secondary-font), sans-serif;
-  color: #cacaca;
-  margin-bottom: 10px;
-  font-size: .75rem;
-  line-height: 1.5;
-}
-
-a {
-  border-bottom: 1px solid var(--lines);
-  color: #fff;
-  font-family: Roboto Mono, sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  text-decoration: none;
-  transition: all .35s;
-
-  &:hover {
-    border-bottom-color: #fff;
-  }
-}
-
-ul {
-  color: #fff;
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding-left: 40px;
-  font-family: Roboto Mono, sans-serif;
-  font-size: 1em;
-}
-
-ol {
-  color: #fff;
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding-left: 40px;
-  font-family: Roboto Mono, sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-li {
-  color: #fff;
-  font-family: Roboto Mono, sans-serif;
-  font-size: 1rem;
-}
-
-blockquote {
-  color: #fff;
-  border-left: 5px solid #e2e2e2;
-  margin-bottom: 10px;
-  padding: 10px 20px;
-  font-family: Roboto Mono, sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.article-picture {
-  display: flex;
-  justify-content: center;
-
-  img {
-    max-width: 60%;
-  }
-}
-
-.heading-xxl {
-  text-align: left;
-  width: 75%;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: Montserrat, sans-serif;
-  font-size: 3rem;
-  font-weight: 400;
-  line-height: 1;
-
-  @media screen and (max-width: 479px) {
-    width: 100%;
-  }
-
-  &.not-found-page,
-  &.newsletters-page {
-    text-align: center;
-    font-size: 12em;
-    font-weight: 600;
-
-    @media screen and (max-width: 991px) {
-      width: 100%;
-    }
-
-    @media screen and (max-width: 767px) {
-      font-size: 8em;
-    }
-  }
-}
-
-.w-input {
+app-footer {
   display: block;
   width: 100%;
-  height: 38px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #333333;
-  vertical-align: middle;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
 }
 
-.w-input:-moz-placeholder {
-  color: #999;
+/* Utility classes */
+.w--current {
+  color: var(--colors-global--primary-color) !important;
 }
 
-.w-input::-moz-placeholder {
-  color: #999;
-  opacity: 1;
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.w-input::-webkit-input-placeholder {
-  color: #999;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.w-input:focus {
-  border-color: #3898EC;
-  outline: 0;
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
 }
 
-.w-input[disabled],
-.w-input[readonly],
-fieldset[disabled] .w-input {
-  cursor: not-allowed;
+@media (min-width: 769px) {
+  .hide-desktop {
+    display: none !important;
+  }
 }
 
-.w-input[disabled]:not(.w-input-disabled),
-.w-input[readonly],
-fieldset[disabled]:not(.w-input-disabled) .w-input {
-  background-color: #eeeeee;
+/* Custom marquee animations for Angular */
+/* Marquee animations for the carousel component */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-.w-dyn-empty {
-  padding: 10px;
-  background-color: #dddddd;
+@keyframes marquee-scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.message {
-  font-family: var(--secondary-font), sans-serif;
-  font-size: var(--standard-subheading);
+/* Handle the reverse carousel attribute */
+[data-carousel-horizontal="reverse"] {
+  animation: marquee-reverse 20s linear infinite;
 }
 
-.w-inline-block {
-  max-width: 100%;
-  display: inline-block;
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-.w-form {
-  margin: 0 0 15px;
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.w-button {
-  display: inline-block;
-  padding: 9px 15px;
-  background-color: #3898EC;
-  color: white;
-  border: 0;
-  line-height: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  border-radius: 0;
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.hero-section {
-  display: flex;
+/* Ensure marquee text wrappers are properly spaced */
+.marquee-text-wrapper {
+  flex-shrink: 0;
+  margin-right: 2rem;
+}
+
+/* Make sure the marquee container doesn't clip the animation */
+.marquee-component {
   overflow: hidden;
-  height: 35vh;
-  min-height: 35vh;
-  padding: 5vw 5vw 2.5vw;
-  justify-content: flex-start;
-  align-items: flex-end;
-
-  @media screen and (max-width: 991px) {
-    height: 70vh;
-  }
-
-  @media screen and (max-width: 479px) {
-    padding-bottom: 5vw;
-  }
 }
 
-.hero-content-wrapper {
-  align-items: flex-start;
-  width: 100%;
-  display: flex;
-
-  @media screen and (max-width: 991px) {
-    flex-direction: column;
-  }
-}
-
-.left-hero-section {
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 50vw;
-  display: flex;
-
-  @media screen and (max-width: 991px) {
-    width: 100%;
-  }
-}
-
-.right-hero-section {
-  flex-direction: column;
-  align-items: flex-start;
-  width: 50vw;
-  display: flex;
-
-  @media screen and (max-width: 991px) {
-    width: 100%;
-  }
-}
-
-.bold-text-6 {
-  font-family: Roboto Mono, sans-serif;
-  font-weight: 300;
-  line-height: 20px;
-}
-
-.italic-text-2 {
-  font-size: var(--standard-heading);
-}
-
-.intro-paragraph {
-  font-size: var(--standard-subheading);
-  margin: 0;
-  padding-left: 0;
-  padding-right: 0;
-  font-weight: 400;
-
-  @media screen and (max-width: 991px) {
-    font-size: var(--standard-subheading);
-    text-align: right;
-    justify-content: flex-end;
-    width: 80%;
-    display: flex;
-  }
-
-  @media screen and (max-width: 767px) {
-    font-size: var(--standard-subheading);
-    width: 90%;
-  }
-
-  @media screen and (max-width: 479px) {
-    font-size: var(--standard-subheading);
-    width: 90%;
-    margin-bottom: 1em;
-
-    &.inhouse {
-      text-align: left;
-    }
-  }
-}
-
-.divider {
-  background-color: rgba(255, 255, 255, .07);
-  height: .5px;
-  margin-top: 2.5vw;
-  margin-bottom: 2.5vw;
-}
-
-.intro-wrapper {
-  width: 100%;
-
-  @media screen and (max-width: 991px) {
-    text-align: right;
-    justify-content: flex-end;
-    margin-top: 3em;
-    display: flex;
-  }
-
-  @media screen and (max-width: 767px) {
-    margin-top: 5vw;
-  }
-
-  @media screen and (max-width: 479px) {
-    margin-top: 5vw;
-  }
-}
-
-.heading-style-wrapper {
-  grid-column-gap: 16px;
-  grid-row-gap: 59px;
-  grid-template-rows: auto;
-  grid-template-columns: 1fr;
-  grid-auto-columns: 1fr;
-  justify-content: center;
-  justify-items: center;
-  padding: 5vh 5vw;
-  display: grid;
-
-  @media screen and (max-width: 767px) {
-    grid-template-columns: 1fr;
-  }
-
-  @media screen and (max-width: 479px) {
-    grid-template-rows: auto auto auto auto;
-    grid-template-columns: 1fr;
-  }
-
-  &.style-guide-page {
-    border-top: 1px solid var(--dividers);
-    color: #fff;
-    flex-direction: column;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-items: start;
-    display: flex;
-
-    @media screen and (max-width: 767px) {
-      grid-template-columns: 1fr;
-    }
-  }
-}
-
-.rich-text {
-  font-size: var(--standard-subheading);
-
-  @media screen and (max-width: 1920px) {
-    width: 50vw;
-  }
-
-  @media screen and (max-width: 991px) {
-    width: 90%;
-  }
-}
-
-.image-cover {
-  object-fit: cover;
-  width: 100%;
-  height: 30vh;
-  margin-bottom: 18px;
-}
-
-.utility-page-wrap {
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  max-width: 100%;
-  height: 80vh;
-  max-height: 100%;
+.marquee-wrap {
+  width: max-content;
   display: flex;
 }
 
-.utility-page-content {
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-  width: 50vw;
-  display: flex;
-
-  @media screen and (max-width: 991px) {
-    width: 65%;
-  }
-
-  @media screen and (max-width: 767px) {
-    width: 85%;
-  }
-
-  @media screen and (max-width: 479px) {
-    width: 90%;
-  }
-}
-
-.standard-message {
-  color: #adadad;
-  font-family: Roboto Mono, sans-serif;
-  font-size: var(--standard-subheading);
-  line-height: 1;
-
-  @media screen and (max-width: 1920px) {
-    line-height: 1;
-  }
-}
-
-.span-link {
-  font-size: var(--standard-subheading);
+/* Ensure Angular router links work properly without interfering with original animations */
+a[routerLink] {
   cursor: pointer;
+}
+/* Remove the conflicting button-link and link-block overrides to preserve original Webflow animations */
+/* The original Webflow CSS will handle the hover animations properly */
+
+/* SIMPLE CARD LAYOUT - COLUMN ONLY FOR MOBILE/TABLET */
+.cards-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+  width: 100% !important;
+}
+
+.cards-list.cards-list-scroll {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+  width: 100% !important;
+}
+
+/* Ensure cards take full width */
+.card-row {
+  width: 100% !important;
+}
+
+.card-row-item {
+  width: 100% !important;
+}
+
+/* Desktop only - keep original grid */
+@media screen and (min-width: 992px) {
+  .cards-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: var(--sizes-global--00-000) !important;
+  }
+  
+  .cards-list.cards-list-scroll {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: var(--sizes-global--00-000) !important;
+  }
 }

@@ -1,30 +1,35 @@
-@import 'variables';
-
-.input-container {
-  position: relative;
+.component-input {
+  min-height: 2.369rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #f4f4f4;
+  background-color: #f4f4f4;
+  color: #8a8a8a;
   width: 100%;
-  height: 100%;
-}
+  height: auto;
+  font-size: 1rem;
+  font-family: 'Inter Tight', sans-serif;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  font-size: 14px;
+  line-height: 1.42857143;
 
-.field-label {
-  color: #fff;
-  font-family: Montserrat, sans-serif;
-  font-size: var(--standard-heading);
-  font-weight: 400;
-  display: block;
-}
+  &:hover,
+  &:active {
+    border-color: #2121211a;
+  }
 
-.form-input-field {
-  color: #fff;
-  font-family: Roboto Mono, sans-serif;
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-bottom-color: rgba(255, 255, 255, .07);
-  margin-bottom: 1.5em;
-  display: block;
-  font-size: var(--standard-subheading);
-  padding-top: 0;
-  padding-bottom: 0;
-  font-weight: 300;
-  line-height: 1;
-}
+  &:focus {
+    border-color: #a6a6a6;
+    color: #212121;
+    outline: none;
+  }
+
+  &:focus-visible {
+    border-color: #a6a6a6;
+  }
+
+  &::placeholder {
+    color: #8a8a8a;
+  }
+} 

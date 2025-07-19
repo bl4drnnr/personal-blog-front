@@ -1,37 +1,36 @@
-@import 'variables';
-
-.textarea-container {
-  position: relative;
+.component-textarea {
   width: 100%;
-  height: 100%;
-}
-
-.textarea-label {
-  color: #fff;
-  font-family: Montserrat, sans-serif;
-  font-size: var(--standard-heading);
-  font-weight: 400;
-  display: block;
-}
-
-.textarea-field {
-  color: #fff;
-  width: 100%;
-  height: 120px;
-  min-height: 60px;
-  max-height: 360px;
-  font-family: Roboto Mono, sans-serif;
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-bottom-color: rgba(255, 255, 255, .07);
-  display: block;
-  font-size: var(--standard-subheading);
-  font-weight: 300;
-  margin-bottom: 10px;
-  line-height: 1;
+  min-height: 120px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #f4f4f4;
+  background-color: #f4f4f4;
+  color: #8a8a8a;
+  font-size: 1rem;
+  font-family: 'Inter Tight', sans-serif;
+  box-sizing: border-box;
   resize: vertical;
+  margin-bottom: 0.75rem;
+  line-height: 1.42857143;
+  transition: border-color 0.2s;
+  font-size: 14px;
+  line-height: 1.42857143;
+
+  &:hover,
+  &:active {
+    border-color: #2121211a;
+  }
 
   &:focus {
-    outline: 0;
+    border-color: #a6a6a6;
+    color: #212121;
+    outline: none;
   }
-}
+
+  &:focus-visible {
+    border-color: #a6a6a6;
+  }
+
+  &::placeholder {
+    color: #8a8a8a;
+  }
+} 

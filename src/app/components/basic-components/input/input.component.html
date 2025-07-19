@@ -1,14 +1,7 @@
-<div class="input-container">
-  <label
-    class="field-label"
-    *ngIf="label"
-  >{{ label }}</label>
-
-  <input
-    class="form-input-field w-input"
-    [(ngModel)]="value"
-    [placeholder]="placeholder || ''"
-    [type]="type"
-    (input)="onInput()"
-  />
-</div>
+<input
+  type="text"
+  class="component-input"
+  [placeholder]="placeholder"
+  [value]="value"
+  (input)="onInput($event)"
+/> 

@@ -1,0 +1,46 @@
+<hero-layout
+  [footerText]="'Subscribe to our newsletter for exclusive updates and insights.'"
+  [templateLink]="'https://webflow.com/templates/designers/valdis-zhvaginsh'"
+  [logoText]="'Luch'"
+  [breadcrumbText]="'Subscribe'"
+  [heroImageMain]="'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
+  [heroImageSecondary]="'assets/images/Astronaut-Woman-in-Spacecraft_1Astronaut Woman in Spacecraft.avif'"
+  [heroImageMainAlt]="'Abstract Gradient Art'"
+  [heroImageSecondaryAlt]="'Astronaut in Space Suit'"
+  [heroTitle]="'Stay in the loop!'"
+  [heroDesc]="'Join our community to receive the latest news, articles, and resources straight to your inbox.'"
+  [showHomePageLink]="true"
+  [hideScrollProgressBar]="true"
+>
+  <div class="subscribe-section subscribe-section-relative">
+    <component-carousel-words [words]="carouselWords" [speed]="60"/>
+    <form class="subscribe-form">
+      <div class="form-field">
+        <component-input
+          [placeholder]="'Name'"
+          [value]="name"
+          (valueChange)="name = $event"
+        ></component-input>
+      </div>
+      <div class="form-field">
+        <component-input
+          [placeholder]="'Email Address'"
+          [value]="email"
+          (valueChange)="email = $event"
+        ></component-input>
+      </div>
+      <div class="form-field">
+        <component-button
+          [text]="'Subscribe Now'"
+          [type]="'submit'"
+        ></component-button>
+      </div>
+      <div *ngIf="isSuccess" class="success-message">
+        Thank you for subscribing! You’ll receive our next newsletter soon.
+      </div>
+      <div *ngIf="isError" class="error-message">
+        Oops! Something went wrong. Please fill in all fields correctly.
+      </div>
+    </form>
+  </div>
+</hero-layout> 

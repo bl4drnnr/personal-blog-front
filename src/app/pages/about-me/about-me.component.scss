@@ -1,0 +1,107 @@
+.about-me-section {
+  padding: 2rem;
+  max-width: 80%;
+}
+
+.about-me-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0.5rem 0 1rem 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.about-me-section p {
+  font-weight: 300;
+  font-size: 1.15rem;
+  color: #212121;
+  margin-bottom: 0.3rem;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+.about-me-section ul,
+.about-me-section ol {
+  font-weight: 300;
+  font-size: 1rem;
+  color: #212121;
+  margin: 1.5rem 0 1.5rem 2rem;
+  padding: 0;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.about-me-section li {
+  font-weight: 300;
+  font-size: 1rem;
+  color: #212121;
+  margin-bottom: 0.3rem;
+}
+
+.about-me-section strong {
+  font-weight: 700;
+  color: #2d2d2d;
+}
+
+.about-me-section em {
+  font-style: italic;
+  color: #212121;
+}
+
+.about-me-section blockquote {
+  border-left: 4px solid #212121;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: #f7f7ff;
+  color: #444;
+  border-radius: 0.5rem;
+}
+
+.about-me-section pre {
+  background: #232136;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 1rem;
+  margin: 1.5rem 0;
+}
+
+.about-me-section code {
+  font-family: 'Roboto Mono', monospace;
+  background: #f4f4f4;
+  color: #d6336c;
+  padding: 0.2em 0.4em;
+  border-radius: 0.3em;
+}
+
+.about-me-section mark {
+  background: #ffe066;
+  color: #222;
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+}
+
+.about-me-section del {
+  color: #b0b0b0;
+  text-decoration: line-through;
+}
+
+.about-me-section ins {
+  color: #2d2d2d;
+  text-decoration: underline;
+}
+
+.about-me-section small {
+  font-size: 0.95em;
+  color: #888;
+}
+
+.about-me-section a {
+  color: #525252;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.about-me-section a:hover {
+  color: #888;
+} 
