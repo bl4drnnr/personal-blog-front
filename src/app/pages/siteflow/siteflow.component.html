@@ -22,8 +22,9 @@
           <div class="flow-item" 
                [class.flow-item-primary]="tile.isPrimary"
                [class.flow-item-secondary]="tile.isSecondary"
-               [class.flow-item-primary-shadow]="tile.isPrimaryShadow">
-            <a [routerLink]="tile.link" class="flow-link w-inline-block"></a>
+               [class.flow-item-primary-shadow]="tile.isPrimaryShadow"
+               [attr.data-tile-index]="i">
+            <a [routerLink]="tile.link" class="flow-link" role="button" [attr.aria-label]="'Navigate to ' + tile.title"></a>
             <div class="row-content">
               <div class="row-text-wrapper row-text-wrapper-bento">
                 <div class="flow-icon-wrapper" 
@@ -34,7 +35,9 @@
                     <img [src]="'assets/images/' + tile.icon" 
                          loading="lazy" 
                          [alt]="tile.iconAlt" 
-                         class="icon-image">
+                         class="icon-image"
+                         width="24"
+                         height="24">
                   </div>
                 </div>
                 <div class="link-flow" 

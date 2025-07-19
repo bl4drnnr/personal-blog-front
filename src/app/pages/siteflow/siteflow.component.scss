@@ -1,28 +1,47 @@
-// Siteflow Component Styles
+@import './animations.scss';\n\n// Siteflow Component Styles - Enhanced with Webflow animations
 .flow-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 2rem 0;
+  width: 100%;
 }
 
 .flow-item-wrapper {
   position: relative;
+  width: 100%;
 }
 
 .flow-item {
   position: relative;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 2rem;
-  transition: all 0.3s ease;
+  transition: box-shadow 0.2s ease-out, transform 0.3s ease, border-color 0.2s ease-out;
   overflow: hidden;
+  min-height: 200px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
   
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.3), 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.15);
     border-color: rgba(255, 255, 255, 0.2);
+    
+    .flow-overlay {
+      opacity: 1;
+    }
+    
+    .flow-scroll {
+      transform: scaleX(1);
+    }
+    
+    .link-flow {
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 0.05em;
+    }
   }
   
   &.flow-item-primary {
@@ -47,8 +66,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 5;
   text-decoration: none;
+  display: block;
 }
 
 .flow-icon-wrapper {
@@ -90,6 +110,14 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  letter-spacing: 0.0238em;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1;
+  transition: color 0.2s ease-out, letter-spacing 0.2s ease-out;
   
   &.link-flow-tetriary {
     .flow-link-icon-line {
@@ -114,6 +142,15 @@
   height: 2px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 1px;
+  transition: width 0.2s ease-out, background 0.2s ease-out;
+  
+  &.flow-link-icon-line-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  &.flow-link-icon-line-tertiary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
 }
 
 .row-heading-small {
@@ -139,6 +176,8 @@
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   margin-top: 0.5rem;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+  box-shadow: 0 0 10px rgba(240, 147, 251, 0.3);
 }
 
 .flow-scroll {
@@ -146,14 +185,12 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
   transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.flow-item:hover .flow-scroll {
-  transform: scaleX(1);
+  transform-origin: center;
+  transition: transform 0.3s ease-out;
+  z-index: 4;
 }
 
 .flow-overlay {
@@ -162,29 +199,73 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease-out;
   pointer-events: none;
+  z-index: 2;
 }
 
-.flow-item:hover .flow-overlay {
-  opacity: 1;
+// Enhanced responsive adjustments
+@media (max-width: 992px) {
+  .flow-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  
+  .flow-item {
+    padding: 1.75rem;
+    min-height: 180px;
+    
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
 }
 
-// Responsive adjustments
 @media (max-width: 768px) {
   .flow-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 1.5rem 0;
   }
   
   .flow-item {
     padding: 1.5rem;
+    min-height: 160px;
+    border-radius: 12px;
   }
   
   .row-heading-small {
     font-size: 1.125rem;
+  }
+  
+  .link-flow {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flow-grid {
+    gap: 0.75rem;
+  }
+  
+  .flow-item {
+    padding: 1.25rem;
+    min-height: 140px;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+  
+  .flow-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    
+    .icon-image {
+      width: 20px;
+      height: 20px;
+    }
   }
 } 

@@ -8,4 +8,4 @@ export interface SiteflowTile {
   isSecondary?: boolean;
   isPrimaryShadow?: boolean;
   tag?: string;
-} 
+}

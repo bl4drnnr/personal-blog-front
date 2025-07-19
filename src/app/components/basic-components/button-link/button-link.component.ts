@@ -15,4 +15,4 @@ export class ButtonLinkComponent {
   onClick(event: Event) {
     this.buttonClick.emit(event);
   }
-} 
+}

@@ -1,0 +1,83 @@
+// Keyframe animations for siteflow component
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 5px rgba(240, 147, 251, 0.3);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(240, 147, 251, 0.5);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Staggered animation for tile entrance
+.flow-item-wrapper {
+  animation: slideInUp 0.6s ease-out;
+  animation-fill-mode: both;
+  
+  @for $i from 0 through 20 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+// Enhanced hover effects for better interactivity
+.flow-item {
+  will-change: transform, box-shadow;
+  
+  &:hover {
+    .flow-icon-wrapper {
+      transform: scale(1.05);
+      transition: transform 0.2s ease-out;
+    }
+    
+    .flow-link-icon-line {
+      width: 20px;
+    }
+    
+    .row-heading-small {
+      color: #ffffff;
+      transition: color 0.2s ease-out;
+    }
+  }
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .flow-item-wrapper {
+    animation: none;
+  }
+  
+  .flow-item {
+    transition: none;
+    
+    &:hover {
+      transform: none;
+      
+      .flow-icon-wrapper {
+        transform: none;
+      }
+    }
+  }
+  
+  .nav-link-tag {
+    animation: none;
+  }
+  
+  .flow-scroll,
+  .flow-overlay {
+    transition: none;
+  }
+}
