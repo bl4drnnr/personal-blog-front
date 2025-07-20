@@ -82,10 +82,20 @@ export class NavigationComponent {
   email = 'info@example.com';
   copyrightText = '© LUCH — 2025';
 
+  hoveredNavFooterIndex: number | null = null;
+  navFooterLinks: any[] = [
+    { title: this.email, link: 'mailto:' + this.email },
+    { title: 'Buy this template', link: this.templateLink }
+  ];
+
   isMenuOpen = false;
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  onNavFooterLinkHover(index: number | null) {
+    this.hoveredNavFooterIndex = index;
   }
 
   @HostListener('document:click', ['$event'])

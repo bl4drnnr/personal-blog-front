@@ -14,18 +14,16 @@
           <div class="nav-footer-text">{{ footerText }}</div>
         </div>
         <div class="link-wrapper">
-          <a [href]="'mailto:' + email" class="link-block">
-            <div class="link-icon-wrapper">
-              <div class="link-icon-line"></div>
-            </div>
-            <p>{{ email }}</p>
-          </a>
-          <a [href]="templateLink" target="_blank" class="link-block">
-            <div class="link-icon-wrapper">
-              <div class="link-icon-line"></div>
-            </div>
-            <p>Buy this template</p>
-          </a>
+          <component-link-block
+            *ngFor="let link of navFooterLinks; let i = index"
+            [link]="link.link"
+            [title]="link.title"
+            textPosition="right"
+            iconType="link"
+            (mouseenter)="onNavFooterLinkHover(i)"
+            (mouseleave)="onNavFooterLinkHover(null)"
+            [class.dimmed]="hoveredNavFooterIndex !== null && hoveredNavFooterIndex !== i">
+          </component-link-block>
         </div>
         <div class="nav-footer-text">{{ copyrightText }}</div>
       </div>

@@ -1,6 +1,10 @@
 <button
   type="button"
   class="w-inline-block button-link"
+  [ngClass]="{
+    'icon-left': textPosition === 'right',
+    'icon-right': textPosition === 'left'
+  }"
   (click)="onClick($event)"
   [ngStyle]="buttonBg ? { 'background': buttonBg } : {}"
 >

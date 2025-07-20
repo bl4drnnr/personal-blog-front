@@ -41,6 +41,17 @@
   padding-top: 2rem;
 }
 
+.license-text a {
+  color: #6c757d;
+  text-decoration: underline;
+  text-transform: lowercase;
+}
+
+.license-text a:hover {
+  color: #495057;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .license-section {
     .license-content {

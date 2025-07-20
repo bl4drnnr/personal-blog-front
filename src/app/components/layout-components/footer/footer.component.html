@@ -20,20 +20,26 @@
         <div class="row-text-wrapper row-text-wrapper-footer">
           <nav class="button-wrapper button-wrapper-grid">
             <component-link-block
-              *ngFor="let link of footerNavigationLinks"
+              *ngFor="let link of footerNavigationLinks; let i = index"
               [link]="link.link"
               [title]="link.title"
               textPosition="right"
-              iconType="button">
+              iconType="button"
+              (mouseenter)="onNavigationLinkHover(i)"
+              (mouseleave)="onNavigationLinkHover(null)"
+              [class.dimmed]="hoveredNavigationIndex !== null && hoveredNavigationIndex !== i">
             </component-link-block>
           </nav>
           <div class="link-wrapper link-wrapper-alt">
             <component-link-block
-              *ngFor="let link of footerLegalLinks"
+              *ngFor="let link of footerLegalLinks; let i = index"
               [link]="link.link"
               [title]="link.title"
               textPosition="left"
-              iconType="link">
+              iconType="link"
+              (mouseenter)="onLegalLinkHover(i)"
+              (mouseleave)="onLegalLinkHover(null)"
+              [class.dimmed]="hoveredLegalIndex !== null && hoveredLegalIndex !== i">
             </component-link-block>
           </div>
         </div>
@@ -42,24 +48,16 @@
         <div class="row-text-wrapper row-text-wrapper-bottom">
           <div class="row-copyright">
             <div class="link-wrapper">
-              <a href="https://webflow.com/@thevaldis" target="_blank" class="link-block w-inline-block">
-                <div class="link-icon-wrapper">
-                  <div class="link-icon-line link-icon-line-primary"></div>
-                </div>
-                <p>By Valdis Zhvaginsh</p>
-              </a>
-              <a href="https://try.webflow.com/9wyc5a5fesf6" target="_blank" class="link-block w-inline-block">
-                <div class="link-icon-wrapper">
-                  <div class="link-icon-line link-icon-line-primary"></div>
-                </div>
-                <p>Powered by Webflow</p>
-              </a>
-              <a href="https://webflow.com/templates/designers/valdis-zhvaginsh" target="_blank" class="link-block w-inline-block">
-                <div class="link-icon-wrapper">
-                  <div class="link-icon-line link-icon-line-primary"></div>
-                </div>
-                <p>Buy this template</p>
-              </a>
+              <component-link-block
+                *ngFor="let link of copyrightLinks; let i = index"
+                [link]="link.link"
+                [title]="link.title"
+                textPosition="right"
+                iconType="link"
+                (mouseenter)="onCopyrightLinkHover(i)"
+                (mouseleave)="onCopyrightLinkHover(null)"
+                [class.dimmed]="hoveredCopyrightIndex !== null && hoveredCopyrightIndex !== i">
+              </component-link-block>
             </div>
             <div class="row-text-wrapper">
               <div class="row-text">

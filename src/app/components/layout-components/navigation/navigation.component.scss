@@ -207,3 +207,13 @@
 .breadcrumb-link:hover .breadcrumb-text-secondary {
   transform: translateY(0);
 }
+
+// Dimming effect for link components
+component-link-block {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+component-link-block.dimmed {
+  opacity: 0.4;
+}

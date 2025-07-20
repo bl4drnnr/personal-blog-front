@@ -22,4 +22,15 @@ export class HeaderComponent {
     { title: 'Changelog', link: '/changelog' },
     { title: 'Siteflow', link: '/siteflow' }
   ];
+
+  hoveredNavigationIndex: number | null = null;
+  hoveredLegalIndex: number | null = null;
+
+  onNavigationLinkHover(index: number | null) {
+    this.hoveredNavigationIndex = index;
+  }
+
+  onLegalLinkHover(index: number | null) {
+    this.hoveredLegalIndex = index;
+  }
 }

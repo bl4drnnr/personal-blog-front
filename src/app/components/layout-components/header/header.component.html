@@ -29,20 +29,26 @@
       <div class="row-text-wrapper row-text-wrapper-bottom">
         <nav class="button-wrapper button-wrapper-grid">
           <component-link-block
-            *ngFor="let link of navigationLinks"
+            *ngFor="let link of navigationLinks; let i = index"
             [link]="link.link"
             [title]="link.title"
             textPosition="right"
-            iconType="button">
+            iconType="button"
+            (mouseenter)="onNavigationLinkHover(i)"
+            (mouseleave)="onNavigationLinkHover(null)"
+            [class.dimmed]="hoveredNavigationIndex !== null && hoveredNavigationIndex !== i">
           </component-link-block>
         </nav>
         <div class="link-wrapper link-wrapper-alt">
           <component-link-block
-            *ngFor="let link of legalLinks"
+            *ngFor="let link of legalLinks; let i = index"
             [link]="link.link"
             [title]="link.title"
             textPosition="left"
-            iconType="link">
+            iconType="link"
+            (mouseenter)="onLegalLinkHover(i)"
+            (mouseleave)="onLegalLinkHover(null)"
+            [class.dimmed]="hoveredLegalIndex !== null && hoveredLegalIndex !== i">
           </component-link-block>
         </div>
       </div>

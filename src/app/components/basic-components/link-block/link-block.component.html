@@ -1,7 +1,12 @@
 <a 
   [href]="link" 
   class="w-inline-block" 
-  [ngClass]="iconType === 'button' ? 'button-link' : 'link-block'"
+  [ngClass]="{
+    'button-link': iconType === 'button',
+    'link-block': iconType !== 'button',
+    'icon-left': textPosition === 'right',
+    'icon-right': textPosition === 'left'
+  }"
 >
   <ng-container *ngIf="textPosition === 'left'">
     <p>{{ title }}</p>

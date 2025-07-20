@@ -42,4 +42,32 @@ export class FooterComponent {
     { title: 'Changelog', link: '/changelog' },
     { title: 'Siteflow', link: '/siteflow' }
   ];
+
+  hoveredNavigationIndex: number | null = null;
+  hoveredLegalIndex: number | null = null;
+  hoveredCopyrightIndex: number | null = null;
+
+  copyrightLinks: FooterLink[] = [
+    { title: 'By Valdis Zhvaginsh', link: 'https://webflow.com/@thevaldis' },
+    {
+      title: 'Powered by Webflow',
+      link: 'https://try.webflow.com/9wyc5a5fesf6'
+    },
+    {
+      title: 'Buy this template',
+      link: 'https://webflow.com/templates/designers/valdis-zhvaginsh'
+    }
+  ];
+
+  onNavigationLinkHover(index: number | null) {
+    this.hoveredNavigationIndex = index;
+  }
+
+  onLegalLinkHover(index: number | null) {
+    this.hoveredLegalIndex = index;
+  }
+
+  onCopyrightLinkHover(index: number | null) {
+    this.hoveredCopyrightIndex = index;
+  }
 }
