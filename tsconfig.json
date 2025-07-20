@@ -37,7 +37,8 @@
       "@assets/*": ["src/assets/*"],
       "@environments/*": ["src/environments/*"],
       "@interface/*": ["src/app/shared/interfaces/*"],
-      "@layouts/*": ["src/app/layouts/*"]
+      "@layouts/*": ["src/app/layouts/*"],
+      "@animations/*": ["src/app/shared/animations/*"]
     }
   },
   "angularCompilerOptions": {

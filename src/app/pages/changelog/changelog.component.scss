@@ -9,21 +9,7 @@
   margin: 0 auto;
 }
 
-.changelog-content h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 0.5rem 0 1rem 0;
-  font-family: 'Inter', sans-serif;
-  color: #212121;
-}
-
-.changelog-content > p {
-  font-weight: 300;
-  font-size: 1.15rem;
-  color: #666;
-  margin-bottom: 3rem;
-  line-height: 1.5;
-}
+/* Main page heading and intro text styles handled by .content-text class */
 
 .changelog-entry {
   margin-bottom: 3rem;
@@ -31,13 +17,8 @@
   background: #f8f9fa;
   border-radius: 12px;
   border-left: 4px solid #212121;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.changelog-entry:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
 
 .entry-header {
   margin-bottom: 1rem;
@@ -57,13 +38,7 @@
   margin-top: 0.5rem;
 }
 
-.entry-description {
-  font-weight: 300;
-  font-size: 1rem;
-  color: #212121;
-  margin: 0 0 1rem 0;
-  line-height: 1.5;
-}
+/* Entry description styles handled by .content-text class */
 
 .changes-list {
   list-style: none;
@@ -72,10 +47,6 @@
 }
 
 .change-item {
-  font-weight: 300;
-  font-size: 1rem;
-  color: #212121;
-  line-height: 1.6;
   position: relative;
   margin-left: 1rem;
 }

@@ -61,59 +61,7 @@ body.blog-fullscreen-active {
 }
 
 .blog-detail-content {
-  font-size: 1.15rem;
-  line-height: 1.5;
-  color: #222;
   margin-bottom: 2.5rem;
-
-  p {
-    font-weight: 300;
-    font-size: 1rem;
-    color: #212121;
-    margin-bottom: 0.3rem;
-  }
-
-  h1 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  h2 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.8rem;
-  }
-
-  h3 {
-    margin-top: 1.2rem;
-    margin-bottom: 0.6rem;
-  }
-
-  ul,
-  ol {
-    font-weight: 300;
-    font-size: 1rem;
-    color: #212121;
-    margin: 1.5rem 0 1.5rem 2rem;
-    padding: 0;
-    line-height: 1.1;
-  }
-
-  li {
-    font-weight: 300;
-    font-size: 1rem;
-    color: #212121;
-    margin-bottom: 0.3rem;
-  }
-
-  strong {
-    font-weight: 700;
-    color: #2d2d2d;
-  }
-
-  em {
-    font-style: italic;
-    color: #212121;
-  }
 
   .quote-author {
     display: block;
@@ -121,58 +69,6 @@ body.blog-fullscreen-active {
     font-size: 1rem;
     color: #888;
     text-align: right;
-  }
-
-  pre {
-    background: #f4f4f4;
-    color: #222;
-    padding: 0.5rem 1rem;
-    border-radius: 0.4rem;
-    overflow-x: auto;
-    font-size: 1rem;
-    margin: 1.5rem 0;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-    border: 1px solid #e0e0e0;
-  }
-
-  code {
-    font-family: 'Roboto Mono', monospace;
-    background: #f4f4f4;
-    color: #000;
-    border-radius: 0.3em;
-    font-size: 0.98em;
-  }
-
-  mark {
-    background: #ffe066;
-    color: #222;
-    padding: 0.1em 0.1em;
-    border-radius: 0.2em;
-  }
-
-  del {
-    color: #b0b0b0;
-    text-decoration: line-through;
-  }
-
-  ins {
-    color: #2d2d2d;
-    text-decoration: underline;
-  }
-
-  small {
-    font-size: 0.95em;
-    color: #888;
-  }
-
-  a {
-    color: #525252;
-    text-decoration: underline;
-    transition: color 0.2s;
-  }
-
-  a:hover {
-    color: #888;
   }
 }
 

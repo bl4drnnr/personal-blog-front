@@ -4,6 +4,8 @@ export interface SiteflowTile {
   link: string;
   icon: string;
   iconAlt: string;
+  image?: string;
+  imageAlt?: string;
   isPrimary?: boolean;
   isSecondary?: boolean;
   isPrimaryShadow?: boolean;

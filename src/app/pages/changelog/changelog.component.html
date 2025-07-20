@@ -8,13 +8,13 @@
   [breadcrumbText]="'Changelog'"
   [heroTitle]="'Latest Features & Improvements'"
   [showHomePageLink]="true"
-  [hideScrollProgressBar]="true"
   [showHeader]="false"
 >
   <section class="changelog-section">
-    <div class="changelog-content">
-      <div class="changelog-entries">
-        <div *ngFor="let entry of changelogEntries" class="changelog-entry">
+    <div class="changelog-content content-text">
+      <div class="changelog-entries" [@changelogStagger]="animationState">
+        <div *ngFor="let entry of changelogEntries; let i = index" 
+             class="changelog-entry">
           <div class="entry-header">
             <h3 class="version-title">{{ entry.version }} - {{ entry.title }}</h3>
           </div>

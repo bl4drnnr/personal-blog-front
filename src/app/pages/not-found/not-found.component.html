@@ -1,0 +1,25 @@
+<default-layout
+  [hideScrollProgressBar]="true"
+  [showHeader]="false"
+  [showFooter]="true"
+  [heroImageMain]="'/assets/images/Astronaut-on-Barren-Landscape.jpeg'"
+  [heroImageMainAlt]="'404 Not Found'"
+  [heroTitle]="'404'"
+  [footerText]="'Page not found'">
+  
+  <div class="not-found-container">
+    <div class="not-found-content" [@fadeInUpStagger]="animationState">
+      <h1 class="not-found-title text-animate">404</h1>
+      <p class="text-animate">Page not found</p>
+      <div class="not-found-button">
+        <component-button-link
+            iconType="button"
+            buttonBg="#fff"
+            [title]="'Go to main page'"
+            (buttonClick)="goToMainPage()"
+        ></component-button-link>
+      </div>
+    </div>
+  </div>
+
+</default-layout> 

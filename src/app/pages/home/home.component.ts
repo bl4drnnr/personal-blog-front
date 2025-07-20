@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Project } from '@interface/project.interface';
 import { Post } from '@interface/post.interface';
 import { FaqQuestion } from '@interface/faq-question.interface';
 import { WhysSection } from '@interface/whys-section.interface';
+import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
   selector: 'page-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [fadeInUpStaggerAnimation]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  animationState = '';
   projects: Project[] = [
     {
       title: 'Futuristic UI/UX Design',
@@ -145,4 +148,11 @@ export class HomeComponent {
       { title: 'Blog Friendly' }
     ]
   };
+
+  ngOnInit() {
+    // Trigger animations after view initialization
+    setTimeout(() => {
+      this.animationState = 'loaded';
+    }, 100);
+  }
 }

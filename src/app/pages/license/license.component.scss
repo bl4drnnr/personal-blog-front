@@ -1,48 +1,44 @@
 .license-section {
-  padding: 2rem 0;
-  
-  .license-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    
-    .license-text {
-      border-radius: 12px;
-      padding: 2rem;
-      
-      h2 {
-        font-size: 2rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-      
-      .license-date {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-        font-style: italic;
-      }
-      
-      p {
-        font-size: 1rem;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        text-align: justify;
-        
-        &:last-of-type {
-          margin-bottom: 2rem;
-        }
-      }
-      
-      .license-additional {
-        margin-top: 3rem;
-        padding-top: 2rem;
-        
-        h3 {
-          margin-bottom: 1rem;
-        }
-      }
-    }
-  }
+  text-align: justify;
+}
+
+.license-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.license-text {
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.license-date {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.license-tiles {
+  margin: 3rem 0;
+}
+
+.link-wrapper {
+  margin-top: 1rem;
+}
+
+.row-divider {
+  margin-top: 2rem;
+}
+
+.row-line {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.license-additional {
+  margin-top: 3rem;
+  padding-top: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -53,13 +49,15 @@
       .license-text {
         padding: 1.5rem;
         
-        h2 {
-          font-size: 1.75rem;
-        }
-        
-        .license-additional {
-          h3 {
-            font-size: 1.25rem;
+        .license-tiles {
+          margin: 2rem 0;
+          
+          .license-tile {
+            padding: 1.5rem 0;
+            
+            .row-divider {
+              margin-top: 1.5rem;
+            }
           }
         }
       }

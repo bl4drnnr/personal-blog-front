@@ -19,12 +19,12 @@
       >
       </component-navigation>
     </div>
-    <div class="row-wrapper row-wrapper-alt">
+    <div class="row-wrapper row-wrapper-alt" [@fadeInUpStagger]="animationState">
       <div id="content-row" class="row">
         <div class="row-item">
           <div class="row-content row-content-sticky">
             <div class="blog-detail-wrapper" [ngClass]="{ 'fullscreen': isFullscreen }">
-              <div class="blog-detail-header">
+              <div class="blog-detail-header text-animate">
                 <h2 class="blog-detail-title">{{ title }}</h2>
                 <p class="blog-detail-description">{{ description }}</p>
                 <div class="blog-detail-meta">
@@ -34,15 +34,17 @@
                   </div>
                 </div>
               </div>
-              <component-button-link
-                iconType="button"
-                buttonBg="#fff"
-                [title]="isFullscreen ? 'Close Fullscreen' : 'Fullscreen'"
-                (buttonClick)="toggleFullscreen()"
-              ></component-button-link>
-              <hr class="blog-detail-divider" />
+              <div class="text-animate">
+                <component-button-link
+                  iconType="button"
+                  buttonBg="#fff"
+                  [title]="isFullscreen ? 'Close Fullscreen' : 'Fullscreen'"
+                  (buttonClick)="toggleFullscreen()"
+                ></component-button-link>
+              </div>
+              <hr class="blog-detail-divider text-animate" />
               <ng-container *ngIf="toc.length > 0">
-                <nav class="blog-detail-toc">
+                <nav class="blog-detail-toc text-animate">
                   <div class="blog-detail-toc-title">Table of Contents</div>
                   <ul>
                     <li *ngFor="let item of toc" [ngClass]="{
@@ -55,8 +57,8 @@
                   </ul>
                 </nav>
               </ng-container>
-              <hr class="blog-detail-divider" />
-              <div class="blog-detail-content" #contentRef [innerHTML]="blogContent">
+              <hr class="blog-detail-divider text-animate" />
+              <div class="blog-detail-content content-text text-animate" #contentRef [innerHTML]="blogContent">
               </div>
             </div>
             <div class="footer-section">

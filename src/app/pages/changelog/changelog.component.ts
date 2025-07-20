@@ -1,16 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangelogEntry } from '@shared/interfaces/changelog-entry.interface';
+import { changelogStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
   selector: 'page-changelog',
   templateUrl: './changelog.component.html',
-  styleUrls: ['./changelog.component.scss']
+  styleUrls: ['./changelog.component.scss'],
+  animations: [changelogStaggerAnimation]
 })
 export class ChangelogComponent implements OnInit {
+  animationState = '';
   changelogEntries: ChangelogEntry[] = [];
 
   ngOnInit(): void {
     this.loadChangelogEntries();
+
+    // Trigger animation after view is initialized
+    setTimeout(() => {
+      this.animationState = 'loaded';
+    }, 100);
   }
 
   private loadChangelogEntries(): void {

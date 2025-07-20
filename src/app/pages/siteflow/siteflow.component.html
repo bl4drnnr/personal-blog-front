@@ -8,15 +8,18 @@
   [showHeader]="false"
   [preventPicChange]="true"
 >
-  <div class="flow-grid flow-grid-siteflow">
+  <div class="flow-grid flow-grid-siteflow" [@siteflowTile]="animationState">
     <div 
       class="flow-item-wrapper" 
       *ngFor="let tile of siteflowTiles; let i = index"
-      [attr.data-delay]="i * 100"
       [id]="getFlowItemId(i)"
     >
       <div class="flow-item">
         <a [routerLink]="tile.link" class="flow-link"></a>
+        
+        <div class="flow-background-image" *ngIf="tile.image">
+          <img [src]="'assets/images/' + tile.image" [alt]="tile.imageAlt" class="background-image" />
+        </div>
         
         <div class="flow-icon-wrapper">
           <div class="flow-icon">

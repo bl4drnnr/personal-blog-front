@@ -3,6 +3,7 @@ import {
   BrowserModule,
   provideClientHydration
 } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PagesModule } from '@pages/pages.module';
@@ -19,6 +20,7 @@ import {
   imports: [
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule,
     PagesModule,
     ComponentsModule,

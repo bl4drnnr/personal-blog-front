@@ -1,5 +1,5 @@
 <div class="nav">
-  <div class="nav-menu" [class.nav-menu-open]="isMenuOpen">
+  <div class="nav-menu" [@navMenuSlide]="isMenuOpen ? 'open' : 'closed'">
     <div class="nav-links-wrapper">
       <a *ngFor="let link of links" 
          [href]="link.link" 
@@ -49,7 +49,7 @@
   <div class="nav-wrapper">
     <div class="nav-container">
       <div class="nav-left">
-        <div class="nav-burger" (click)="toggleMenu()" [class.nav-burger-open]="isMenuOpen">
+        <div class="nav-burger" (click)="toggleMenu()" [@burgerMenu]="isMenuOpen ? 'open' : 'closed'">
           <div class="nav-burger-top"></div>
           <div class="nav-burger-mid"></div>
           <div class="nav-burger-bottom"></div>

@@ -16,40 +16,15 @@
   height: calc(100vh - 60px);
   background-color: var(--colors-global--tertiary-color);
   z-index: 9999;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform: translateY(-100%);
-  opacity: 0;
-  visibility: hidden;
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  
-  &.nav-menu-open {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 .nav-burger {
   cursor: pointer;
-  transition: all 0.3s ease;
   z-index: 10000;
   position: relative;
-  
-  &.nav-burger-open {
-    .nav-burger-top {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    .nav-burger-mid {
-      opacity: 0;
-    }
-    
-    .nav-burger-bottom {
-      transform: rotate(-45deg) translate(7px, -6px);
-    }
-  }
 }
 
 .nav-wrapper {
@@ -67,15 +42,6 @@
   z-index: 10001;
 }
 
-.nav-burger-top,
-.nav-burger-mid,
-.nav-burger-bottom {
-  transition: all 0.3s ease;
-}
-
-.nav-menu.nav-menu-open {
-  display: flex !important;
-}
 
 #hero-background {
   transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);

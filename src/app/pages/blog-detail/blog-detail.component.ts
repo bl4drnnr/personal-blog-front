@@ -12,12 +12,14 @@ import { Location } from '@angular/common';
 import { ScrollAnimationService } from '@services/scroll-animation.service';
 import { Subscription } from 'rxjs';
 import hljs from 'highlight.js';
+import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
   selector: 'page-blog-detail',
   templateUrl: './blog-detail.component.html',
   styleUrls: ['./blog-detail.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [fadeInUpStaggerAnimation]
 })
 export class BlogDetailComponent
   implements AfterViewInit, OnInit, OnDestroy, AfterViewChecked
@@ -71,6 +73,7 @@ console.log('LUCH Template Inspiration:', inspiration);
     <p>Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
   `;
 
+  animationState = '';
   scrollProgress = 0;
   isFooterReached = false;
   toc: { id: string; text: string; level: number; number: string }[] = [];
@@ -100,6 +103,11 @@ console.log('LUCH Template Inspiration:', inspiration);
   ngAfterViewInit() {
     this.highlightAllCode();
     this.buildTableOfContents();
+
+    // Trigger animations after view initialization
+    setTimeout(() => {
+      this.animationState = 'loaded';
+    }, 100);
   }
 
   ngAfterViewChecked() {

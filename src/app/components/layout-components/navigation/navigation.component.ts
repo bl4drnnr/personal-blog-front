@@ -1,12 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, HostListener } from '@angular/core';
 import { NavigationLink } from '@interface/navigation-link.interface';
+import {
+  navMenuSlideAnimation,
+  burgerMenuAnimation
+} from '@shared/animations/fade-in-up.animation';
 
 @Component({
   selector: 'component-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
+  animations: [navMenuSlideAnimation, burgerMenuAnimation]
 })
 export class NavigationComponent {
+  constructor(private elementRef: ElementRef) {}
   @Input() footerText = 'Default footer text';
   @Input() templateLink =
     'https://webflow.com/templates/designers/valdis-zhvaginsh';
@@ -80,6 +86,17 @@ export class NavigationComponent {
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    // Check if the click was outside the navigation component
+    if (
+      this.isMenuOpen &&
+      !this.elementRef.nativeElement.contains(event.target)
+    ) {
+      this.isMenuOpen = false;
+    }
   }
 
   getScrollLineStyle() {
