@@ -12,11 +12,9 @@ import { ContactComponent } from '@pages/contact/contact.component';
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { SubscribeComponent } from '@pages/subscribe/subscribe.component';
 import { SiteflowComponent } from '@pages/siteflow/siteflow.component';
-import { StyleGuideComponent } from '@pages/legal/style-guide.component';
-import { LicensesComponent } from '@pages/legal/licenses.component';
-import { ChangelogComponent } from '@pages/legal/changelog.component';
-import { InstructionsComponent } from '@pages/legal/instructions.component';
 import { AboutMeComponent } from '@pages/about-me/about-me.component';
+import { ChangelogComponent } from '@pages/changelog/changelog.component';
+import { LicenseComponent } from '@pages/license/license.component';
 
 const components: any = [
   HomeComponent,
@@ -28,11 +26,9 @@ const components: any = [
   NotFoundComponent,
   SubscribeComponent,
   SiteflowComponent,
-  StyleGuideComponent,
-  LicensesComponent,
+  AboutMeComponent,
   ChangelogComponent,
-  InstructionsComponent,
-  AboutMeComponent
+  LicenseComponent
 ];
 
 const routes: Routes = [
@@ -45,11 +41,9 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'subscribe', component: SubscribeComponent },
   { path: 'siteflow', component: SiteflowComponent },
-  { path: 'legal/style-guide', component: StyleGuideComponent },
-  { path: 'legal/licenses', component: LicensesComponent },
-  { path: 'legal/changelog', component: ChangelogComponent },
-  { path: 'legal/instructions', component: InstructionsComponent },
   { path: 'about-me', component: AboutMeComponent },
+  { path: 'changelog', component: ChangelogComponent },
+  { path: 'licenses', component: LicenseComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

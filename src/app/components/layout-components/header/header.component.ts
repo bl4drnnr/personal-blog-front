@@ -16,10 +16,10 @@ export class HeaderComponent {
     { title: 'Subscribe', link: '/subscribe' }
   ];
   @Input() legalLinks: HeaderLink[] = [
-    { title: 'Style Guide', link: '/legal/style-guide' },
-    { title: 'Licenses', link: '/legal/licenses' },
-    { title: 'Instruction', link: '/legal/instructions' },
-    { title: 'Changelog', link: '/legal/changelog' },
+    { title: 'About Me', link: '/about-me' },
+    { title: 'Licenses', link: '/licenses' },
+    { title: 'Instruction', link: '/instructions' },
+    { title: 'Changelog', link: '/changelog' },
     { title: 'Siteflow', link: '/siteflow' }
   ];
 }

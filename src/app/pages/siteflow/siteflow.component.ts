@@ -39,26 +39,26 @@ export class SiteflowComponent {
       iconAlt: 'Mail Add'
     },
     {
-      title: 'Style Guide',
-      link: '/legal/style-guide',
+      title: 'About Me',
+      link: '/about-me',
       icon: 'settings-fill.svg',
       iconAlt: 'Settings'
     },
     {
       title: 'Licenses',
-      link: '/legal/licenses',
+      link: '/licenses',
       icon: 'file-info-fill.svg',
       iconAlt: 'File Info'
     },
     {
       title: 'Instruction',
-      link: '/legal/instructions',
+      link: '/instructions',
       icon: 'questionnaire-fill.svg',
       iconAlt: 'Questionnaire'
     },
     {
       title: 'Changelog',
-      link: '/legal/changelog',
+      link: '/changelog',
       icon: 'sticky-note-fill.svg',
       iconAlt: 'Sticky Note'
     },

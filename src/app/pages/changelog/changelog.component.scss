@@ -1,0 +1,129 @@
+.changelog-section {
+  min-height: 100vh;
+  padding: 2rem;
+  max-width: 80%;
+}
+
+.changelog-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.changelog-content h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0.5rem 0 1rem 0;
+  font-family: 'Inter', sans-serif;
+  color: #212121;
+}
+
+.changelog-content > p {
+  font-weight: 300;
+  font-size: 1.15rem;
+  color: #666;
+  margin-bottom: 3rem;
+  line-height: 1.5;
+}
+
+.changelog-entry {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #212121;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.changelog-entry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.entry-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.version-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #212121;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.entry-content {
+  margin-top: 0.5rem;
+}
+
+.entry-description {
+  font-weight: 300;
+  font-size: 1rem;
+  color: #212121;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.changes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.change-item {
+  font-weight: 300;
+  font-size: 1rem;
+  color: #212121;
+  line-height: 1.6;
+  position: relative;
+  margin-left: 1rem;
+}
+
+.change-item:before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 0.5rem;
+  width: 6px;
+  height: 6px;
+  background: #212121;
+  border-radius: 50%;
+}
+
+.change-item:last-child {
+  margin-bottom: 0;
+}
+
+.entry-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.version-date {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: 300;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .changelog-section {
+    padding: 1rem;
+    max-width: 95%;
+  }
+  
+  .changelog-entry {
+    padding: 1.5rem;
+  }
+  
+  .version-title {
+    font-size: 1.3rem;
+  }
+  
+  .changelog-content h2 {
+    font-size: 1.8rem;
+  }
+} 
+ 

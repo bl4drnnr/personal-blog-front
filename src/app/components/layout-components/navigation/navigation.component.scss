@@ -194,3 +194,50 @@
   display: flex;
   margin: 1.5rem 0 0.5rem 0;
 }
+
+// Logo and breadcrumb text animation styles
+.logo-heading-wrapper,
+.breadcrumb-text-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  pointer-events: none;
+}
+
+.logo-heading,
+.breadcrumb-text {
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.logo-heading-primary,
+.breadcrumb-text-primary {
+  position: relative;
+  z-index: 1;
+  transform: translateY(0);
+}
+
+.logo-heading-secondary,
+.breadcrumb-text-secondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transform: translateY(100%);
+}
+
+// Hover animations
+.logo-link:hover .logo-heading-primary {
+  transform: translateY(-100%);
+}
+
+.logo-link:hover .logo-heading-secondary {
+  transform: translateY(0);
+}
+
+.breadcrumb-link:hover .breadcrumb-text-primary {
+  transform: translateY(-100%);
+}
+
+.breadcrumb-link:hover .breadcrumb-text-secondary {
+  transform: translateY(0);
+}

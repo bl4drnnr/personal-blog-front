@@ -3,7 +3,6 @@
     <div class="nav-links-wrapper">
       <a *ngFor="let link of links" 
          [href]="link.link" 
-         routerLinkActive="w--current" 
          class="nav-link">
         <div class="nav-link-title">{{ link.title }}</div>
         <div class="nav-link-description">{{ link.description }}</div>
@@ -56,18 +55,22 @@
           <div class="nav-burger-bottom"></div>
         </div>
         <div class="header-breadcrumb">
-          <a routerLink="/home" class="logo-link">
-            <div class="logo-heading">{{ logoText }}</div>
-            <div class="logo-heading logo-heading-absolute">{{ logoText }}</div>
+          <a href="/" class="logo-link">
+            <div class="logo-heading-wrapper">
+              <div class="logo-heading logo-heading-primary">{{ logoText }}</div>
+              <div class="logo-heading logo-heading-secondary">{{ logoText }}</div>
+            </div>
           </a>
           <div class="breadcrumb-divider">
             <div class="breadcrumb-divider-circle"></div>
             <div class="breadcrumb-divider-line"></div>
             <div class="breadcrumb-divider-line breadcrumb-divider-line-alt"></div>
           </div>
-          <a routerLink="/home" class="breadcrumb-link">
-            <div class="breadcrumb-text">{{ breadcrumbText }}</div>
-            <div class="breadcrumb-text breadcrumb-text-absolute">{{ breadcrumbText }}</div>
+          <a routerLink="/" class="breadcrumb-link">
+            <div class="breadcrumb-text-wrapper">
+              <div class="breadcrumb-text breadcrumb-text-primary">{{ breadcrumbText }}</div>
+              <div class="breadcrumb-text breadcrumb-text-secondary">{{ breadcrumbText }}</div>
+            </div>
           </a>
         </div>
       </div>
