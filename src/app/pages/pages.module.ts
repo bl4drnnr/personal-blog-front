@@ -11,7 +11,7 @@ import { ProjectDetailComponent } from '@pages/project-detail/project-detail.com
 import { ContactComponent } from '@pages/contact/contact.component';
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { SubscribeComponent } from '@pages/subscribe/subscribe.component';
-import { SiteflowComponent } from '@pages/siteflow/siteflow.component';
+import { PageMenuComponent } from '@pages/menu/page-menu.component';
 import { AboutMeComponent } from '@pages/about-me/about-me.component';
 import { ChangelogComponent } from '@pages/changelog/changelog.component';
 import { LicenseComponent } from '@pages/license/license.component';
@@ -26,7 +26,7 @@ const components: any = [
   ContactComponent,
   NotFoundComponent,
   SubscribeComponent,
-  SiteflowComponent,
+  PageMenuComponent,
   AboutMeComponent,
   ChangelogComponent,
   LicenseComponent,
@@ -42,7 +42,7 @@ const routes: Routes = [
   { path: 'projects/:slug', component: ProjectDetailComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'subscribe', component: SubscribeComponent },
-  { path: 'siteflow', component: SiteflowComponent },
+  { path: 'menu', component: PageMenuComponent },
   { path: 'about-me', component: AboutMeComponent },
   { path: 'changelog', component: ChangelogComponent },
   { path: 'licenses', component: LicenseComponent },

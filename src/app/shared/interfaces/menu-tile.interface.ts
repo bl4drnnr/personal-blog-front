@@ -1,4 +1,4 @@
-export interface SiteflowTile {
+export interface MenuTile {
   title: string;
   description?: string;
   link: string;

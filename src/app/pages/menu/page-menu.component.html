@@ -3,15 +3,15 @@
   [heroImageMain]="'assets/images/Contemplative-Astronaut-Woman.webp'"
   [heroImageMainAlt]="'Contemplative Astronaut Woman'"
   [logoText]="'Luch'"
-  [breadcrumbText]="'Siteflow'"
+  [breadcrumbText]="'Menu'"
   [templateLink]="'https://webflow.com/templates/designers/valdis-zhvaginsh'"
   [showHeader]="false"
   [preventPicChange]="true"
 >
-  <div class="flow-grid flow-grid-siteflow" [@siteflowTile]="animationState">
+  <div class="flow-grid flow-grid-menu" [@menuTile]="animationState">
     <div 
       class="flow-item-wrapper" 
-      *ngFor="let tile of siteflowTiles; let i = index"
+      *ngFor="let tile of menuTiles; let i = index"
       [id]="getFlowItemId(i)"
     >
       <div class="flow-item">

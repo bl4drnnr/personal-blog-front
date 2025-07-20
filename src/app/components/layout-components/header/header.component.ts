@@ -20,7 +20,7 @@ export class HeaderComponent {
     { title: 'Licenses', link: '/licenses' },
     { title: 'Privacy', link: '/privacy' },
     { title: 'Changelog', link: '/changelog' },
-    { title: 'Siteflow', link: '/siteflow' }
+    { title: 'Menu', link: '/menu' }
   ];
 
   hoveredNavigationIndex: number | null = null;

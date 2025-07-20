@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteflowTile } from '@shared/interfaces/siteflow-tile.interface';
-import { siteflowTileAnimation } from '@shared/animations/fade-in-up.animation';
+import { MenuTile } from '@shared/interfaces/menu-tile.interface';
+import { menuTileAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
-  selector: 'page-siteflow',
-  templateUrl: './siteflow.component.html',
-  styleUrls: ['./siteflow.component.scss'],
-  animations: [siteflowTileAnimation]
+  selector: 'page-menu',
+  templateUrl: './page-menu.component.html',
+  styleUrls: ['./page-menu.component.scss'],
+  animations: [menuTileAnimation]
 })
-export class SiteflowComponent implements OnInit {
+export class PageMenuComponent implements OnInit {
   animationState = '';
-  siteflowTiles: SiteflowTile[] = [
+  menuTiles: MenuTile[] = [
     {
       title: 'Homepage',
       link: '/',
@@ -86,8 +86,8 @@ export class SiteflowComponent implements OnInit {
       imageAlt: 'Abstract Wave Artwork'
     },
     {
-      title: 'Siteflow',
-      link: '/siteflow',
+      title: 'Menu',
+      link: '/menu',
       icon: 'layout-fill.svg',
       iconAlt: 'Layout',
       image: 'Futuristic-Cabin-Landscape_1Futuristic Cabin Landscape.avif',
@@ -105,11 +105,11 @@ export class SiteflowComponent implements OnInit {
   getFlowItemId(index: number): string | null {
     switch (index) {
       case 0:
-        return 'siteflow-homepage-tile';
+        return 'menu-homepage-tile';
       case 7:
-        return 'siteflow-style-guide-tile';
+        return 'menu-style-guide-tile';
       case 11:
-        return 'siteflow-siteflow-tile';
+        return 'menu-menu-tile';
       default:
         return null;
     }

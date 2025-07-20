@@ -45,8 +45,8 @@ export const changelogStaggerAnimation = trigger('changelogStagger', [
   ])
 ]);
 
-// Siteflow tile animations
-export const siteflowTileAnimation = trigger('siteflowTile', [
+// Menu tile animations
+export const menuTileAnimation = trigger('menuTile', [
   transition('* => loaded', [
     query(
       '.flow-item-wrapper',
