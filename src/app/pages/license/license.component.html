@@ -16,25 +16,23 @@
     <div class="license-content">
       <div class="license-text" [@fadeInUpStagger]="animationState">
         <div class="content-text">
-          <h2 class="text-animate">MIT License</h2>
-          <p class="license-date text-animate">Copyright (c) 2025 LUCH Framework</p>
-          <p class="text-animate">Permission is hereby granted, free of charge, to any person obtaining a copy
-            of this software and associated documentation files (the "Software"), to deal
-            in the Software without restriction, including without limitation the rights
-            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-            copies of the Software, and to permit persons to whom the Software is
-            furnished to do so, subject to the following conditions:</p>
-            
-            <p class="text-animate">The above copyright notice and this permission notice shall be included in all
-            copies or substantial portions of the Software.</p>
-            
-            <p class="text-animate">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-            SOFTWARE.</p>
+          <h2 class="text-animate">{{ pageContent.title }}</h2>
+          <p class="license-date text-animate">{{ pageContent.licenseDate }}</p>
+          <p class="text-animate" *ngFor="let paragraph of pageContent.paragraphs">
+            {{ paragraph }}
+          </p>
+        </div>
+
+        <div class="license-additional">
+          <div class="content-text">
+            <h3 class="text-animate">{{ pageContent.additionalInfo.title }}</h3>
+            <p class="text-animate" *ngFor="let paragraph of pageContent.additionalInfo.paragraphs">
+              {{ paragraph }}
+            </p>
+          
+            <p class="text-animate">For questions regarding licensing or usage, please contact us through our 
+            <a href="/contact">contact page</a>.</p>
+          </div>
         </div>
         
         <div class="license-tiles">
@@ -56,17 +54,6 @@
             <div class="row-divider" *ngIf="!last">
               <div class="row-line"></div>
             </div>
-          </div>
-        </div>
-        
-        <div class="license-additional">
-          <div class="content-text">
-            <h3 class="text-animate">Additional Information</h3>
-            <p class="text-animate">This template is built using Angular and follows modern web development practices. 
-            The design and components are created with accessibility and performance in mind.</p>
-          
-            <p class="text-animate">For questions regarding licensing or usage, please contact us through our 
-            <a href="/contact">contact page</a>.</p>
           </div>
         </div>
       </div>
