@@ -38,7 +38,7 @@ export class FooterComponent {
   footerLegalLinks: FooterLink[] = [
     { title: 'About Me', link: '/about-me' },
     { title: 'Licenses', link: '/licenses' },
-    { title: 'Instruction', link: '/instructions' },
+    { title: 'Privacy', link: '/privacy' },
     { title: 'Changelog', link: '/changelog' },
     { title: 'Siteflow', link: '/siteflow' }
   ];

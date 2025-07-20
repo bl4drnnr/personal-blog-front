@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Post } from '@interface/post.interface';
+import { blogPostAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
   selector: 'page-blog',
   templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.scss']
+  styleUrls: ['./blog.component.scss'],
+  animations: [blogPostAnimation]
 })
-export class BlogComponent {
+export class BlogComponent implements OnInit {
+  animationState = '';
   posts: Post[] = [
     {
       title: 'The Future of AI in Design',
@@ -155,17 +158,39 @@ export class BlogComponent {
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.triggerAnimation();
     }
   }
 
   prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.triggerAnimation();
     }
   }
 
   onSearch(term: string): void {
     this.searchTerm = term;
     this.currentPage = 1;
+    this.triggerAnimation();
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.triggerAnimation();
+  }
+
+  private triggerAnimation(): void {
+    this.animationState = '';
+    setTimeout(() => {
+      this.animationState = 'loaded';
+    }, 50);
+  }
+
+  ngOnInit() {
+    // Trigger post animations after view initialization
+    setTimeout(() => {
+      this.animationState = 'loaded';
+    }, 100);
   }
 }

@@ -24,6 +24,7 @@
   <div
     class="posts-list-wrapper"
     *ngIf="paginatedPosts.length > 0; else noPosts"
+    [@blogPost]="animationState"
   >
     <component-post-card 
       *ngFor="let post of paginatedPosts" 
@@ -44,7 +45,7 @@
     <component-pagination
       [currentPage]="currentPage"
       [totalPages]="totalPages"
-      (pageChange)="currentPage = $event">
+      (pageChange)="onPageChange($event)">
     </component-pagination>
   </div>
 </hero-layout> 

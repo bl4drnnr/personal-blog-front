@@ -24,6 +24,7 @@
   <div
     class="projects-list-wrapper"
     *ngIf="paginatedProjects.length > 0; else noProjects"
+    [@project]="animationState"
   >
     <component-project-card 
       *ngFor="let project of paginatedProjects" 
@@ -44,7 +45,7 @@
     <component-pagination
       [currentPage]="currentPage"
       [totalPages]="totalPages"
-      (pageChange)="currentPage = $event">
+      (pageChange)="onPageChange($event)">
     </component-pagination>
   </div>
 </hero-layout> 

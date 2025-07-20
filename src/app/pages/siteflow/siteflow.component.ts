@@ -70,10 +70,10 @@ export class SiteflowComponent implements OnInit {
       imageAlt: 'Vibrant Abstract Artwork'
     },
     {
-      title: 'Instruction',
-      link: '/instructions',
-      icon: 'questionnaire-fill.svg',
-      iconAlt: 'Questionnaire',
+      title: 'Privacy',
+      link: '/privacy',
+      icon: 'lock-unlock-fill.svg',
+      iconAlt: 'Privacy',
       image: 'Astronaut-on-Barren-Landscape.jpeg',
       imageAlt: 'Astronaut on Barren Landscape'
     },

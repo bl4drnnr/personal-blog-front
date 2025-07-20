@@ -3,16 +3,22 @@ import { Project } from '@interface/project.interface';
 import { Post } from '@interface/post.interface';
 import { FaqQuestion } from '@interface/faq-question.interface';
 import { WhysSection } from '@interface/whys-section.interface';
-import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
+import {
+  fadeInUpStaggerAnimation,
+  blogPostAnimation,
+  projectAnimation
+} from '@shared/animations/fade-in-up.animation';
 
 @Component({
   selector: 'page-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [fadeInUpStaggerAnimation]
+  animations: [fadeInUpStaggerAnimation, blogPostAnimation, projectAnimation]
 })
 export class HomeComponent implements OnInit {
   animationState = '';
+  projectsAnimationState = '';
+  postsAnimationState = '';
   projects: Project[] = [
     {
       title: 'Futuristic UI/UX Design',
@@ -91,7 +97,7 @@ export class HomeComponent implements OnInit {
     {
       question: 'What pages are included in the LUCH template?',
       answer:
-        'LUCH comes with Home, About, Blog (CMS), Blog Post (CMS), Projects (CMS), Project Page (CMS), Contact, and Subscribe pages, plus additional resources like Style Guide, Licenses, Instructions, and Changelog.'
+        'LUCH comes with Home, About, Blog (CMS), Blog Post (CMS), Projects (CMS), Project Page (CMS), Contact, and Subscribe pages, plus additional resources like Style Guide, Licenses, Privacy Policy, and Changelog.'
     },
     {
       question: 'Do I need a Webflow account to use LUCH?',
@@ -150,9 +156,19 @@ export class HomeComponent implements OnInit {
   };
 
   ngOnInit() {
-    // Trigger animations after view initialization
+    // Trigger animations after view initialization with staggered timing
     setTimeout(() => {
       this.animationState = 'loaded';
     }, 100);
+
+    // Stagger project animations to start after other content
+    setTimeout(() => {
+      this.projectsAnimationState = 'loaded';
+    }, 600);
+
+    // Stagger post animations to start after projects
+    setTimeout(() => {
+      this.postsAnimationState = 'loaded';
+    }, 1200);
   }
 }

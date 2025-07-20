@@ -15,6 +15,7 @@ import { SiteflowComponent } from '@pages/siteflow/siteflow.component';
 import { AboutMeComponent } from '@pages/about-me/about-me.component';
 import { ChangelogComponent } from '@pages/changelog/changelog.component';
 import { LicenseComponent } from '@pages/license/license.component';
+import { PrivacyComponent } from '@pages/privacy/privacy.component';
 
 const components: any = [
   HomeComponent,
@@ -28,7 +29,8 @@ const components: any = [
   SiteflowComponent,
   AboutMeComponent,
   ChangelogComponent,
-  LicenseComponent
+  LicenseComponent,
+  PrivacyComponent
 ];
 
 const routes: Routes = [
@@ -44,6 +46,7 @@ const routes: Routes = [
   { path: 'about-me', component: AboutMeComponent },
   { path: 'changelog', component: ChangelogComponent },
   { path: 'licenses', component: LicenseComponent },
+  { path: 'privacy', component: PrivacyComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

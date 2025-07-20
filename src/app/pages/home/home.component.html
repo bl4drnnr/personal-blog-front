@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="cards-list-wrapper">
-        <div class="cards-list cards-list-scroll">
+        <div class="cards-list cards-list-scroll" [@project]="projectsAnimationState">
           <component-project-card 
             *ngFor="let project of projects" 
             [project]="project">
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="cards-list-wrapper">
-        <div class="cards-list cards-list-scroll">
+        <div class="cards-list cards-list-scroll" [@blogPost]="postsAnimationState">
           <component-post-card 
             *ngFor="let post of posts" 
             [post]="post">

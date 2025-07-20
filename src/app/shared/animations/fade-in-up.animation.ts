@@ -64,6 +64,44 @@ export const siteflowTileAnimation = trigger('siteflowTile', [
   ])
 ]);
 
+// Blog post animations
+export const blogPostAnimation = trigger('blogPost', [
+  transition('* => loaded', [
+    query(
+      'component-post-card',
+      [
+        style({ opacity: 0, transform: 'translateY(30px)' }),
+        stagger('150ms', [
+          animate(
+            '600ms ease-out',
+            style({ opacity: 1, transform: 'translateY(0)' })
+          )
+        ])
+      ],
+      { optional: true }
+    )
+  ])
+]);
+
+// Project animations
+export const projectAnimation = trigger('project', [
+  transition('* => loaded', [
+    query(
+      'component-project-card',
+      [
+        style({ opacity: 0, transform: 'translateY(30px)' }),
+        stagger('150ms', [
+          animate(
+            '600ms ease-out',
+            style({ opacity: 1, transform: 'translateY(0)' })
+          )
+        ])
+      ],
+      { optional: true }
+    )
+  ])
+]);
+
 // Hover animations for cards and interactive elements
 export const hoverLiftAnimation = trigger('hoverLift', [
   state('normal', style({ transform: 'translateY(0px)' })),

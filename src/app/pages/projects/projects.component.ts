@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Project } from '@interface/project.interface';
+import { projectAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
   selector: 'page-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
+  styleUrls: ['./projects.component.scss'],
+  animations: [projectAnimation]
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit {
+  animationState = '';
   projects: Project[] = [
     {
       title: 'Futuristic UI/UX Design',
@@ -259,17 +262,39 @@ export class ProjectsComponent {
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.triggerAnimation();
     }
   }
 
   prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.triggerAnimation();
     }
   }
 
   onSearch(term: string): void {
     this.searchTerm = term;
     this.currentPage = 1;
+    this.triggerAnimation();
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.triggerAnimation();
+  }
+
+  private triggerAnimation(): void {
+    this.animationState = '';
+    setTimeout(() => {
+      this.animationState = 'loaded';
+    }, 50);
+  }
+
+  ngOnInit() {
+    // Trigger project animations after view initialization
+    setTimeout(() => {
+      this.animationState = 'loaded';
+    }, 100);
   }
 }
