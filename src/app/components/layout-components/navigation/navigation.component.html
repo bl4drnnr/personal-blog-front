@@ -47,7 +47,10 @@
   <div class="nav-wrapper">
     <div class="nav-container">
       <div class="nav-left">
-        <div class="nav-burger" (click)="toggleMenu()" [@burgerMenu]="isMenuOpen ? 'open' : 'closed'">
+        <div class="nav-burger" 
+             (click)="toggleMenu()" 
+             [@burgerMenu]="isMenuOpen ? 'open' : 'closed'"
+             [attr.data-state]="isMenuOpen ? 'open' : 'closed'">
           <div class="nav-burger-top"></div>
           <div class="nav-burger-mid"></div>
           <div class="nav-burger-bottom"></div>

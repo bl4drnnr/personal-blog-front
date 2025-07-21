@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Inter+Tight:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap');
 
 @import 'highlight.js/styles/github.css';
+@import 'katex/dist/katex.min.css';
 
 :root {
   --colors-global--body-color: var(--colors-project--body);
@@ -3933,3 +3934,22 @@ a[routerLink] {
     color: #888;
   }
 }
+
+/* --- KaTeX and Blog Content Styles --- */
+.blog-image {
+  display: block;
+  margin: 2rem auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.image-caption {
+  text-align: center;
+  font-size: 0.95em;
+  color: #888;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+}
+

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { ScrollAnimationService } from '@services/scroll-animation.service';
+import { MathService } from '@services/math.service';
 import { Subscription } from 'rxjs';
 import hljs from 'highlight.js';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
@@ -30,47 +31,117 @@ export class BlogDetailComponent
   date = 'July 11, 2025';
   tags = ['Web Design', 'Trends', 'Inspiration'];
   blogContent = `
-    <h1>Introduction</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur consectetur, nisl nisi consectetur nisi, euismod euismod nisi nisi euismod.</p>
-    <h2>Typography Trends</h2>
-    <p>Modern web design leverages bold, readable fonts. <strong>Bold typography</strong> and <em>minimalist layouts</em> are at the heart of today’s web design.</p>
-    <h3>Font Pairings</h3>
-    <p>Choosing the right font pairings is essential for a cohesive look.</p>
-    <h2>Color and Visuals</h2>
-    <p>Vibrant gradients and modern color schemes are popular in 2025.</p>
-    <h3>Gradients</h3>
-    <p>Gradients add depth and interest to backgrounds and UI elements.</p>
+    <h1>Modern Web Design Trends That Inspired the LUCH Template</h1>
+    
+    <p>In the ever-evolving landscape of web design, staying ahead of trends while maintaining timeless appeal is a delicate balance. The LUCH template draws inspiration from cutting-edge design movements that prioritize both aesthetics and functionality, creating an experience that resonates with modern users.</p>
+    
+    <h2>The Rise of Bold Typography</h2>
+    <p>Typography has become the hero of modern web design. Gone are the days when text was merely functional – today's designs leverage typography as a primary visual element. The LUCH template embraces this trend with carefully selected font pairings that create hierarchy and visual interest while maintaining readability across all devices.</p>
+    
+    <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Modern typography and design elements" />
+    <p class="image-caption">Figure 1: Bold typography creates visual hierarchy and engagement in modern web design</p>
+    
+    <h2>Immersive Visual Storytelling</h2>
+    <p>Modern websites are moving beyond simple layouts to create immersive experiences. The LUCH template incorporates smooth animations, parallax effects, and strategic use of whitespace to guide users through a carefully crafted narrative journey.</p>
+    
+    <h3>The Power of Whitespace</h3>
+    <p>Minimalism continues to dominate modern design philosophy. The strategic use of whitespace in LUCH allows content to breathe, creating focus points that guide user attention naturally. This approach reduces cognitive load while enhancing the overall aesthetic appeal.</p>
+    
+    <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Clean minimalist design with whitespace" />
+    <p class="image-caption">Figure 2: Strategic whitespace usage creates focus and enhances user experience</p>
+    
+    <h2>Interactive Elements and Micro-interactions</h2>
+    <p>User engagement is amplified through thoughtful micro-interactions. From subtle hover effects to smooth page transitions, these small details contribute to a premium feel that keeps users engaged and creates memorable experiences.</p>
+    
     <blockquote>
-      "Design is not just what it looks like and feels like. Design is how it works."<br />
-      <span class="quote-author">– Steve Jobs</span>
+      "Good design is obvious. Great design is transparent. The best interactions feel inevitable – they anticipate user needs and respond intuitively."<br />
+      <span class="quote-author">– Modern Design Philosophy</span>
     </blockquote>
-    <h2>Accessibility</h2>
-    <p>Accessible and <u>easy-to-read</u> content is a must for modern web experiences.</p>
-    <ul>
-      <li>Responsive layouts for all devices</li>
-      <li>Accessible color contrast</li>
-      <li>Keyboard navigation</li>
-    </ul>
-    <h2>Code Example</h2>
-    <p>You can even include code snippets:</p>
-    <pre class="language-javascript"><code>const inspiration = [
-  'Bold Typography',
-  'Minimalist Layouts',
-  'Immersive Visuals',
-  'Accessibility',
-];
-console.log('LUCH Template Inspiration:', inspiration);
+    
+    <h2>Responsive Design Evolution</h2>
+    <p>The LUCH template embraces mobile-first design principles, ensuring optimal performance across all devices. Modern responsive design goes beyond simple scaling – it involves rethinking user flows and interactions for different contexts.</p>
+    
+    <h2>Technical Excellence Behind the Aesthetics</h2>
+    <p>Beautiful design means nothing without solid technical foundation. The following code example demonstrates how we implement smooth animations while maintaining performance:</p>
+    
+    <pre class="language-css"><code>.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}</code></pre>
+    
+    <h1>Advanced Content Rendering Examples</h1>
+    <p>This section demonstrates advanced content rendering capabilities including LaTeX formulas and image processing. Mathematical expressions can be written inline like $E = mc^2$ or as display equations:</p>
+    
+    <p>The famous quadratic formula is: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$</p>
+    
+    <h2>Sample Mathematical Images</h2>
+    <p>Here's an example of how mathematical content images would be displayed:</p>
+    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Mathematical formulas on a blackboard" />
+    <p class="image-caption">Figure 3: Mathematical formulas and equations demonstrate LaTeX integration</p>
+    
+    <h2>Mathematical Concepts</h2>
+    <p>Let's explore some mathematical concepts with inline formulas. The area of a circle is $A = \\pi r^2$, where $r$ is the radius.</p>
+    
+    <h3>Calculus Example</h3>
+    <p>Consider the derivative of $f(x) = x^2 + 3x + 2$:</p>
+    $$f'(x) = \\frac{d}{dx}(x^2 + 3x + 2) = 2x + 3$$
+    
+    <h3>Linear Algebra</h3>
+    <p>A simple matrix multiplication example:</p>
+    $$\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix} \\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} x + 2y \\\\ 3x + 4y \\end{pmatrix}$$
+    
+    <h2>Advanced Mathematical Visualization</h2>
+    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Mathematical equations and graphs" />
+    <p class="image-caption">Figure 4: Complex mathematical equations and graphs showcase advanced LaTeX capabilities</p>
+    
+    <h2>Complex Formulas</h2>
+    <p>Here's the famous Euler's formula that connects five fundamental mathematical constants:</p>
+    $$e^{i\\pi} + 1 = 0$$
+    
+    <p>And the beautiful integral representation of the Gamma function:</p>
+    $$\\Gamma(n) = \\int_0^\\infty t^{n-1} e^{-t} dt$$
+    
+    <h2>Typography with Math</h2>
+    <p>Modern web design leverages bold, readable fonts alongside mathematical notation. The combination of $\\LaTeX$ rendering and <strong>bold typography</strong> creates engaging technical content.</p>
+    
+    <blockquote>
+      "Mathematics is the language with which God has written the universe."<br />
+      <span class="quote-author">– Galileo Galilei</span>
+    </blockquote>
+    
+    <h2>Code and Math Together</h2>
+    <p>You can combine code snippets with mathematical formulas. For example, implementing the quadratic formula:</p>
+    <pre class="language-javascript"><code>function solveQuadratic(a, b, c) {
+  const discriminant = b * b - 4 * a * c;
+  if (discriminant >= 0) {
+    const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+    const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+    return [x1, x2];
+  }
+  return null; // No real solutions
+}
 </code></pre>
-    <h2>Lorem Ipsum Section</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur consectetur, nisl nisi consectetur nisi, euismod euismod nisi nisi euismod.</p>
-    <h3>Subsection Example</h3>
-    <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit.</p>
-    <ol>
-      <li>Class aptent taciti sociosqu ad litora torquent</li>
-      <li>Per conubia nostra, per inceptos himenaeos</li>
-      <li>Maecenas sed diam eget risus varius blandit</li>
-    </ol>
-    <p>Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+    
+    <p>This implements the mathematical formula: $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$</p>
+    
+    <h2>Statistics and Probability</h2>
+    <p>The normal distribution probability density function is given by:</p>
+    $$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}$$
+    
+    <p>Where $\\mu$ is the mean and $\\sigma$ is the standard deviation.</p>
   `;
 
   animationState = '';
@@ -82,9 +153,15 @@ console.log('LUCH Template Inspiration:', inspiration);
   private lastContent: string = '';
   private subscription: Subscription = new Subscription();
 
+  // Getter for processed content with LaTeX and image support
+  get processedContent(): string {
+    return this.mathService.processBlogContent(this.blogContent);
+  }
+
   constructor(
     private location: Location,
-    private scrollAnimationService: ScrollAnimationService
+    private scrollAnimationService: ScrollAnimationService,
+    private mathService: MathService
   ) {}
 
   ngOnInit(): void {
@@ -113,6 +190,7 @@ console.log('LUCH Template Inspiration:', inspiration);
   ngAfterViewChecked() {
     if (this.contentRef && this.blogContent !== this.lastContent) {
       this.highlightAllCode();
+      this.processMathInContent();
       this.lastContent = this.blogContent;
     }
   }
@@ -209,6 +287,12 @@ console.log('LUCH Template Inspiration:', inspiration);
       blocks.forEach((block: HTMLElement) => {
         hljs.highlightElement(block);
       });
+    }
+  }
+
+  private processMathInContent() {
+    if (this.contentRef) {
+      this.mathService.renderMathInElement(this.contentRef.nativeElement);
     }
   }
 }

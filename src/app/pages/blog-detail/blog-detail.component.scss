@@ -202,6 +202,117 @@ body .footer-section {
   transform: translateY(0);
 }
 
+// Blog image and content styles
+.blog-detail-content {
+  // Image styling with proper spacing
+  ::ng-deep .blog-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2.5rem 0 0.5rem 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  // Image caption styling
+  ::ng-deep .image-caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    margin: 0.5rem 0 2.5rem 0;
+    padding: 0 1rem;
+    line-height: 1.4;
+  }
+  
+  // Enhanced LaTeX styling to fix positioning issues
+  ::ng-deep .katex-display {
+    margin: 2rem 0;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: visible;
+    
+    .katex {
+      font-size: 1.2em !important;
+      line-height: 1.4 !important;
+    }
+  }
+  
+  ::ng-deep .katex {
+    font-size: 1em !important;
+    line-height: 1.3 !important;
+    vertical-align: baseline !important;
+  }
+  
+  // Ensure proper superscript and subscript positioning
+  ::ng-deep .katex .msupsub {
+    vertical-align: baseline !important;
+  }
+  
+  ::ng-deep .katex .mord + .msupsub {
+    margin-left: 0 !important;
+  }
+  
+  // Code block styling
+  ::ng-deep pre {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    
+    code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: 'Roboto Mono', monospace;
+    }
+  }
+  
+  // Blockquote styling
+  ::ng-deep blockquote {
+    border-left: 4px solid #e9ecef;
+    margin: 2rem 0;
+    padding: 1.5rem 2rem;
+    background: #f8f9fa;
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+    
+    .quote-author {
+      font-style: normal;
+      font-weight: 500;
+      display: block;
+      margin-top: 1rem;
+      text-align: right;
+    }
+  }
+  
+  // Better paragraph spacing
+  ::ng-deep p {
+    margin: 1.2rem 0;
+    line-height: 1.6;
+  }
+  
+  // Heading spacing
+  ::ng-deep h1, ::ng-deep h2, ::ng-deep h3 {
+    margin: 2.5rem 0 1.5rem 0;
+    
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
 @media (max-width: 991px) {
   .blog-detail-wrapper {
     max-width: 100%;
@@ -215,5 +326,41 @@ body .footer-section {
     transform: translate(-50%, -50%);
     padding: 1.2rem 0.5rem 1rem 0.5rem;
     border-radius: 0;
+  }
+  
+  .blog-detail-content {
+    ::ng-deep .blog-image {
+      margin: 2rem 0 0.5rem 0;
+      border-radius: 6px;
+    }
+    
+    ::ng-deep .image-caption {
+      font-size: 0.85rem;
+      margin: 0.5rem 0 2rem 0;
+      padding: 0 0.5rem;
+    }
+    
+    ::ng-deep .katex-display .katex {
+      font-size: 1.1em !important;
+    }
+    
+    ::ng-deep .katex {
+      font-size: 0.95em !important;
+    }
+    
+    ::ng-deep pre {
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin: 1.5rem 0;
+    }
+    
+    ::ng-deep blockquote {
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    ::ng-deep h1, ::ng-deep h2, ::ng-deep h3 {
+      margin: 2rem 0 1rem 0;
+    }
   }
 }
