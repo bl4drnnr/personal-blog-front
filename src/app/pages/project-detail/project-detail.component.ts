@@ -9,11 +9,17 @@ import {
   AfterViewChecked
 } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ScrollAnimationService } from '@services/scroll-animation.service';
 import { MathService } from '@services/math.service';
+import { ProjectsService } from '@services/projects.service';
+import { Project } from '@interface/project.interface';
+import { SEOService } from '@services/seo.service';
+import { SiteConfigService } from '@services/site-config.service';
 import { Subscription } from 'rxjs';
 import hljs from 'highlight.js';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'page-project-detail',
@@ -25,12 +31,34 @@ import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animatio
 export class ProjectDetailComponent
   implements AfterViewInit, OnInit, OnDestroy, AfterViewChecked
 {
-  title = 'Modern Web Design Trends That Inspired the LUCH Template';
-  description =
-    'Explore the latest trends in web design that shaped the look and feel of the LUCH template. From bold typography to immersive visuals, discover what makes modern web experiences stand out.';
-  date = 'July 11, 2025';
-  tags = ['Web Design', 'Trends', 'Inspiration'];
-  blogContent = `
+  project: Project | null = null;
+  isLoading = true;
+  notFound = false;
+
+  get title() {
+    return this.project?.title || 'Project';
+  }
+
+  get description() {
+    return this.project?.description || '';
+  }
+
+  get date() {
+    return this.project?.date || '';
+  }
+
+  get tags() {
+    return this.project?.tags || [];
+  }
+
+  get technologies() {
+    return this.project?.technologies || [];
+  }
+
+  get blogContent() {
+    return (
+      this.project?.content ||
+      `
     <h1>Math Rendering Test</h1>
     
     <p>In the ever-evolving landscape of web design, staying ahead of trends while maintaining timeless appeal is a delicate balance. The LUCH template draws inspiration from cutting-edge design movements that prioritize both aesthetics and functionality, creating an experience that resonates with modern users.</p>
@@ -144,7 +172,9 @@ export class ProjectDetailComponent
     $$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}$$
     
     <p>Where $\\mu$ is the mean and $\\sigma$ is the standard deviation.</p>
-  `;
+  `
+    );
+  }
 
   animationState = '';
   scrollProgress = 0;
@@ -161,8 +191,13 @@ export class ProjectDetailComponent
 
   constructor(
     private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
     private scrollAnimationService: ScrollAnimationService,
-    private mathService: MathService
+    private mathService: MathService,
+    private projectsService: ProjectsService,
+    private seoService: SEOService,
+    private siteConfigService: SiteConfigService
   ) {}
 
   ngOnInit(): void {
@@ -172,6 +207,66 @@ export class ProjectDetailComponent
         this.checkFooterScroll();
       })
     );
+
+    // Load project data based on route parameter
+    this.route.params.subscribe((params) => {
+      const slug = params['slug'];
+      if (slug) {
+        this.loadProject(slug);
+      } else {
+        this.notFound = true;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private loadProject(slug: string): void {
+    this.isLoading = true;
+    this.notFound = false;
+
+    this.projectsService.getProjectBySlug(slug).subscribe({
+      next: (project) => {
+        this.project = project;
+        this.isLoading = false;
+        this.updateSEO();
+      },
+      error: (error) => {
+        console.error('Error loading project:', error);
+        this.notFound = true;
+        this.isLoading = false;
+
+        // Navigate to 404 if project not found
+        this.router.navigate(['/404']);
+      }
+    });
+  }
+
+  private updateSEO(): void {
+    if (this.project) {
+      const siteConfig = this.siteConfigService.getCurrentConfig();
+      const fullUrl = `${environment.siteUrl}/projects/${this.project.slug}`;
+      this.seoService.updateForProject(this.project, fullUrl);
+
+      // Add structured data for better SEO
+      this.seoService.addStructuredData('Article', {
+        headline: this.project.title,
+        description: this.project.description,
+        author: {
+          '@type': 'Person',
+          name: siteConfig?.siteAuthor || 'Blog Author'
+        },
+        datePublished: this.project.date,
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': fullUrl
+        },
+        publisher: siteConfig?.organization || {
+          '@type': 'Organization',
+          name: siteConfig?.siteName || 'Personal Blog',
+          url: siteConfig?.siteUrl || environment.siteUrl
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {

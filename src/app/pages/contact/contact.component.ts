@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SEOService } from '@services/seo.service';
 
 @Component({
   selector: 'page-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
+  constructor(private seoService: SEOService) {}
+
+  ngOnInit() {
+    this.seoService.updatePageTitle('Contact');
+  }
   name: string = '';
   email: string = '';
   message: string = '';

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '@interface/post.interface';
+import { SEOService } from '@services/seo.service';
 import { blogPostAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
@@ -10,6 +11,9 @@ import { blogPostAnimation } from '@shared/animations/fade-in-up.animation';
 })
 export class BlogComponent implements OnInit {
   animationState = '';
+
+  constructor(private seoService: SEOService) {}
+
   posts: Post[] = [
     {
       title: 'The Future of AI in Design',
@@ -132,11 +136,15 @@ export class BlogComponent implements OnInit {
     const filtered = this.posts.filter(
       (post) =>
         post.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        post.category.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (post.category &&
+          post.category
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())) ||
         post.description
           .toLowerCase()
           .includes(this.searchTerm.toLowerCase()) ||
-        post.date.toLowerCase().includes(this.searchTerm.toLowerCase())
+        (post.date &&
+          post.date.toLowerCase().includes(this.searchTerm.toLowerCase()))
     );
     return Math.ceil(filtered.length / this.pageSize);
   }
@@ -145,11 +153,15 @@ export class BlogComponent implements OnInit {
     const filtered = this.posts.filter(
       (post) =>
         post.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        post.category.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (post.category &&
+          post.category
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())) ||
         post.description
           .toLowerCase()
           .includes(this.searchTerm.toLowerCase()) ||
-        post.date.toLowerCase().includes(this.searchTerm.toLowerCase())
+        (post.date &&
+          post.date.toLowerCase().includes(this.searchTerm.toLowerCase()))
     );
     const start = (this.currentPage - 1) * this.pageSize;
     return filtered.slice(start, start + this.pageSize);
@@ -188,6 +200,9 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Set page title
+    this.seoService.updatePageTitle('Blog');
+
     // Trigger post animations after view initialization
     setTimeout(() => {
       this.animationState = 'loaded';

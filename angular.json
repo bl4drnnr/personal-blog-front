@@ -20,6 +20,7 @@
             "outputPath": "dist/personal-blog-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "server": "src/main.server.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -32,20 +33,21 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "prerender": false
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "8kb"
                 }
               ],
               "outputHashing": "all"
@@ -69,6 +71,69 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "personal-blog-front:build:development",
+              "serverTarget": "personal-blog-front:server:development"
+            },
+            "production": {
+              "browserTarget": "personal-blog-front:build:production",
+              "serverTarget": "personal-blog-front:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/personal-blog-front",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/",
+              "/blog",
+              "/projects",
+              "/contact",
+              "/about-me",
+              "/blog/intro-to-cybersecurity",
+              "/blog/web-application-security",
+              "/blog/network-security-fundamentals",
+              "/projects/security-scanner-tool",
+              "/projects/vulnerability-assessment"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "personal-blog-front:build:production",
+              "serverTarget": "personal-blog-front:server:production"
+            },
+            "development": {
+              "browserTarget": "personal-blog-front:build:development",
+              "serverTarget": "personal-blog-front:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

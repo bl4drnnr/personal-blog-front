@@ -9,11 +9,17 @@ import {
   AfterViewChecked
 } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ScrollAnimationService } from '@services/scroll-animation.service';
 import { MathService } from '@services/math.service';
+import { BlogService } from '@services/blog.service';
+import { Post } from '@interface/post.interface';
+import { SEOService } from '@services/seo.service';
+import { SiteConfigService } from '@services/site-config.service';
 import { Subscription } from 'rxjs';
 import hljs from 'highlight.js';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'page-blog-detail',
@@ -25,12 +31,30 @@ import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animatio
 export class BlogDetailComponent
   implements AfterViewInit, OnInit, OnDestroy, AfterViewChecked
 {
-  title = 'Modern Web Design Trends That Inspired the LUCH Template';
-  description =
-    'Explore the latest trends in web design that shaped the look and feel of the LUCH template. From bold typography to immersive visuals, discover what makes modern web experiences stand out.';
-  date = 'July 11, 2025';
-  tags = ['Web Design', 'Trends', 'Inspiration'];
-  blogContent = `
+  post: Post | null = null;
+  isLoading = true;
+  notFound = false;
+
+  get title() {
+    return this.post?.title || 'Blog Post';
+  }
+
+  get description() {
+    return this.post?.description || '';
+  }
+
+  get date() {
+    return this.post?.publishDate || '';
+  }
+
+  get tags() {
+    return this.post?.tags || [];
+  }
+
+  get blogContent() {
+    return (
+      this.post?.content ||
+      `
     <h1>Math Rendering Test</h1>
     
     <p>In the ever-evolving landscape of web design, staying ahead of trends while maintaining timeless appeal is a delicate balance. The LUCH template draws inspiration from cutting-edge design movements that prioritize both aesthetics and functionality, creating an experience that resonates with modern users.</p>
@@ -144,7 +168,9 @@ export class BlogDetailComponent
     $$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}$$
     
     <p>Where $\\mu$ is the mean and $\\sigma$ is the standard deviation.</p>
-  `;
+  `
+    );
+  }
 
   animationState = '';
   scrollProgress = 0;
@@ -161,8 +187,13 @@ export class BlogDetailComponent
 
   constructor(
     private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
     private scrollAnimationService: ScrollAnimationService,
-    private mathService: MathService
+    private mathService: MathService,
+    private blogService: BlogService,
+    private seoService: SEOService,
+    private siteConfigService: SiteConfigService
   ) {}
 
   ngOnInit(): void {
@@ -172,6 +203,68 @@ export class BlogDetailComponent
         this.checkFooterScroll();
       })
     );
+
+    // Load post data based on route parameter
+    this.route.params.subscribe((params) => {
+      const slug = params['slug'];
+      if (slug) {
+        this.loadPost(slug);
+      } else {
+        this.notFound = true;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private loadPost(slug: string): void {
+    this.isLoading = true;
+    this.notFound = false;
+
+    this.blogService.getPostBySlug(slug).subscribe({
+      next: (post) => {
+        this.post = post;
+        this.isLoading = false;
+        this.updateSEO();
+      },
+      error: (error) => {
+        console.error('Error loading post:', error);
+        this.notFound = true;
+        this.isLoading = false;
+
+        // Navigate to 404 if post not found
+        this.router.navigate(['/404']);
+      }
+    });
+  }
+
+  private updateSEO(): void {
+    if (this.post) {
+      const siteConfig = this.siteConfigService.getCurrentConfig();
+      const fullUrl = `${environment.siteUrl}/blog/${this.post.slug}`;
+      this.seoService.updateForBlogPost(this.post, fullUrl);
+
+      // Add structured data for better SEO
+      this.seoService.addStructuredData('BlogPosting', {
+        headline: this.post.title,
+        description: this.post.description,
+        author: {
+          '@type': 'Person',
+          name: this.post.author || siteConfig?.siteAuthor || 'Blog Author'
+        },
+        datePublished: this.post.publishDate || this.post.date,
+        dateModified:
+          this.post.updatedDate || this.post.publishDate || this.post.date,
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': fullUrl
+        },
+        publisher: siteConfig?.organization || {
+          '@type': 'Organization',
+          name: siteConfig?.siteName || 'Personal Blog',
+          url: siteConfig?.siteUrl || environment.siteUrl
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {

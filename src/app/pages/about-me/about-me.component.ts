@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SEOService } from '@services/seo.service';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
@@ -9,6 +10,8 @@ import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animatio
 })
 export class AboutMeComponent implements OnInit {
   animationState = '';
+
+  constructor(private seoService: SEOService) {}
 
   // Page content structure - will be populated from backend API
   pageContent = {
@@ -21,6 +24,9 @@ export class AboutMeComponent implements OnInit {
   };
 
   ngOnInit() {
+    // Set page title
+    this.seoService.updatePageTitle('About');
+
     // Trigger animation after view is initialized
     setTimeout(() => {
       this.animationState = 'loaded';

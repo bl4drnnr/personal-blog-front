@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from '@interface/project.interface';
+import { SEOService } from '@services/seo.service';
 import { projectAnimation } from '@shared/animations/fade-in-up.animation';
 
 @Component({
@@ -10,6 +11,9 @@ import { projectAnimation } from '@shared/animations/fade-in-up.animation';
 })
 export class ProjectsComponent implements OnInit {
   animationState = '';
+
+  constructor(private seoService: SEOService) {}
+
   projects: Project[] = [
     {
       title: 'Futuristic UI/UX Design',
@@ -238,9 +242,16 @@ export class ProjectsComponent implements OnInit {
     const filtered = this.projects.filter(
       (project) =>
         project.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        project.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        project.aiModel.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        project.client.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (project.type &&
+          project.type.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
+        (project.aiModel &&
+          project.aiModel
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())) ||
+        (project.client &&
+          project.client
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())) ||
         project.date.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     return Math.ceil(filtered.length / this.pageSize);
@@ -250,9 +261,16 @@ export class ProjectsComponent implements OnInit {
     const filtered = this.projects.filter(
       (project) =>
         project.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        project.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        project.aiModel.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        project.client.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (project.type &&
+          project.type.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
+        (project.aiModel &&
+          project.aiModel
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())) ||
+        (project.client &&
+          project.client
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())) ||
         project.date.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     const start = (this.currentPage - 1) * this.pageSize;
@@ -292,6 +310,9 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Set page title
+    this.seoService.updatePageTitle('Projects');
+
     // Trigger project animations after view initialization
     setTimeout(() => {
       this.animationState = 'loaded';

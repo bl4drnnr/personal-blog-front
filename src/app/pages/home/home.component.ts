@@ -3,6 +3,7 @@ import { Project } from '@interface/project.interface';
 import { Post } from '@interface/post.interface';
 import { FaqQuestion } from '@interface/faq-question.interface';
 import { WhysSection } from '@interface/whys-section.interface';
+import { SEOService } from '@services/seo.service';
 import {
   fadeInUpStaggerAnimation,
   blogPostAnimation,
@@ -19,6 +20,8 @@ export class HomeComponent implements OnInit {
   animationState = '';
   projectsAnimationState = '';
   postsAnimationState = '';
+
+  constructor(private seoService: SEOService) {}
   projects: Project[] = [
     {
       title: 'Futuristic UI/UX Design',
@@ -156,6 +159,9 @@ export class HomeComponent implements OnInit {
   };
 
   ngOnInit() {
+    // Set page title
+    this.seoService.updatePageTitle('Home');
+
     // Trigger animations after view initialization with staggered timing
     setTimeout(() => {
       this.animationState = 'loaded';
