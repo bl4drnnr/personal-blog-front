@@ -16,33 +16,41 @@ export class MathService {
   renderMath(content: string): string {
     if (!content) return content;
 
-    // First, handle display math ($$...$$)
-    content = content.replace(/\$\$([^$]+)\$\$/g, (match, formula) => {
+    // First, handle display math ($$...$$) - more restrictive pattern
+    content = content.replace(/\$\$([\s\S]*?)\$\$/g, (match, formula) => {
       try {
-        return katex.renderToString(formula.trim(), {
+        const cleanFormula = formula.trim();
+        if (!cleanFormula) return match; // Return original if empty
+
+        return katex.renderToString(cleanFormula, {
           displayMode: true,
           throwOnError: false,
           errorColor: '#cc0000',
-          strict: 'warn'
+          strict: 'warn',
+          trust: false
         });
       } catch (error) {
-        console.warn('KaTeX display math error:', error);
-        return `<span style="color: #cc0000;">Math Error: ${formula}</span>`;
+        console.warn('KaTeX display math error:', error, 'Formula:', formula);
+        return `<div class="math-error" style="color: #cc0000; border: 1px solid #cc0000; padding: 4px; margin: 4px 0;">Math Error: ${formula.trim()}</div>`;
       }
     });
 
-    // Then, handle inline math ($...$)
-    content = content.replace(/\$([^$]+)\$/g, (match, formula) => {
+    // Then, handle inline math ($...$) - avoid matching display math remnants
+    content = content.replace(/\$([^$\n]+?)\$/g, (match, formula) => {
       try {
-        return katex.renderToString(formula.trim(), {
+        const cleanFormula = formula.trim();
+        if (!cleanFormula) return match; // Return original if empty
+
+        return katex.renderToString(cleanFormula, {
           displayMode: false,
           throwOnError: false,
           errorColor: '#cc0000',
-          strict: 'warn'
+          strict: 'warn',
+          trust: false
         });
       } catch (error) {
-        console.warn('KaTeX inline math error:', error);
-        return `<span style="color: #cc0000;">Math Error: ${formula}</span>`;
+        console.warn('KaTeX inline math error:', error, 'Formula:', formula);
+        return `<span class="math-error" style="color: #cc0000; border: 1px solid #cc0000; padding: 2px;">Math Error: ${formula.trim()}</span>`;
       }
     });
 
@@ -57,11 +65,29 @@ export class MathService {
   renderMathInElement(element: HTMLElement): void {
     if (!element) return;
 
+    // Skip if already processed (check for katex classes)
+    if (element.querySelector('.katex')) {
+      return;
+    }
+
     // Find all text nodes that might contain LaTeX
     const walker = document.createTreeWalker(
       element,
       NodeFilter.SHOW_TEXT,
-      null
+      (node) => {
+        // Skip nodes that are already inside katex elements
+        let parent = node.parentNode;
+        while (parent && parent !== element) {
+          if (
+            (parent as Element).classList &&
+            (parent as Element).classList.contains('katex')
+          ) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          parent = parent.parentNode;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
     );
 
     const textNodes: Text[] = [];

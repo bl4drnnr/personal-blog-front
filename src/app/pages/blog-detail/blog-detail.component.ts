@@ -31,9 +31,11 @@ export class BlogDetailComponent
   date = 'July 11, 2025';
   tags = ['Web Design', 'Trends', 'Inspiration'];
   blogContent = `
-    <h1>Modern Web Design Trends That Inspired the LUCH Template</h1>
+    <h1>Math Rendering Test</h1>
     
     <p>In the ever-evolving landscape of web design, staying ahead of trends while maintaining timeless appeal is a delicate balance. The LUCH template draws inspiration from cutting-edge design movements that prioritize both aesthetics and functionality, creating an experience that resonates with modern users.</p>
+
+    <a href="https://www.google.com">Google</a>
     
     <h2>The Rise of Bold Typography</h2>
     <p>Typography has become the hero of modern web design. Gone are the days when text was merely functional – today's designs leverage typography as a primary visual element. The LUCH template embraces this trend with carefully selected font pairings that create hierarchy and visual interest while maintaining readability across all devices.</p>
@@ -153,9 +155,8 @@ export class BlogDetailComponent
   private lastContent: string = '';
   private subscription: Subscription = new Subscription();
 
-  // Getter for processed content with LaTeX and image support
   get processedContent(): string {
-    return this.mathService.processBlogContent(this.blogContent);
+    return this.mathService.processImages(this.blogContent);
   }
 
   constructor(
@@ -181,7 +182,6 @@ export class BlogDetailComponent
     this.highlightAllCode();
     this.buildTableOfContents();
 
-    // Trigger animations after view initialization
     setTimeout(() => {
       this.animationState = 'loaded';
     }, 100);
@@ -190,7 +190,9 @@ export class BlogDetailComponent
   ngAfterViewChecked() {
     if (this.contentRef && this.blogContent !== this.lastContent) {
       this.highlightAllCode();
-      this.processMathInContent();
+      setTimeout(() => {
+        this.processMathInContent();
+      }, 50);
       this.lastContent = this.blogContent;
     }
   }
@@ -256,7 +258,6 @@ export class BlogDetailComponent
 
   toggleFullscreen() {
     this.isFullscreen = !this.isFullscreen;
-    // Optionally, scroll to top or focus content
     setTimeout(() => {
       if (this.isFullscreen) {
         document.body.classList.add('blog-fullscreen-active');
