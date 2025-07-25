@@ -16,7 +16,7 @@
     "extract-i18n": "ng extract-i18n",
     "fetch:slugs:dev": "NODE_ENV=development node scripts/fetch-slugs.mjs",
     "fetch:slugs:prod": "NODE_ENV=production node scripts/fetch-slugs.mjs",
-    "format": "prettier --write \"{src,packages}/**/*.ts\" && eslint \"{src,packages}/**/*.ts\" --fix"
+    "format": "prettier --write \"{src,packages}/**/*.ts\" \"scripts/**/*.mjs\" && eslint \"{src,packages}/**/*.ts\" --fix"
   },
   "private": true,
   "dependencies": {

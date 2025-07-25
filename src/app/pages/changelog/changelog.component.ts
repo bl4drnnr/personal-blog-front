@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangelogEntry } from '@shared/interfaces/changelog-entry.interface';
 import { changelogStaggerAnimation } from '@shared/animations/fade-in-up.animation';
+import { SEOService } from '@services/seo.service';
+import { LoadingService } from '@services/loading.service';
+import {
+  ChangelogService,
+  ChangelogPageData,
+  ChangelogLayoutData,
+  ChangelogPageContent
+} from '@services/changelog.service';
 
 @Component({
   selector: 'page-changelog',
@@ -10,55 +18,93 @@ import { changelogStaggerAnimation } from '@shared/animations/fade-in-up.animati
 })
 export class ChangelogComponent implements OnInit {
   animationState = '';
+  error: string | null = null;
   changelogEntries: ChangelogEntry[] = [];
 
-  ngOnInit(): void {
-    this.loadChangelogEntries();
+  // Data properties - will be populated from backend API
+  pageContent: ChangelogPageContent = {
+    title: '',
+    content: ''
+  };
 
-    // Trigger animation after view is initialized
-    setTimeout(() => {
-      this.animationState = 'loaded';
-    }, 100);
+  layoutData: ChangelogLayoutData = {
+    footerText: '',
+    heroImageMain: '',
+    heroImageSecondary: '',
+    heroImageMainAlt: '',
+    heroImageSecondaryAlt: '',
+    logoText: '',
+    breadcrumbText: '',
+    heroTitle: ''
+  };
+
+  constructor(
+    private seoService: SEOService,
+    private changelogService: ChangelogService,
+    private loadingService: LoadingService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadChangelogPageData();
   }
 
-  private loadChangelogEntries(): void {
-    this.changelogEntries = [
-      {
-        id: '1',
-        version: '1.1.0',
-        date: 'February 2025',
-        title: 'Enhanced User Experience',
-        description:
-          'Minor improvements to the overall appearance and performance of the template.',
-        changes: [
-          'Added lightbox gallery and description block to blog and project collection pages',
-          'Improved responsive design for mobile devices',
-          'Enhanced navigation accessibility',
-          'Optimized loading performance'
-        ]
-      },
-      {
-        id: '2',
-        version: '1.0.0',
-        date: 'January 2025',
-        title: 'Initial Release',
-        description: 'The template has been released!',
-        changes: [
-          'Complete website launch',
-          'Blog functionality with dynamic content',
-          'Projects showcase with detailed pages',
-          'Contact form implementation',
-          'Responsive design for all devices',
-          'Modern UI with smooth animations',
-          'SEO optimization',
-          'Analytics integration'
-        ]
-      }
-    ];
+  loadChangelogPageData(): void {
+    this.loadingService.show();
+    this.error = null;
 
-    // Sort by date (newest first)
-    this.changelogEntries.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    this.changelogService.getChangelogPageData().subscribe({
+      next: (data: ChangelogPageData) => {
+        this.pageContent = data.pageContent;
+        this.layoutData = data.layoutData;
+        this.changelogEntries = data.entries;
+
+        // Update SEO data
+        this.updateSEOData(data.seoData);
+
+        this.loadingService.hide();
+
+        // Trigger animation after data is loaded
+        setTimeout(() => {
+          this.animationState = 'loaded';
+        }, 100);
+      },
+      error: () => {
+        this.error =
+          'Failed to load changelog content. Please try again later.';
+        this.loadingService.hide();
+
+        // Set fallback page title even on error
+        this.seoService.updatePageTitle('Changelog');
+      }
+    });
+  }
+
+  private updateSEOData(seoData: any): void {
+    if (seoData.metaTitle) {
+      this.seoService.updatePageTitle(seoData.metaTitle);
+    } else {
+      this.seoService.updatePageTitle('Changelog');
+    }
+
+    if (seoData.metaDescription) {
+      this.seoService.updateMetaDescription(seoData.metaDescription);
+    }
+
+    if (seoData.metaKeywords) {
+      this.seoService.updateMetaKeywords(seoData.metaKeywords);
+    }
+
+    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
+      this.seoService.updateOpenGraphTags({
+        title: seoData.ogTitle,
+        description: seoData.ogDescription,
+        image: seoData.ogImage,
+        url: window.location.href
+      });
+    }
+
+    if (seoData.structuredData) {
+      this.seoService.updateStructuredData(seoData.structuredData);
+    }
   }
 }
