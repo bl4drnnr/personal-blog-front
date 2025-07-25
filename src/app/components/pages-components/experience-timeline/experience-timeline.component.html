@@ -39,7 +39,13 @@
               {{ getDateRange(position.startDate, position.endDate) }}
             </div>
             <h4 class="position-title">{{ position.title }}</h4>
-            <p class="position-description">{{ position.description }}</p>
+            <div class="position-description" [innerHTML]="position.description"></div>
+            
+            <div class="skills-box" *ngIf="position.skills && position.skills.length > 0">
+              <div class="skills-list">
+                <span class="skill-item" *ngFor="let skill of position.skills">{{ skill }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

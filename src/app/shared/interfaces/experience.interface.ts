@@ -3,6 +3,7 @@ export interface Position {
   startDate: string;
   endDate: string | null; // null for current position
   description: string;
+  skills?: string[];
 }
 
 export interface Experience {
