@@ -1,6 +1,8 @@
-# Personal Blog Frontend - SSR & SEO Optimized
+# Personal Blog Frontend
 
 A high-performance Angular 17 blog application with Server-Side Rendering (SSR) and comprehensive SEO optimization. Built with Angular Universal for optimal search engine visibility and fast loading times.
+
+> **Note**: This frontend requires the [personal-blog-api](../personal-blog-api) to be running for full functionality.
 
 ## 🚀 Features
 
@@ -48,6 +50,7 @@ scripts/                     # Build automation scripts
 - Node.js 18+ (LTS recommended)
 - npm 9+
 - Angular CLI 17+
+- **Backend API** running at `http://localhost:3000` (see [personal-blog-api setup](../personal-blog-api/README.md))
 
 ### Installation
 
@@ -59,17 +62,25 @@ cd personal-blog-front
 # Install dependencies
 npm install
 
-# Start development server
+# Start development server (requires API to be running)
 npm start
 ```
 
 The application will be available at `http://localhost:4202`
 
+### Backend Connection
+
+The frontend connects to the API at:
+- **Development**: `http://localhost:3000/api`
+- **Production**: Configured via `API_URL` environment variable
+
+Make sure your [personal-blog-api](../personal-blog-api) is running before starting the frontend.
+
 ### Development Commands
 
 ```bash
 # Development server
-npm start                    # Starts dev server on port 4202
+npm start                    # Starts dev server on port 4202 (requires API)
 
 # Code quality
 npm run format              # Format code with Prettier & ESLint
@@ -78,12 +89,20 @@ npm test                    # Run unit tests
 # Build variants
 npm run build               # Client-side build only
 npm run build:ssr           # SSR build (client + server)
-npm run build:prerender     # Full pre-rendering build
+npm run build:prerender     # Full pre-rendering build (requires API)
 
 # SSR development
 npm run serve:ssr           # Serve SSR in development mode
-npm run fetch:slugs:dev     # Fetch routes for development
+npm run fetch:slugs:dev     # Fetch routes from API for development
+npm run fetch:slugs:prod    # Fetch routes from API for production
+npm run update:routes       # Update Angular route configuration
 ```
+
+### Important Notes
+
+- **API Dependency**: Most commands require the backend API to be running
+- **Build Process**: `npm run build:prerender` fetches content from API to generate static routes
+- **Development Mode**: Works with graceful degradation if API is unavailable, but full functionality requires API connection
 
 ## 🏗️ Production Deployment
 
@@ -102,8 +121,14 @@ export const environment = {
 
 #### Environment Variables
 Set these in your deployment environment:
-- `API_URL`: Your backend API base URL
-- `SITE_URL`: Your frontend domain URL
+- `API_URL`: Your backend API base URL (e.g., `https://api.yourdomain.com/api`)
+- `SITE_URL`: Your frontend domain URL (e.g., `https://yourdomain.com`)
+
+**Example Production Environment:**
+```bash
+export API_URL="https://api.yourdomain.com/api"
+export SITE_URL="https://yourdomain.com"
+```
 
 ### API Requirements
 
@@ -119,9 +144,7 @@ Response: {
   "siteUrl": "https://your-domain.com",
   "defaultImage": "https://your-domain.com/og-default.jpg",
   "keywords": "your, keywords, here",
-  "twitterHandle": "@your_handle",
   "socialMedia": {
-    "twitter": "https://twitter.com/your_handle",
     "linkedin": "https://linkedin.com/in/yourprofile",
     "github": "https://github.com/yourusername"
   },
@@ -192,7 +215,12 @@ Response: {
 ### Build & Deploy Process
 
 ```bash
-# 1. Build the application with pre-rendering
+# 1. Ensure your backend API is running and accessible
+# 2. Set environment variables
+export API_URL="https://your-api-domain.com/api"
+export SITE_URL="https://your-domain.com"
+
+# 3. Build the application with pre-rendering
 npm run build:prerender
 
 # This command will:
@@ -202,6 +230,8 @@ npm run build:prerender
 # - Pre-render all pages to static HTML
 # - Output to dist/personal-blog-front/
 ```
+
+**Important**: The build process requires your API to be accessible and returning data. If the API is not available, the build will fail.
 
 ### Production Build Output
 
@@ -311,7 +341,6 @@ The SEO service automatically handles:
 - **Title tags**: Dynamic titles with site branding
 - **Meta descriptions**: Unique descriptions per page
 - **Open Graph tags**: Social media sharing optimization
-- **Twitter Cards**: Twitter-specific sharing tags
 - **Canonical URLs**: Prevents duplicate content issues
 - **Structured data**: JSON-LD for rich snippets
 
@@ -361,12 +390,24 @@ npm install
 - Verify API endpoints are accessible during build
 - Check that all routes resolve properly
 - Reduce the number of routes for testing
+- Ensure API returns valid JSON responses
 
 #### 4. SEO Not Working
 - Verify meta tags in browser developer tools
-- Test with social media debuggers:
-  - [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
-  - [Twitter Card Validator](https://cards-dev.twitter.com/validator)
+- Test with social media debuggers (Facebook, LinkedIn)
+- Ensure API provides all required SEO data (title, description, featuredImage)
+
+#### 5. API Connection Issues
+```bash
+# Check if API is running
+curl http://localhost:3000/api/site/config
+
+# Verify CORS settings in API
+# Ensure API allows requests from http://localhost:4202
+
+# Check environment configuration
+echo $API_URL
+```
 
 ### Performance Optimization
 

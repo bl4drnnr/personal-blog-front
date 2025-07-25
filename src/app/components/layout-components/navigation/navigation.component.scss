@@ -81,29 +81,29 @@
 
 #hero-background {
   transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   .row-bg-item-desktop.footer-background-active {
     .row-bg-change-image-main {
       opacity: 0;
     }
-    
+
     .row-bg-change-image-absolute {
       opacity: 1;
       z-index: 1;
     }
-    
+
     .main-overlay {
       background: rgba(0, 0, 0, 0.3);
     }
   }
-  
+
   .row-bg-change-image-main {
     transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     opacity: 1;
     position: relative;
     z-index: 2;
   }
-  
+
   .row-bg-change-image-absolute {
     transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     opacity: 0;
@@ -114,7 +114,7 @@
     height: 100%;
     z-index: 1;
   }
-  
+
   .main-overlay {
     transition: background 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
@@ -227,7 +227,6 @@
   transform: translateY(100%);
 }
 
-// Hover animations
 .logo-link:hover .logo-heading-primary {
   transform: translateY(-100%);
 }
@@ -244,7 +243,6 @@
   transform: translateY(0);
 }
 
-// Dimming effect for link components
 component-link-block {
   transition: opacity 0.3s ease;
   opacity: 1;

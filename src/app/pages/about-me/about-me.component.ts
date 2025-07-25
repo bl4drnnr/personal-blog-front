@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SEOService } from '@services/seo.service';
+import { LoadingService } from '@services/loading.service';
+import {
+  AboutService,
+  AboutPageData,
+  AboutLayoutData
+} from '@services/about.service';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
+import { Experience } from '@interface/experience.interface';
+import { Certificate } from '@interface/certificate.interface';
 
 @Component({
   selector: 'page-about-me',
@@ -10,26 +18,98 @@ import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animatio
 })
 export class AboutMeComponent implements OnInit {
   animationState = '';
+  error: string | null = null;
 
-  constructor(private seoService: SEOService) {}
+  constructor(
+    private seoService: SEOService,
+    private aboutService: AboutService,
+    private loadingService: LoadingService
+  ) {}
 
-  // Page content structure - will be populated from backend API
+  // Data properties - will be populated from backend API
   pageContent = {
-    title: "Hello, I'm Mikhail!",
-    paragraphs: [
-      "Welcome to my personal blog. I'm passionate about web development, design, and sharing knowledge with the world. Here you'll find my thoughts, projects, and more about my journey in tech and creativity.",
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus dolorum, consectetur quo ipsum labore quisquam commodi provident ducimus tenetur natus fuga blanditiis facilis saepe, ratione amet asperiores culpa sunt velit perspiciatis. Accusantium inventore repudiandae aspernatur earum magni dolorum rerum quisquam atque fuga architecto! Error nihil numquam dicta quibusdam sint architecto cupiditate molestias odit dolorum tempore magni facilis saepe mollitia libero atque fugit reiciendis eius fuga cumque minus optio voluptatem, doloribus quisquam culpa! Nulla ducimus deserunt expedita ipsum incidunt ad nobis hic accusamus tempore laboriosam repellendus architecto numquam aliquid distinctio natus autem at alias laudantium odio enim corrupti, labore repellat mollitia. Molestias eius omnis maxime quidem esse? Voluptates exercitationem, debitis quas totam pariatur earum iure unde amet. Reprehenderit autem corporis nihil maxime possimus laudantium optio delectus ullam dolore fuga? Consectetur iusto, voluptatem ipsum, ad iure voluptates, in earum sunt illo quibusdam suscipit deserunt labore minus rerum beatae. Facilis, quaerat debitis id ut consectetur dignissimos vero obcaecati. Aspernatur dicta accusantium eos, blanditiis vero unde minus soluta id tenetur reiciendis, nesciunt veritatis? Voluptatibus voluptates illo optio quas ea porro eos eius hic tenetur autem dolor adipisci doloribus eaque maiores ipsum nemo soluta suscipit deleniti, nulla nisi. Ducimus magnam alias vitae, atque eum totam nesciunt sapiente architecto maxime cum, rerum tempora nisi, hic itaque neque. Tenetur cupiditate optio doloremque! Doloremque recusandae inventore ex vitae mollitia et, repellendus exercitationem, dignissimos sit ad adipisci cupiditate fugiat ullam magnam aperiam tempora suscipit ut pariatur a eligendi quis. Provident sit veritatis nam molestiae fugit inventore rerum animi asperiores deserunt ipsam amet dignissimos totam earum eos id, voluptate doloribus corporis officiis consequuntur vitae minima explicabo necessitatibus atque? Mollitia minus magni repellendus enim, nisi quam sint minima. Necessitatibus repellendus non blanditiis, culpa id nesciunt ab, adipisci, quasi dolor corporis eaque labore ipsam! Recusandae laborum veritatis totam veniam qui hic unde.',
-      'Feel free to connect with me or explore my latest work!'
-    ]
+    title: '',
+    content: ''
   };
 
-  ngOnInit() {
-    // Set page title
-    this.seoService.updatePageTitle('About');
+  layoutData: AboutLayoutData = {
+    footerText: '',
+    heroImageMain: '',
+    heroImageSecondary: '',
+    heroImageMainAlt: '',
+    heroImageSecondaryAlt: '',
+    logoText: '',
+    breadcrumbText: '',
+    heroTitle: '',
+    contactTiles: []
+  };
 
-    // Trigger animation after view is initialized
-    setTimeout(() => {
-      this.animationState = 'loaded';
-    }, 100);
+  experiences: Experience[] = [];
+  certificates: Certificate[] = [];
+  contactTiles: any[] = [];
+
+  ngOnInit() {
+    this.loadAboutPageData();
+  }
+
+  loadAboutPageData(): void {
+    this.loadingService.show();
+    this.error = null;
+
+    this.aboutService.getAboutPageData().subscribe({
+      next: (data: AboutPageData) => {
+        this.pageContent = data.pageContent;
+        this.layoutData = data.layoutData;
+        this.experiences = data.experiences;
+        this.certificates = data.certificates;
+        this.contactTiles = data.layoutData.contactTiles || [];
+
+        // Update SEO data
+        this.updateSEOData(data.seoData);
+
+        this.loadingService.hide();
+
+        // Trigger animation after data is loaded
+        setTimeout(() => {
+          this.animationState = 'loaded';
+        }, 100);
+      },
+      error: () => {
+        this.error = 'Failed to load page content. Please try again later.';
+        this.loadingService.hide();
+
+        // Set fallback page title even on error
+        this.seoService.updatePageTitle('About');
+      }
+    });
+  }
+
+  private updateSEOData(seoData: any): void {
+    if (seoData.metaTitle) {
+      this.seoService.updatePageTitle(seoData.metaTitle);
+    } else {
+      this.seoService.updatePageTitle('About');
+    }
+
+    if (seoData.metaDescription) {
+      this.seoService.updateMetaDescription(seoData.metaDescription);
+    }
+
+    if (seoData.metaKeywords) {
+      this.seoService.updateMetaKeywords(seoData.metaKeywords);
+    }
+
+    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
+      this.seoService.updateOpenGraphTags({
+        title: seoData.ogTitle,
+        description: seoData.ogDescription,
+        image: seoData.ogImage,
+        url: window.location.href
+      });
+    }
+
+    if (seoData.structuredData) {
+      this.seoService.updateStructuredData(seoData.structuredData);
+    }
   }
 }

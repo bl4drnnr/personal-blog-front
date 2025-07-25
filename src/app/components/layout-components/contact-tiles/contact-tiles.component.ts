@@ -1,13 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-export interface ContactTile {
-  link: string;
-  image: string;
-  alt: string;
-  label: string;
-  sublabel?: string;
-  target?: string;
-}
+import { ContactTile } from '@interface/contact-tile.interface';
 
 @Component({
   selector: 'component-contact-tiles',

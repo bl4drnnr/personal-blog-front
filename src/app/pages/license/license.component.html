@@ -29,12 +29,12 @@
             <p class="text-animate" *ngFor="let paragraph of pageContent.additionalInfo.paragraphs">
               {{ paragraph }}
             </p>
-          
-            <p class="text-animate">For questions regarding licensing or usage, please contact us through our 
+
+            <p class="text-animate">For questions regarding licensing or usage, please contact us through our
             <a href="/contact">contact page</a>.</p>
           </div>
         </div>
-        
+
         <div class="license-tiles">
           <div *ngFor="let tile of licenseTiles; let last = last">
             <div class="content-text">
@@ -42,8 +42,8 @@
               <p class="text-animate">{{ tile.description }}</p>
             </div>
             <div class="link-wrapper">
-              <component-button-link 
-                *ngFor="let link of tile.links" 
+              <component-button-link
+                *ngFor="let link of tile.links"
                 [title]="link.label"
                 textPosition="right"
                 iconType="button"
@@ -59,4 +59,4 @@
       </div>
     </div>
   </section>
-</default-layout> 
+</default-layout>

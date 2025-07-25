@@ -81,15 +81,6 @@ export class SEOService {
       });
     }
 
-    // Set Twitter Card meta tags
-    this.updateTag('twitter:card', 'summary_large_image', 'name');
-    this.updateTag('twitter:title', data.title, 'name');
-    this.updateTag('twitter:description', data.description, 'name');
-    this.updateTag('twitter:image', data.image, 'name');
-    if (this.siteConfig?.twitterHandle) {
-      this.updateTag('twitter:creator', this.siteConfig.twitterHandle, 'name');
-    }
-
     // Set canonical URL
     if (data.url) {
       this.updateLinkTag('canonical', data.url);
@@ -130,6 +121,51 @@ export class SEOService {
     const siteName = this.siteConfig?.siteName || 'Personal Blog';
     const fullTitle = `${siteName} | ${pageName}`;
     this.title.setTitle(fullTitle);
+  }
+
+  updateMetaDescription(description: string): void {
+    this.updateTag('description', description);
+  }
+
+  updateMetaKeywords(keywords: string): void {
+    this.updateTag('keywords', keywords);
+  }
+
+  updateOpenGraphTags(ogData: {
+    title?: string;
+    description?: string;
+    image?: string;
+    url?: string;
+  }): void {
+    if (ogData.title) {
+      this.updateTag('og:title', ogData.title, 'property');
+    }
+    if (ogData.description) {
+      this.updateTag('og:description', ogData.description, 'property');
+    }
+    if (ogData.image) {
+      this.updateTag('og:image', ogData.image, 'property');
+    }
+    if (ogData.url) {
+      this.updateTag('og:url', ogData.url, 'property');
+    }
+  }
+
+  updateStructuredData(structuredData: any): void {
+    // Remove existing structured data
+    const existing = document.querySelector(
+      'script[type="application/ld+json"][data-about="true"]'
+    );
+    if (existing) {
+      existing.remove();
+    }
+
+    // Add new structured data
+    const script = document.createElement('script');
+    script.setAttribute('type', 'application/ld+json');
+    script.setAttribute('data-about', 'true');
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
   }
 
   private updateTag(

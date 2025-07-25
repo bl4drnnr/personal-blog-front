@@ -18,7 +18,7 @@
         <div class="content-text">
           <h2 class="text-animate">{{ pageContent.title }}</h2>
           <p class="privacy-date text-animate">{{ pageContent.lastUpdated }}</p>
-          
+
           <div *ngFor="let section of pageContent.sections">
             <h3 class="text-animate">{{ section.title }}</h3>
             <ng-container *ngFor="let item of section.content">
@@ -32,7 +32,7 @@
             </ng-container>
           </div>
         </div>
-        
+
         <div class="privacy-additional">
           <div class="content-text">
             <h3 class="text-animate">{{ pageContent.cookiePolicy.title }}</h3>
@@ -48,4 +48,4 @@
       </div>
     </div>
   </section>
-</default-layout> 
+</default-layout>

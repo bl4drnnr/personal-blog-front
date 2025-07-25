@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  margin-top: 3rem;
 }
 
 @media (max-width: 900px) {
@@ -59,4 +58,4 @@
 .row-heading-small {
   font-size: 1rem;
   color: var(--colors-global--primary-color);
-} 
+}

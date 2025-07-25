@@ -1,20 +1,33 @@
 <default-layout
-  [footerText]="'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
-  [heroImageMain]="'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
-  [heroImageSecondary]="'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
-  [heroImageMainAlt]="'Abstract Gradient Art'"
-  [heroImageSecondaryAlt]="'Abstract Gradient Art'"
-  [logoText]="'Luch'"
-  [breadcrumbText]="'About Me'"
-  [heroTitle]="'About Me'"
+  [footerText]="layoutData.footerText"
+  [heroImageMain]="layoutData.heroImageMain"
+  [heroImageSecondary]="layoutData.heroImageSecondary"
+  [heroImageMainAlt]="layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="layoutData.heroImageSecondaryAlt"
+  [logoText]="layoutData.logoText"
+  [breadcrumbText]="layoutData.breadcrumbText"
+  [heroTitle]="layoutData.heroTitle"
   [showHomePageLink]="true"
   [hideScrollProgressBar]="false"
   [showHeader]="false"
+  [preventPicChange]="true"
 >
   <section class="about-me-section content-text" [@fadeInUpStagger]="animationState">
     <h2 class="text-animate">{{ pageContent.title }}</h2>
-    <p class="text-animate" *ngFor="let paragraph of pageContent.paragraphs">
-      {{ paragraph }}
-    </p>
+    <div class="text-animate content-html" [innerHTML]="pageContent.content"></div>
+
+    <experience-timeline
+      class="text-animate"
+      [experiences]="experiences"
+    ></experience-timeline>
+
+    <certificates
+      class="text-animate"
+      [certificates]="certificates"
+    ></certificates>
+
+    <div class="contact-tiles-wrapper">
+      <component-contact-tiles [tiles]="contactTiles"></component-contact-tiles>
+    </div>
   </section>
-</default-layout> 
+</default-layout>

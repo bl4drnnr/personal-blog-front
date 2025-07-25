@@ -10,7 +10,7 @@
     "update:routes": "node scripts/update-angular-routes.mjs",
     "serve:ssr": "ng run personal-blog-front:serve-ssr",
     "serve:ssr:prod": "node dist/personal-blog-front/server/server.mjs",
-    "front:restart": "pm2 restart bahdashych-on-security-front",
+    "front:restart": "pm2 restart personal-blog-front",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "extract-i18n": "ng extract-i18n",

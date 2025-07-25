@@ -9,6 +9,7 @@ import { PaginationComponent } from '@components/pagination/pagination.component
 import { InputComponent } from '@components/input/input.component';
 import { ButtonComponent } from '@components/button/button.component';
 import { TextareaComponent } from '@components/textarea/textarea.component';
+import { LoadingSpinnerComponent } from '@components/loading-spinner/loading-spinner.component';
 
 const components: any = [
   PostCardComponent,
@@ -18,7 +19,8 @@ const components: any = [
   PaginationComponent,
   InputComponent,
   ButtonComponent,
-  TextareaComponent
+  TextareaComponent,
+  LoadingSpinnerComponent
 ];
 
 @NgModule({
