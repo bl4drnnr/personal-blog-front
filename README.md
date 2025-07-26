@@ -1,116 +1,355 @@
 # Personal Blog Frontend
 
-A high-performance Angular 17 blog application with Server-Side Rendering (SSR) and comprehensive SEO optimization. Built with Angular Universal for optimal search engine visibility and fast loading times.
+A high-performance Angular 17 application with comprehensive Server-Side Rendering (SSR), static pre-rendering, and advanced SEO optimization. Built with Angular Universal for optimal search engine visibility and modern web performance standards.
 
-> **Note**: This frontend requires the [personal-blog-api](../personal-blog-api) to be running for full functionality.
+## Architecture Overview
 
-## 🚀 Features
+### Core Technologies
 
-- **Server-Side Rendering (SSR)** with Angular Universal
-- **Static Pre-rendering** for all blog posts and project pages
-- **Dynamic SEO optimization** with meta tags, Open Graph, and structured data
-- **Automatic route generation** from API data
-- **Mobile-first responsive design**
-- **Modern Angular 17** with standalone application builder
-- **TypeScript strict mode** enabled
-- **Comprehensive build automation**
+- **Framework**: Angular 17 with SSR and standalone application builder
+- **Rendering**: Angular Universal with prerendering for static HTML generation
+- **Language**: TypeScript with strict mode enabled
+- **Styling**: SCSS with CSS custom properties for theming
+- **Content Processing**: KaTeX for LaTeX math rendering, highlight.js for code syntax
+- **Animations**: Angular Animations with staggered loading effects
+- **Build**: Angular CLI with custom scripts for dynamic route generation
 
-## 📁 Project Structure
+### Design Patterns
+
+- **Modular Architecture**: Three-tier component organization (basic, layout, pages)
+- **Service-Oriented**: Dedicated services for data fetching, SEO, and utilities
+- **Interface-Driven Development**: Comprehensive TypeScript interfaces
+- **SSR-First Design**: Optimized for server-side rendering and SEO
+- **Progressive Enhancement**: Works without JavaScript, enhanced with client-side features
+
+## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── components/           # Reusable UI components
-│   │   ├── basic-components/     # Generic UI elements
-│   │   ├── layout-components/    # Header, footer, navigation
-│   │   └── pages-components/     # Page-specific components
-│   ├── layouts/             # Page layout wrappers
-│   ├── pages/               # Route components
-│   ├── services/            # Business logic services
-│   │   ├── blog.service.ts      # Blog posts management
-│   │   ├── projects.service.ts  # Projects management  
+│   ├── components/              # Three-tier component system
+│   │   ├── basic-components/    # Reusable UI primitives
+│   │   │   ├── button/          # Custom button component
+│   │   │   ├── input/           # Form input components
+│   │   │   ├── post-card/       # Blog post cards
+│   │   │   └── project-card/    # Project showcase cards
+│   │   ├── layout-components/   # Layout and navigation
+│   │   │   ├── header/          # Site header with navigation
+│   │   │   ├── footer/          # Site footer
+│   │   │   ├── navigation/      # Main navigation component
+│   │   │   └── carousel-words/  # Text carousel effects
+│   │   └── pages-components/    # Page-specific components
+│   │       ├── certificates/    # Professional certificates
+│   │       ├── experience-timeline/ # Work experience display
+│   │       └── whys-section/    # Feature showcase
+│   ├── layouts/                 # Page layout wrappers
+│   │   ├── default-layout/      # Standard page layout
+│   │   └── hero-layout/         # Hero section layout
+│   ├── pages/                   # Route components
+│   │   ├── home/                # Landing page
+│   │   ├── blog/                # Blog listing
+│   │   ├── blog-detail/         # Individual blog posts
+│   │   ├── projects/            # Project listing
+│   │   ├── project-detail/      # Individual projects
+│   │   ├── about-me/            # Professional profile
+│   │   ├── contact/             # Contact form
+│   │   ├── changelog/           # Platform updates
+│   │   ├── license/             # Legal documentation
+│   │   └── privacy/             # Privacy policy
+│   ├── services/                # Business logic services
+│   │   ├── blog.service.ts      # Blog post data management
+│   │   ├── projects.service.ts  # Project data management
 │   │   ├── seo.service.ts       # SEO meta tags & structured data
 │   │   ├── math.service.ts      # LaTeX math rendering
-│   │   └── scroll-animation.service.ts
-│   └── shared/              # Shared utilities
-│       ├── interfaces/          # TypeScript interfaces
-│       └── animations/          # Angular animations
-├── assets/                  # Static assets
-├── environments/            # Environment configurations
-└── main.ts / main.server.ts # App bootstrap files
-scripts/                     # Build automation scripts
-├── fetch-slugs.mjs         # API data fetching & route generation
-└── update-angular-routes.mjs # Angular config updates
+│   │   ├── site-config.service.ts # Site configuration
+│   │   ├── loading.service.ts   # Global loading states
+│   │   └── scroll-animation.service.ts # Scroll-based animations
+│   └── shared/                  # Shared utilities
+│       ├── interfaces/          # TypeScript type definitions
+│       ├── animations/          # Angular animation definitions
+│       └── styles/              # Global SCSS styles
+├── assets/                      # Static assets
+│   ├── images/                  # Image files
+│   ├── icons/                   # SVG icons
+│   └── slugs-data.json         # Generated route data
+├── environments/                # Environment configurations
+└── scripts/                     # Build automation
+    ├── fetch-slugs.mjs         # API data fetching for builds
+    ├── update-angular-routes.mjs # Route configuration updates
+    └── update-prerender-config.mjs # Prerender route updates
 ```
 
-## 🛠️ Development Setup
+## Core Features
+
+### Server-Side Rendering & Static Generation
+
+#### Angular Universal Integration
+- **Full SSR Support**: Complete server-side rendering with Angular Universal
+- **Static Prerendering**: All blog posts and projects pre-rendered to static HTML
+- **Hydration**: Seamless client-side hydration for interactive features
+- **SEO Optimization**: Search engines receive fully rendered HTML with metadata
+
+#### Dynamic Route Generation
+- **Build-Time Fetching**: Routes generated from backend API during build process
+- **Automatic Updates**: Route configuration updated automatically from API data
+- **Static HTML Generation**: Each route pre-rendered with complete content and SEO data
+- **Fallback Support**: Client-side routing for dynamic content updates
+
+#### Build Process Integration
+```bash
+# Complete build pipeline
+npm run build:prerender
+# 1. Fetches all blog/project slugs from API
+# 2. Updates Angular route configuration
+# 3. Builds client and server bundles
+# 4. Pre-renders all routes to static HTML
+# 5. Outputs optimized static site
+```
+
+### Content Management & Rendering
+
+#### Dynamic HTML Content Rendering
+
+The application uses a sophisticated content rendering system for blog posts and project details:
+
+##### Content Processing Pipeline
+```typescript
+// Blog/Project Detail Components (blog-detail.component.ts, project-detail.component.ts)
+get processedContent(): string {
+  return this.mathService.processImages(this.blogContent);
+}
+```
+
+##### innerHTML Rendering with Post-Processing
+The main content is rendered using Angular's `[innerHTML]` binding with comprehensive post-processing:
+
+**Template Implementation:**
+```html
+<!-- blog-detail.component.html & project-detail.component.html -->
+<div class="blog-detail-content content-text text-animate" 
+     #contentRef 
+     [innerHTML]="processedContent">
+</div>
+```
+
+**Post-Processing Steps:**
+```typescript
+ngAfterViewInit() {
+  this.highlightAllCode();        // Apply syntax highlighting
+  this.buildTableOfContents();    // Generate navigation TOC
+}
+
+ngAfterViewChecked() {
+  if (this.contentRef && this.blogContent !== this.lastContent) {
+    this.highlightAllCode();      // Re-highlight code blocks
+    setTimeout(() => {
+      this.processMathInContent(); // Render LaTeX formulas
+    }, 50);
+    this.lastContent = this.blogContent;
+  }
+}
+```
+
+##### Content Enhancement Features
+
+**1. Code Syntax Highlighting**
+- **Library**: highlight.js for comprehensive language support
+- **Implementation**: Automatic detection and highlighting of `<pre><code>` blocks
+- **Languages**: Supports all major programming languages
+- **Styling**: Custom themes that match the site design
+
+**2. LaTeX Math Rendering**
+- **Library**: KaTeX for fast, high-quality math rendering
+- **Syntax Support**: 
+  - Inline math: `$formula$`
+  - Display math: `$$formula$$`
+- **Error Handling**: Graceful fallback for invalid formulas
+- **Performance**: DOM-based rendering after content insertion
+
+**3. Image Processing & Optimization**
+- **Lazy Loading**: Automatic `loading="lazy"` attribute addition
+- **Responsive Images**: `max-width: 100%; height: auto;` styling
+- **CSS Classes**: Automatic `blog-image` class for styling consistency
+- **Captions**: Support for image captions with proper styling
+
+**4. Table of Contents Generation**
+- **Automatic TOC**: Generated from heading tags in content
+- **Hierarchy Support**: H1, H2, H3 levels with proper indentation
+- **Smooth Scrolling**: Navigation to sections with scroll behavior
+- **Numbering**: Automatic section numbering for better organization
+
+##### CSS Classes for Dynamic Content
+
+When creating backend content, use these CSS classes for proper styling:
+
+**Image Classes:**
+```html
+<!-- Automatically applied by image processor -->
+<img src="image.jpg" class="blog-image" loading="lazy" style="max-width: 100%; height: auto;">
+
+<!-- For image captions -->
+<p class="image-caption">Caption text here</p>
+```
+
+**Content Structure Classes:**
+```scss
+// Available in _detail-page.scss
+.blog-detail-content {
+  // Enhanced styling for dynamic content
+  ::ng-deep .blog-image { /* Image styling with hover effects */ }
+  ::ng-deep .image-caption { /* Centered italic captions */ }
+  ::ng-deep .katex-display { /* Math formula display */ }
+  ::ng-deep pre { /* Code block styling */ }
+  ::ng-deep blockquote { /* Quote styling */ }
+  ::ng-deep table { /* Table formatting */ }
+}
+```
+
+**Table Styling:**
+```html
+<!-- Tables automatically styled -->
+<table>
+  <thead>
+    <tr><th>Header 1</th><th>Header 2</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Data 1</td><td>Data 2</td></tr>
+  </tbody>
+</table>
+```
+
+**Math Formula Examples:**
+```html
+<!-- Inline math -->
+<p>The formula $E = mc^2$ is famous.</p>
+
+<!-- Display math -->
+<p>$$\int_{a}^{b} f(x) dx = F(b) - F(a)$$</p>
+```
+
+##### Content Creation Guidelines for Backend
+
+When creating content in your backend API, ensure:
+
+1. **HTML Structure**: Use semantic HTML tags (`<h1>`, `<h2>`, `<h3>`, `<p>`, `<blockquote>`)
+2. **Code Blocks**: Wrap code in `<pre><code class="language-javascript">` for syntax highlighting
+3. **Math Formulas**: Use LaTeX syntax within `$...$` or `$$...$$` delimiters
+4. **Images**: Include proper `alt` attributes; styling applied automatically
+5. **Tables**: Use standard HTML table structure for automatic styling
+6. **Quotes**: Use `<blockquote>` tags for styled quotations
+
+### SEO & Meta Management
+
+#### Comprehensive SEO Service
+- **Dynamic Meta Tags**: Title, description, keywords updated per page
+- **Open Graph Integration**: Social media sharing optimization
+- **Structured Data**: JSON-LD for rich search engine snippets
+- **Canonical URLs**: Prevents duplicate content issues
+- **Article Markup**: Specialized schema for blog posts and projects
+
+#### Social Media Optimization
+- **Open Graph Tags**: Facebook, LinkedIn sharing optimization
+- **Twitter Cards**: Enhanced Twitter sharing appearance
+- **Dynamic Images**: Featured images for each post/project
+- **Author Attribution**: Proper author and publication metadata
+
+### Component Architecture
+
+#### Three-Tier Component System
+
+**1. Basic Components**
+- **Purpose**: Reusable UI primitives and form elements
+- **Examples**: Button, Input, Textarea, Post Card, Project Card
+- **Design**: Highly configurable with input/output patterns
+- **Styling**: Self-contained SCSS with theme integration
+
+**2. Layout Components**
+- **Purpose**: Site structure and navigation elements
+- **Examples**: Header, Footer, Navigation, Carousel, Marquee
+- **Features**: Responsive design, accessibility, animation integration
+- **Patterns**: Smart components with data fetching capabilities
+
+**3. Page Components**
+- **Purpose**: Specialized components for specific page functionality
+- **Examples**: Certificate display, Experience timeline, Feature sections
+- **Integration**: Tightly coupled with page data and business logic
+- **Reusability**: Page-specific but modular for maintainability
+
+#### Layout System
+- **Default Layout**: Standard page wrapper with header/footer
+- **Hero Layout**: Landing page layout with hero sections
+- **Responsive Design**: Mobile-first approach with breakpoints
+- **Animation Integration**: Staggered loading animations
+
+### State Management & Data Flow
+
+#### Service-Based Architecture
+```typescript
+// Data flow pattern
+Backend API → Angular Service → Component → Template → User
+```
+
+#### Core Services
+
+**SEO Service:**
+- Dynamic meta tag management
+- Structured data generation
+- Social media optimization
+- Page-specific SEO updates
+
+**Math Service:**
+- LaTeX formula processing
+- Image optimization
+- Content enhancement
+- Error handling for invalid formulas
+
+**Site Config Service:**
+- Global site configuration
+- API-driven settings
+- Environment-specific configuration
+- Fallback handling
+
+**Loading Service:**
+- Global loading state management
+- Progress indicators
+- Error state handling
+- User experience optimization
+
+### Performance Optimization
+
+#### Bundle Management
+- **Lazy Loading**: Route-based code splitting
+- **Tree Shaking**: Unused code elimination
+- **Asset Optimization**: Image and resource optimization
+- **Caching Strategy**: 1-year static asset caching
+
+#### Animation Performance
+- **CSS Transforms**: Hardware-accelerated animations
+- **Staggered Loading**: Progressive content revelation
+- **Scroll Animations**: Intersection Observer-based effects
+- **Smooth Transitions**: Cubic bezier timing functions
+
+## Installation & Setup
 
 ### Prerequisites
 
 - Node.js 18+ (LTS recommended)
 - npm 9+
 - Angular CLI 17+
-- **Backend API** running at `http://localhost:3000` (see [personal-blog-api setup](../personal-blog-api/README.md))
-
-### Installation
-
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd personal-blog-front
-
-# Install dependencies
-npm install
-
-# Start development server (requires API to be running)
-npm start
-```
-
-The application will be available at `http://localhost:4202`
-
-### Backend Connection
-
-The frontend connects to the API at:
-- **Development**: `http://localhost:3000/api`
-- **Production**: Configured via `API_URL` environment variable
-
-Make sure your [personal-blog-api](../personal-blog-api) is running before starting the frontend.
-
-### Development Commands
-
-```bash
-# Development server
-npm start                    # Starts dev server on port 4202 (requires API)
-
-# Code quality
-npm run format              # Format code with Prettier & ESLint
-npm test                    # Run unit tests
-
-# Build variants
-npm run build               # Client-side build only
-npm run build:ssr           # SSR build (client + server)
-npm run build:prerender     # Full pre-rendering build (requires API)
-
-# SSR development
-npm run serve:ssr           # Serve SSR in development mode
-npm run fetch:slugs:dev     # Fetch routes from API for development
-npm run fetch:slugs:prod    # Fetch routes from API for production
-npm run update:routes       # Update Angular route configuration
-```
-
-### Important Notes
-
-- **API Dependency**: Most commands require the backend API to be running
-- **Build Process**: `npm run build:prerender` fetches content from API to generate static routes
-- **Development Mode**: Works with graceful degradation if API is unavailable, but full functionality requires API connection
-
-## 🏗️ Production Deployment
+- Backend API running (see [personal-blog-api](../personal-blog-api/README.md))
 
 ### Environment Configuration
 
-Create environment files for production:
+#### Development (`.env` or `src/environments/environment.ts`)
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:3000/api',
+  siteUrl: 'http://localhost:4202'
+};
+```
 
-#### `src/environments/environment.prod.ts`
+#### Production (`src/environments/environment.prod.ts`)
 ```typescript
 export const environment = {
   production: true,
@@ -119,371 +358,187 @@ export const environment = {
 };
 ```
 
-#### Environment Variables
-Set these in your deployment environment:
-- `API_URL`: Your backend API base URL (e.g., `https://api.yourdomain.com/api`)
-- `SITE_URL`: Your frontend domain URL (e.g., `https://yourdomain.com`)
+### Installation Steps
 
-**Example Production Environment:**
+#### 1. Install Dependencies
 ```bash
-export API_URL="https://api.yourdomain.com/api"
-export SITE_URL="https://yourdomain.com"
-```
-
-### API Requirements
-
-Your backend API should provide these endpoints:
-
-#### Site Configuration
-```
-GET /site/config
-Response: {
-  "siteName": "Your Site Name",
-  "siteDescription": "Your site description",
-  "siteAuthor": "Your Name",
-  "siteUrl": "https://your-domain.com",
-  "defaultImage": "https://your-domain.com/og-default.jpg",
-  "keywords": "your, keywords, here",
-  "socialMedia": {
-    "linkedin": "https://linkedin.com/in/yourprofile",
-    "github": "https://github.com/yourusername"
-  },
-  "organization": {
-    "name": "Your Organization",
-    "url": "https://your-domain.com",
-    "logo": "https://your-domain.com/logo.jpg"
-  }
-}
-```
-
-#### Blog Posts
-```
-GET /posts/slugs
-Response: [
-  {
-    "slug": "post-slug",
-    "title": "Post Title", 
-    "description": "Post description",
-    "publishDate": "2024-01-15",
-    "tags": ["tag1", "tag2"]
-  }
-]
-
-GET /posts/:slug
-Response: {
-  "slug": "post-slug",
-  "title": "Post Title",
-  "description": "Post description", 
-  "content": "<html content>",
-  "publishDate": "2024-01-15",
-  "updatedDate": "2024-01-16",
-  "tags": ["tag1", "tag2"],
-  "featuredImage": "https://example.com/image.jpg",
-  "author": "Author Name",
-  "excerpt": "Post excerpt"
-}
-```
-
-#### Projects  
-```
-GET /projects/slugs
-Response: [
-  {
-    "slug": "project-slug",
-    "title": "Project Title",
-    "description": "Project description",
-    "date": "2024-01-10", 
-    "tags": ["tag1", "tag2"]
-  }
-]
-
-GET /projects/:slug  
-Response: {
-  "slug": "project-slug",
-  "title": "Project Title",
-  "description": "Project description",
-  "content": "<html content>",
-  "date": "2024-01-10",
-  "tags": ["tag1", "tag2"],
-  "featuredImage": "https://example.com/image.jpg",
-  "technologies": ["TypeScript", "Angular"],
-  "githubUrl": "https://github.com/user/repo",
-  "demoUrl": "https://demo.example.com"
-}
-```
-
-### Build & Deploy Process
-
-```bash
-# 1. Ensure your backend API is running and accessible
-# 2. Set environment variables
-export API_URL="https://your-api-domain.com/api"
-export SITE_URL="https://your-domain.com"
-
-# 3. Build the application with pre-rendering
-npm run build:prerender
-
-# This command will:
-# - Fetch all post/project slugs from your API
-# - Generate static routes configuration  
-# - Build client and server bundles
-# - Pre-render all pages to static HTML
-# - Output to dist/personal-blog-front/
-```
-
-**Important**: The build process requires your API to be accessible and returning data. If the API is not available, the build will fail.
-
-### Production Build Output
-
-```
-dist/personal-blog-front/
-├── browser/                 # Client-side files
-│   ├── index.html              # Main HTML file
-│   ├── *.js                    # JavaScript bundles
-│   ├── *.css                   # Stylesheets
-│   └── assets/                 # Static assets
-└── server/                  # Server-side files
-    └── server.mjs              # SSR server bundle
-```
-
-### Server Configuration
-
-#### Option 1: Node.js Server (Recommended)
-Deploy the server bundle directly:
-
-```bash
-# Copy dist/personal-blog-front to your server
-# Install production dependencies
-npm ci --production
-
-# Start the server
-node dist/personal-blog-front/server/server.mjs
-```
-
-#### Option 2: Static Hosting + Fallback
-For static hosting with fallback support:
-
-1. Upload `dist/personal-blog-front/browser/` to your static host
-2. Configure fallback routing to serve `index.html` for unmatched routes  
-3. Pre-rendered pages will be served as static HTML
-
-### PM2 Configuration (if using PM2)
-
-Create `ecosystem.config.js`:
-
-```javascript
-module.exports = {
-  apps: [{
-    name: 'personal-blog-front',
-    script: 'dist/personal-blog-front/server/server.mjs',
-    instances: 'max',
-    exec_mode: 'cluster',
-    env: {
-      NODE_ENV: 'production',
-      PORT: 3000,
-      API_URL: 'https://your-api-domain.com/api',
-      SITE_URL: 'https://your-domain.com'
-    }
-  }]
-};
-```
-
-```bash
-# Deploy with PM2
-pm2 start ecosystem.config.js
-pm2 save
-```
-
-### GitHub Actions CI/CD
-
-Create `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to Production
-
-on:
-  push:
-    branches: [ master ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build application  
-      run: npm run build:prerender
-      env:
-        API_URL: ${{ secrets.API_URL }}
-        SITE_URL: ${{ secrets.SITE_URL }}
-        
-    - name: Deploy to server
-      # Add your deployment steps here
-      run: echo "Deploy to production server"
-```
-
-## 🔧 SEO Configuration
-
-### Meta Tags Management
-
-The SEO service automatically handles:
-
-- **Title tags**: Dynamic titles with site branding
-- **Meta descriptions**: Unique descriptions per page
-- **Open Graph tags**: Social media sharing optimization
-- **Canonical URLs**: Prevents duplicate content issues
-- **Structured data**: JSON-LD for rich snippets
-
-### Dynamic Configuration
-
-All SEO and site configuration data is now fetched dynamically from your backend API. The system will automatically use the configuration from the `/site/config` endpoint, including:
-
-- Site name and description
-- Author information  
-- Default Open Graph images
-- Keywords and SEO metadata
-- Social media handles
-- Organization/publisher information
-
-### Benefits of Dynamic Configuration
-
-- **No personal data in code**: All personal information stays in your backend
-- **Easy updates**: Change site information without redeploying frontend
-- **Environment flexibility**: Different configs for staging/production
-- **SEO consistency**: Automatic SEO tag generation using your brand data
-
-### Error Handling
-
-If the site config API is unavailable or fails to load, the application will throw errors and fail to build/render. This ensures that configuration issues are immediately visible and must be addressed before deployment.
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-#### 1. Build Errors
-```bash
-# Clear Angular cache
-rm -rf .angular/cache
-ng cache clean
-
-# Clear node modules  
-rm -rf node_modules package-lock.json
 npm install
 ```
 
-#### 2. SSR Rendering Issues
-- Check that all components are SSR-compatible
-- Ensure `document` and `window` objects are properly checked
-- Use Angular's `isPlatformBrowser()` for browser-specific code
+#### 2. Backend Integration
+Ensure your backend API provides these endpoints:
+- `GET /site/config` - Site configuration and metadata
+- `GET /posts/slugs` - Blog post slugs for route generation
+- `GET /posts/:slug` - Individual blog post data
+- `GET /projects/slugs` - Project slugs for route generation
+- `GET /projects/:slug` - Individual project data
+- `GET /home` - Homepage content and featured items
+- `GET /about` - About page content and professional data
 
-#### 3. Pre-rendering Hangs
-- Verify API endpoints are accessible during build
-- Check that all routes resolve properly
-- Reduce the number of routes for testing
-- Ensure API returns valid JSON responses
-
-#### 4. SEO Not Working
-- Verify meta tags in browser developer tools
-- Test with social media debuggers (Facebook, LinkedIn)
-- Ensure API provides all required SEO data (title, description, featuredImage)
-
-#### 5. API Connection Issues
+#### 3. Development Server
 ```bash
-# Check if API is running
-curl http://localhost:3000/api/site/config
+# Start development server (requires backend API)
+npm start
 
-# Verify CORS settings in API
-# Ensure API allows requests from http://localhost:4202
-
-# Check environment configuration
-echo $API_URL
+# Application available at http://localhost:4202
 ```
 
-### Performance Optimization
+## Available Scripts
 
-#### Bundle Size
-Current bundle size limits are set generously for development. For production:
+### Development Commands
+```bash
+npm start                    # Start development server on port 4202
+npm run watch               # Build with watch mode
+npm test                    # Run unit tests via Karma
+npm run format              # Format with Prettier and ESLint fixes
+```
 
-1. Update `angular.json` budget limits:
-```json
-{
-  "type": "initial", 
-  "maximumWarning": "500kb",
-  "maximumError": "1mb"
+### Build Commands
+```bash
+npm run build               # Client-side build only
+npm run build:ssr          # Full SSR build (client + server)
+npm run build:prerender    # Complete prerendering build
+```
+
+### Data & Route Management
+```bash
+npm run fetch:slugs:dev     # Fetch API data for development
+npm run fetch:slugs:prod    # Fetch API data for production
+npm run update:routes       # Update Angular route configuration
+```
+
+### Production Commands
+```bash
+npm run serve:ssr:prod      # Serve SSR build in production mode
+npm run front:restart       # Restart PM2 process
+```
+
+## SSR & Prerendering Architecture
+
+### Build-Time Data Integration
+
+#### Dynamic Route Generation Process
+1. **API Data Fetching**: `scripts/fetch-slugs.mjs` calls backend APIs
+2. **Route Configuration**: Updates `src/prerender-routes.ts` with dynamic routes
+3. **Static Generation**: Angular prerenderer generates HTML for all routes
+4. **SEO Integration**: Each page includes complete meta tags and structured data
+
+#### Backend Integration Pattern
+```typescript
+// Service pattern for SSR data fetching
+@Injectable({ providedIn: 'root' })
+export class HomeService {
+  getHomePageData(): Observable<HomePageData> {
+    return this.http.get<HomePageData>(`${this.apiUrl}/home`);
+  }
 }
 ```
 
-2. Analyze bundle size:
+#### SSR Data Structure
+Each API endpoint returns structured data including:
+- **Page Content**: Title, description, body content
+- **Layout Data**: Hero images, navigation, footer configuration
+- **SEO Data**: Meta tags, Open Graph, structured data
+- **Dynamic Content**: Featured posts, projects, testimonials
+
+### Production Deployment
+
+#### Environment Variables
 ```bash
-npm run build -- --stats-json
-npx webpack-bundle-analyzer dist/personal-blog-front/browser/stats.json
+# Required for production builds
+export API_URL="https://your-api-domain.com/api"
+export SITE_URL="https://your-domain.com"
 ```
 
-#### Lazy Loading
-Most routes use lazy loading. Ensure new routes follow this pattern:
+#### Build Process
+```bash
+# Complete production build
+npm run build:prerender
 
-```typescript
-const routes: Routes = [
-  {
-    path: 'new-route',
-    loadComponent: () => import('./new-route/new-route.component').then(m => m.NewRouteComponent)
-  }
-];
+# This process:
+# 1. Fetches content from backend API
+# 2. Generates static routes configuration
+# 3. Builds client and server bundles
+# 4. Pre-renders all pages with API data
+# 5. Outputs optimized static site to dist/
 ```
 
-## 📝 Development Notes
+#### Deployment Options
 
-### Adding New Blog Posts/Projects
+**Option 1: Node.js SSR Server**
+```bash
+# Deploy server bundle
+node dist/personal-blog-front/server/server.mjs
+```
 
-1. Content is automatically fetched from your API
-2. Routes are generated automatically during build
-3. SEO tags are applied automatically
-4. No code changes needed for new content
+**Option 2: Static Hosting**
+```bash
+# Deploy static files from dist/personal-blog-front/browser/
+# Configure fallback routing for client-side navigation
+```
 
-### Modifying Route Generation
+**Option 3: PM2 Process Management**
+```bash
+npm run front:restart
+pm2 status
+pm2 logs personal-blog-front
+```
 
-Edit `scripts/fetch-slugs.mjs` to modify:
-- API endpoints
-- Route patterns  
-- Data transformation
-- Static routes list
+## Security Considerations
 
-### Custom Components
+### Content Security
+- **XSS Prevention**: Angular's built-in sanitization for `[innerHTML]`
+- **Content Validation**: Server-side content validation required
+- **Image Security**: Proper image source validation
+- **Script Injection**: LaTeX and code highlighting libraries properly sandboxed
 
-Follow existing patterns:
-- Use SCSS for styling
-- Implement proper TypeScript interfaces
-- Follow Angular style guide
-- Add proper error handling
+### Build Security
+- **Environment Variables**: Sensitive data managed through environment configuration
+- **API Validation**: Build fails if required API endpoints unavailable
+- **Content Validation**: Type checking for all API responses
 
-## 🤝 Contributing
+## Performance Metrics
 
-1. Follow the existing code style
-2. Run `npm run format` before committing
-3. Ensure all tests pass
-4. Update documentation for new features
+### Bundle Analysis
+- **Initial Bundle**: Optimized for first page load
+- **Lazy Loading**: Route-based code splitting
+- **Asset Optimization**: Images, fonts, and resources optimized
+- **Caching Strategy**: Long-term caching for static assets
 
-## 📄 License
+### SEO Performance
+- **Core Web Vitals**: Optimized for Google's performance metrics
+- **First Contentful Paint**: Fast initial rendering with SSR
+- **Largest Contentful Paint**: Optimized image loading and critical CSS
+- **Cumulative Layout Shift**: Stable layouts with proper sizing
 
-[Your license here]
+## Contributing
 
-## 🆘 Support
+### Development Standards
+- TypeScript strict mode enabled
+- ESLint + Prettier configuration
+- Angular style guide compliance
+- Comprehensive interface definitions
+- Unit testing for components and services
 
-For issues and questions:
-1. Check this documentation first
-2. Review Angular Universal documentation
-3. Create an issue in the repository
+### Code Organization
+- Follow three-tier component architecture
+- Use services for business logic
+- Implement proper error handling
+- Document complex functionality
+- Maintain consistent naming conventions
+
+## License
+
+This project is licensed under a custom license. See the LICENSE file for details.
+
+## Support
+
+For technical support or implementation questions:
+1. Review this comprehensive documentation
+2. Check the troubleshooting section
+3. Examine the backend API integration requirements
+4. Create an issue in the project repository
 
 ---
 
-*This documentation covers the complete setup and deployment process. Keep it updated as the project evolves.*
+This frontend represents a sophisticated implementation of modern Angular development practices, combining the SEO benefits of static site generation with the flexibility of dynamic content management through comprehensive backend API integration.
