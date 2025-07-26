@@ -41,10 +41,6 @@ export class ScrollUtilitiesService {
     }
   }
 
-  getCurrentFooterState(): boolean {
-    return this.isFooterReachedSubject.value;
-  }
-
   buildTableOfContents(contentElement: HTMLElement): TocItem[] {
     if (!contentElement) return [];
 

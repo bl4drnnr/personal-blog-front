@@ -21,24 +21,6 @@ export class SEOService {
     });
   }
 
-  private get defaultSEO() {
-    if (!this.siteConfig) {
-      const error =
-        'Site configuration not available. SEO service requires site configuration to be loaded first.';
-      console.error(error);
-      throw new Error(error);
-    }
-
-    return {
-      title: this.siteConfig.siteName,
-      description: this.siteConfig.siteDescription,
-      author: this.siteConfig.siteAuthor,
-      image: this.siteConfig.defaultImage,
-      type: 'website' as const,
-      keywords: this.siteConfig.keywords
-    };
-  }
-
   updatePageTitle(pageName: string): void {
     const siteName = this.siteConfig?.siteName;
     const fullTitle = `${siteName} | ${pageName}`;

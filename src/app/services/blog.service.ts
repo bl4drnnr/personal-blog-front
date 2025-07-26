@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { Post } from '@interface/post.interface';
 
@@ -79,14 +78,6 @@ export class BlogService {
     return this.http.get<BlogPageData>(`${this.apiUrl}/blog`, { params });
   }
 
-  getAllTags(): Observable<string[]> {
-    if (!this.apiUrl) {
-      return throwError(() => new Error('API URL not configured'));
-    }
-
-    return this.http.get<string[]>(`${this.apiUrl}/blog/tags`);
-  }
-
   getAllPosts(): Observable<Post[]> {
     if (!this.apiUrl) {
       return throwError(() => new Error('API URL not configured'));
@@ -101,27 +92,5 @@ export class BlogService {
     }
 
     return this.http.get<Post>(`${this.apiUrl}/posts/${slug}`);
-  }
-
-  getPostsSlugs(): Observable<
-    {
-      slug: string;
-      title: string;
-      description: string;
-      publishDate: string;
-      tags: string[];
-    }[]
-  > {
-    return this.getAllPosts().pipe(
-      map((posts) =>
-        posts.map((post) => ({
-          slug: post.slug,
-          title: post.title,
-          description: post.description,
-          publishDate: post.publishDate || '',
-          tags: post.tags || []
-        }))
-      )
-    );
   }
 }

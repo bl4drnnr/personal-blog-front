@@ -13,10 +13,6 @@ export class LoadingService {
     return this.loadingSubject.asObservable();
   }
 
-  get isLoading(): boolean {
-    return this.loadingSubject.value;
-  }
-
   show(): void {
     this.loadingSubject.next(true);
   }

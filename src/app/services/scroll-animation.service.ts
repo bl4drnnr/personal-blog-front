@@ -30,8 +30,4 @@ export class ScrollAnimationService {
 
     this.scrollProgress.next(progress);
   }
-
-  public getScrollProgress(): number {
-    return this.scrollProgress.value;
-  }
 }

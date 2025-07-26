@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap, filter, take } from 'rxjs/operators';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { SiteConfig } from '@interface/site-config.interface';
 
@@ -46,27 +46,5 @@ export class SiteConfigService {
           throw error;
         }
       });
-  }
-
-  getConfig(): Observable<SiteConfig> {
-    return this.config$.pipe(
-      filter((config): config is SiteConfig => config !== null),
-      take(1)
-    ) as Observable<SiteConfig>;
-  }
-
-  getCurrentConfig(): SiteConfig {
-    const config = this.configSubject.value;
-    if (!config) {
-      throw new Error(
-        'Site configuration not loaded. Ensure API is available and responding.'
-      );
-    }
-    return config;
-  }
-
-  // Method to refresh config if needed
-  refreshConfig(): void {
-    this.loadConfig();
   }
 }

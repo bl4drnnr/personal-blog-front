@@ -1,4 +1,4 @@
-name: Bahdashcyh on Security - Front build and deployment
+name: Front build and deployment
 
 on:
   push:

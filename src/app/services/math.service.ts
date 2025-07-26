@@ -165,21 +165,4 @@ export class MathService {
 
     return content;
   }
-
-  /**
-   * Main method to process blog content with both LaTeX and images
-   * @param content Raw HTML content from backend
-   * @returns Processed HTML content
-   */
-  processBlogContent(content: string): string {
-    if (!content) return content;
-
-    // First process images
-    let processedContent = this.processImages(content);
-
-    // Then process LaTeX formulas
-    processedContent = this.renderMath(processedContent);
-
-    return processedContent;
-  }
 }

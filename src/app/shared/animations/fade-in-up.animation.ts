@@ -102,23 +102,6 @@ export const projectAnimation = trigger('project', [
   ])
 ]);
 
-// Hover animations for cards and interactive elements
-export const hoverLiftAnimation = trigger('hoverLift', [
-  state('normal', style({ transform: 'translateY(0px)' })),
-  state('hovered', style({ transform: 'translateY(-5px)' })),
-  transition('normal <=> hovered', animate('300ms ease'))
-]);
-
-export const slideInAnimation = trigger('slideIn', [
-  transition(':enter', [
-    style({ transform: 'translateX(-100%)' }),
-    animate('300ms ease-in', style({ transform: 'translateX(0%)' }))
-  ]),
-  transition(':leave', [
-    animate('300ms ease-out', style({ transform: 'translateX(-100%)' }))
-  ])
-]);
-
 // Navigation menu slide animation
 export const navMenuSlideAnimation = trigger('navMenuSlide', [
   state(
@@ -158,61 +141,3 @@ export const burgerMenuAnimation = trigger('burgerMenu', [
   ),
   transition('closed <=> open', [animate('300ms ease')])
 ]);
-
-// Project card hover animations
-export const projectCardHoverAnimation = trigger('projectCardHover', [
-  state(
-    'normal',
-    style({
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-    })
-  ),
-  state(
-    'hovered',
-    style({
-      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
-    })
-  ),
-  transition('normal <=> hovered', [
-    animate('375ms cubic-bezier(0.165, 0.84, 0.44, 1)')
-  ])
-]);
-
-export const projectCardImageAnimation = trigger('projectCardImage', [
-  state(
-    'normal',
-    style({
-      transform: 'translateY(0%)'
-    })
-  ),
-  state(
-    'hovered',
-    style({
-      transform: 'translateY(-100%)'
-    })
-  ),
-  transition('normal <=> hovered', [
-    animate('500ms cubic-bezier(0.165, 0.84, 0.44, 1)')
-  ])
-]);
-
-export const projectCardImageSecondaryAnimation = trigger(
-  'projectCardImageSecondary',
-  [
-    state(
-      'normal',
-      style({
-        transform: 'translateY(100%)'
-      })
-    ),
-    state(
-      'hovered',
-      style({
-        transform: 'translateY(0%)'
-      })
-    ),
-    transition('normal <=> hovered', [
-      animate('500ms cubic-bezier(0.165, 0.84, 0.44, 1)')
-    ])
-  ]
-);
