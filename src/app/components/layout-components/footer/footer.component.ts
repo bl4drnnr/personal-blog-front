@@ -52,10 +52,6 @@ export class FooterComponent {
     {
       title: 'Powered by Webflow',
       link: 'https://try.webflow.com/9wyc5a5fesf6'
-    },
-    {
-      title: 'Buy this template',
-      link: 'https://webflow.com/templates/designers/valdis-zhvaginsh'
     }
   ];
 

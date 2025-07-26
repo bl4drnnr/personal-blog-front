@@ -4,11 +4,11 @@ import { changelogStaggerAnimation } from '@shared/animations/fade-in-up.animati
 import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
 import {
-  ChangelogService,
-  ChangelogPageData,
   ChangelogLayoutData,
-  ChangelogPageContent
-} from '@services/changelog.service';
+  ChangelogPageContent,
+  ChangelogPageData
+} from '@interface/changelog-page-data.interface';
+import { ChangelogService } from '@services/changelog.service';
 
 @Component({
   selector: 'page-changelog',
@@ -99,7 +99,8 @@ export class ChangelogComponent implements OnInit {
         title: seoData.ogTitle,
         description: seoData.ogDescription,
         image: seoData.ogImage,
-        url: window.location.href
+        url: window.location.href,
+        type: 'website'
       });
     }
 

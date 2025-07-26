@@ -1,6 +1,5 @@
 <hero-layout
   [footerText]="'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
-  [templateLink]="'https://webflow.com/templates/designers/valdis-zhvaginsh'"
   [logoText]="'Luch'"
   [breadcrumbText]="'Contact'"
   [heroImageMain]="'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
@@ -9,12 +8,11 @@
   [heroImageSecondaryAlt]="'Astronaut in Space Suit'"
   [heroTitle]="'Let\'s connect!'"
   [heroDesc]="'Feel free to reach out for collaborations, inquiries or just to chat about design.'"
-  [showHomePageLink]="true"
   [hideScrollProgressBar]="true"
 >
   <div class="contact-section contact-section-relative">
     <component-carousel-words [words]="carouselWords" [speed]="60" />
-    
+
     <form class="contact-form">
       <div class="form-field">
         <component-input
@@ -51,7 +49,7 @@
       </div>
     </form>
   </div>
-  
+
   <div class="contact-tiles-wrapper">
     <component-contact-tiles [tiles]="contactTiles"></component-contact-tiles>
   </div>

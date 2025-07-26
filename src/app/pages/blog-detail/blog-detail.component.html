@@ -1,18 +1,16 @@
-<section class="section">
+<section class="section" *ngIf="post">
   <div class="global-wrapper">
     <div class="row-wrapper row-wrapper-sticky">
       <component-navigation
         [footerText]="'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
-        [heroImageMain]="'assets/images/Contemplative-Astronaut-Woman.webp'"
-        [heroImageSecondary]="'assets/images/Contemplative-Astronaut-Woman.webp'"
-        [heroImageMainAlt]="'Contemplative Astronaut Woman'"
-        [heroImageSecondaryAlt]="'Contemplative Astronaut Woman'"
+        [heroImageMain]="featuredImage"
+        [heroImageSecondary]="featuredImage"
+        [heroImageMainAlt]="title"
+        [heroImageSecondaryAlt]="title"
         [logoText]="'Luch'"
         [breadcrumbText]="'Blog'"
-        [heroTitle]="'Modern Web Design Trends That Inspired the LUCH Template'"
-        [heroDesc]="'A deep dive into the inspirations, trends, and creative process behind the LUCH blog template.'"
-        [templateLink]="'https://webflow.com/templates/designers/valdis-zhvaginsh'"
-        [showHomePageLink]="true"
+        [heroTitle]="title"
+        [heroDesc]="description"
         [scrollProgress]="scrollProgress"
         [isFooterReached]="isFooterReached"
         [preventPicChange]="true"
@@ -28,8 +26,8 @@
                 <h2 class="blog-detail-title">{{ title }}</h2>
                 <p class="blog-detail-description">{{ description }}</p>
                 <div class="blog-detail-meta">
-                  <span class="blog-detail-date">{{ date }}</span>
-                  <div class="blog-detail-tags">
+                  <span class="blog-detail-date">{{ formattedDate }}</span>
+                  <div class="blog-detail-tags" *ngIf="tags.length > 0">
                     <span *ngFor="let tag of tags" class="blog-detail-tag" tabindex="0">{{ tag }}</span>
                   </div>
                 </div>
@@ -69,4 +67,4 @@
       </div>
     </div>
   </div>
-</section> 
+</section>

@@ -1,8 +1,8 @@
 <div class="nav">
   <div class="nav-menu" [@navMenuSlide]="isMenuOpen ? 'open' : 'closed'">
     <div class="nav-links-wrapper">
-      <a *ngFor="let link of links" 
-         [href]="link.link" 
+      <a *ngFor="let link of links"
+         [href]="link.link"
          class="nav-link">
         <div class="nav-link-title">{{ link.title }}</div>
         <div class="nav-link-description">{{ link.description }}</div>
@@ -28,15 +28,15 @@
         <div class="nav-footer-text">{{ copyrightText }}</div>
       </div>
       <div class="nav-socials-wrapper">
-        <a *ngFor="let social of socialLinks" 
-           [href]="social.url" 
-           target="_blank" 
+        <a *ngFor="let social of socialLinks"
+           [href]="social.url"
+           target="_blank"
            class="nav-socials-link">
           <div class="nav-socials-link-icon">
-            <img width="24" 
-                 loading="lazy" 
-                 [alt]="social.alt" 
-                 [src]="social.icon" 
+            <img width="24"
+                 loading="lazy"
+                 [alt]="social.alt"
+                 [src]="social.icon"
                  class="nav-socials-link-image">
           </div>
         </a>
@@ -47,8 +47,8 @@
   <div class="nav-wrapper">
     <div class="nav-container">
       <div class="nav-left">
-        <div class="nav-burger" 
-             (click)="toggleMenu()" 
+        <div class="nav-burger"
+             (click)="toggleMenu()"
              [@burgerMenu]="isMenuOpen ? 'open' : 'closed'"
              [attr.data-state]="isMenuOpen ? 'open' : 'closed'">
           <div class="nav-burger-top"></div>
@@ -90,10 +90,10 @@
               <div class="row-bg-image-grain"></div>
               <div class="row-bg-image-overlay"></div>
               <div class="row-bg-white-fade"></div>
-              <img width="Auto" 
-                   [alt]="heroImageMainAlt" 
-                   [src]="heroImageMain" 
-                   loading="lazy" 
+              <img width="Auto"
+                   [alt]="heroImageMainAlt"
+                   [src]="heroImageMain"
+                   loading="lazy"
                    class="row-bg-image">
             </div>
           </div>
@@ -104,10 +104,10 @@
               <div class="row-bg-image-grain"></div>
               <div class="row-bg-image-overlay"></div>
               <div class="row-bg-white-fade"></div>
-              <img width="Auto" 
-                   [alt]="heroImageSecondaryAlt" 
-                   [src]="heroImageSecondary" 
-                   loading="lazy" 
+              <img width="Auto"
+                   [alt]="heroImageSecondaryAlt"
+                   [src]="heroImageSecondary"
+                   loading="lazy"
                    class="row-bg-image">
             </div>
           </div>
@@ -120,10 +120,10 @@
         <div class="row-bg">
           <div class="row-bg-image-grain"></div>
           <div class="row-bg-image-overlay"></div>
-          <img width="Auto" 
-               [alt]="heroImageMainAlt" 
-               [src]="heroImageMain" 
-               loading="lazy" 
+          <img width="Auto"
+               [alt]="heroImageMainAlt"
+               [src]="heroImageMain"
+               loading="lazy"
                class="row-bg-image">
         </div>
       </div>
@@ -134,22 +134,14 @@
       <div class="row-hero-heading">
         <h1>{{ heroTitle }}</h1>
         <p *ngIf="heroDesc" class="row-hero-desc">{{ heroDesc }}</p>
-        <div *ngIf="showHomePageLink" class="home-page-link-wrapper">
-          <component-link-block 
-            [link]="'/home'" 
-            [title]="'Back Home'" 
-            textPosition="left" 
-            iconType="none"
-          />
-        </div>
       </div>
     </div>
     <div *ngIf="!hideScrollProgressBar" class="scroll-row-wrapper">
       <div class="scroll-row-text scroll-row-text-more">
         <div class="scroll-row-icon">
-          <img src="assets/images/scroll-to-bottom-line.svg" 
-               loading="lazy" 
-               alt="Scroll to bottom icon" 
+          <img src="assets/images/scroll-to-bottom-line.svg"
+               loading="lazy"
+               alt="Scroll to bottom icon"
                class="scroll-row-icon-image">
         </div>
         <div>Scroll for more</div>
@@ -158,12 +150,12 @@
       <a (click)="scrollToTop()" class="scroll-row-text scroll-row-text-back">
         <div>Back to Top</div>
         <div class="scroll-row-icon">
-          <img src="assets/images/arrow-up-line-white.svg" 
-               loading="lazy" 
-               alt="Arrow Up Icon" 
+          <img src="assets/images/arrow-up-line-white.svg"
+               loading="lazy"
+               alt="Arrow Up Icon"
                class="scroll-row-icon-image">
         </div>
       </a>
     </div>
   </div>
-</div> 
+</div>

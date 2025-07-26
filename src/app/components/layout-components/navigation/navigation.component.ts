@@ -14,8 +14,6 @@ import {
 export class NavigationComponent {
   constructor(private elementRef: ElementRef) {}
   @Input() footerText = 'Default footer text';
-  @Input() templateLink =
-    'https://webflow.com/templates/designers/valdis-zhvaginsh';
   @Input() logoText = 'LUCH';
   @Input() breadcrumbText = 'Home';
   @Input() heroImageMain = '';
@@ -27,7 +25,6 @@ export class NavigationComponent {
   @Input() scrollProgress: number = 0;
   @Input() hideScrollProgressBar: boolean = false;
   @Input() heroDesc?: string;
-  @Input() showHomePageLink: boolean = false;
   @Input() preventPicChange: boolean = false;
 
   socialLinks: any[] = [
@@ -83,10 +80,7 @@ export class NavigationComponent {
   copyrightText = '© LUCH — 2025';
 
   hoveredNavFooterIndex: number | null = null;
-  navFooterLinks: any[] = [
-    { title: this.email, link: 'mailto:' + this.email },
-    { title: 'Buy this template', link: this.templateLink }
-  ];
+  navFooterLinks: any[] = [{ title: this.email, link: 'mailto:' + this.email }];
 
   isMenuOpen = false;
 

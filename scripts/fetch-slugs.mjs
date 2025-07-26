@@ -46,7 +46,8 @@ import * as fs from 'fs';
       '/contact',
       '/about-me',
       '/changelog',
-      '/license'
+      '/license',
+      '/privacy'
     ];
     const blogRoutes = postsData.map((post) => `/blog/${post.slug}`);
     const projectRoutes = projectsData.map(

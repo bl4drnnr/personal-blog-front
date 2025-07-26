@@ -13,10 +13,10 @@
                     <div>Blog Post</div>
                   </div>
                   <div class="property-name">
-                    <div>{{ post.date | date:'longDate' }}</div>
+                    <div>{{ post.publishDate | date:'longDate' }}</div>
                   </div>
                   <div class="property-value">
-                    <div>{{ post.category }}</div>
+<!--                    <div>{{ post.category }}</div>-->
                   </div>
                 </div>
               </div>
@@ -44,8 +44,8 @@
       <div class="card-row-bottom">
         <div class="card-image-wrapper">
           <div class="card-image-hover">
-            <img [src]="post.imageUrl" loading="lazy" [alt]="post.altText" class="card-image card-image-primary">
-            <img [src]="post.imageUrl" loading="lazy" [alt]="post.altText" class="card-image card-image-secondary">
+            <img [src]="post.featuredImage" loading="lazy" [alt]="post.featuredImage" class="card-image card-image-primary">
+            <img [src]="post.featuredImage" loading="lazy" [alt]="post.featuredImage" class="card-image card-image-secondary">
           </div>
           <div class="card-overlay-wrapper">
             <div class="card-overlay-first">
@@ -79,4 +79,4 @@
     </div>
     <a [routerLink]="['/blog', post.slug]" class="card-row-item-link card-row-item-link-blog w-inline-block"></a>
   </div>
-</div> 
+</div>

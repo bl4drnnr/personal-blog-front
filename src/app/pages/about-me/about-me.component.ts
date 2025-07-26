@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
-import {
-  AboutService,
-  AboutPageData,
-  AboutLayoutData
-} from '@services/about.service';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 import { Experience } from '@interface/experience.interface';
 import { Certificate } from '@interface/certificate.interface';
+import { AboutService } from '@services/about.service';
+import {
+  AboutLayoutData,
+  AboutPageData
+} from '@interface/about-page-data.interface';
 
 @Component({
   selector: 'page-about-me',
@@ -104,7 +104,8 @@ export class AboutMeComponent implements OnInit {
         title: seoData.ogTitle,
         description: seoData.ogDescription,
         image: seoData.ogImage,
-        url: window.location.href
+        url: window.location.href,
+        type: 'website'
       });
     }
 

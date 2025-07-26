@@ -13,8 +13,8 @@ export class NotFoundComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  goToMainPage() {
-    this.router.navigate(['/home']);
+  async goToMainPage() {
+    await this.router.navigate(['/home']);
   }
 
   ngOnInit(): void {

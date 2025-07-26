@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ScrollAnimationService } from '@services/scroll-animation.service';
+import { ScrollUtilitiesService } from '@services/scroll-utilities.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,8 +17,6 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
   @Input() logoText = '';
   @Input() breadcrumbText = '';
   @Input() heroTitle = '';
-  @Input() templateLink = '';
-  @Input() showHomePageLink: boolean = false;
   @Input() hideScrollProgressBar: boolean = false;
   @Input() showHeader: boolean = true;
   @Input() showFooter: boolean = true;
@@ -27,35 +26,27 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
   isFooterReached = false;
   private subscription: Subscription = new Subscription();
 
-  constructor(private scrollAnimationService: ScrollAnimationService) {}
+  constructor(
+    private scrollAnimationService: ScrollAnimationService,
+    private scrollUtilitiesService: ScrollUtilitiesService
+  ) {}
 
   ngOnInit(): void {
     this.subscription.add(
       this.scrollAnimationService.scrollProgress$.subscribe((progress) => {
         this.scrollProgress = progress;
-        this.checkFooterScroll();
+        this.scrollUtilitiesService.checkFooterScroll();
+      })
+    );
+
+    this.subscription.add(
+      this.scrollUtilitiesService.isFooterReached$.subscribe((isReached) => {
+        this.isFooterReached = isReached;
       })
     );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  private checkFooterScroll(): void {
-    const footer = document.querySelector('component-footer');
-    if (footer) {
-      const footerRect = footer.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      const footerTop = footerRect.top;
-      const footerVisibleThreshold = windowHeight;
-
-      if (footerTop <= footerVisibleThreshold && !this.isFooterReached) {
-        this.isFooterReached = true;
-      } else if (footerTop > footerVisibleThreshold && this.isFooterReached) {
-        this.isFooterReached = false;
-      }
-    }
   }
 }

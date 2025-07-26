@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '@interface/post.interface';
 import { SEOService } from '@services/seo.service';
+import { BlogService, BlogPageData } from '@services/blog.service';
 import { blogPostAnimation } from '@shared/animations/fade-in-up.animation';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'page-blog',
@@ -12,184 +15,128 @@ import { blogPostAnimation } from '@shared/animations/fade-in-up.animation';
 export class BlogComponent implements OnInit {
   animationState = '';
 
-  constructor(private seoService: SEOService) {}
-
-  posts: Post[] = [
-    {
-      title: 'The Future of AI in Design',
-      category: 'AI & Design',
-      imageUrl:
-        'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif',
-      altText: 'Abstract Gradient Art',
-      description:
-        'Exploring how AI is revolutionizing the design industry and what the future holds for creative professionals.',
-      date: '2024-06-01',
-      slug: 'the-future-of-ai-in-design'
+  // Page data from API
+  blogPageData: BlogPageData = {
+    pageContent: {
+      title: '',
+      subtitle: '',
+      description: ''
     },
-    {
-      title: 'Building with GPT-4 Vision',
-      category: 'AI Tools',
-      imageUrl:
-        'assets/images/Abstract-Wave-Artwork_1Abstract Wave Artwork.avif',
-      altText: 'Abstract Wave Artwork',
-      description:
-        'A hands-on guide to leveraging GPT-4 Vision for next-gen applications.',
-      date: '2024-05-20',
-      slug: 'building-with-gpt-4-vision'
+    layoutData: {
+      footerText: '',
+      heroImageMain: '',
+      heroImageSecondary: '',
+      heroImageMainAlt: '',
+      heroImageSecondaryAlt: '',
+      logoText: '',
+      breadcrumbText: '',
+      heroTitle: ''
     },
-    {
-      title: 'Webflow vs. Custom Code',
-      category: 'Web Development',
-      imageUrl:
-        'assets/images/Abstract-Wave-Texture_1Abstract Wave Texture.avif',
-      altText: 'Abstract Wave Texture',
-      description:
-        'Comparing the pros and cons of using Webflow versus traditional custom coding for modern websites.',
-      date: '2024-05-10',
-      slug: 'webflow-vs-custom-code'
+    seoData: {
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: '',
+      ogTitle: '',
+      ogDescription: '',
+      ogImage: '',
+      structuredData: undefined
     },
-    {
-      title: 'Designing for Accessibility',
-      category: 'UX/UI',
-      imageUrl:
-        'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif',
-      altText: 'Abstract Gradient Art',
-      description:
-        'Best practices and tools for making your digital products accessible to everyone.',
-      date: '2024-04-28',
-      slug: 'designing-for-accessibility'
-    },
-    {
-      title: 'AI-Powered Content Creation',
-      category: 'Content',
-      imageUrl:
-        'assets/images/Abstract-Wave-Artwork_1Abstract Wave Artwork.avif',
-      altText: 'Abstract Wave Artwork',
-      description:
-        'How AI is transforming the way we create and manage content online.',
-      date: '2024-04-15',
-      slug: 'ai-powered-content-creation'
-    },
-    {
-      title: 'The Rise of No-Code Platforms',
-      category: 'No-Code',
-      imageUrl:
-        'assets/images/Abstract-Wave-Texture_1Abstract Wave Texture.avif',
-      altText: 'Abstract Wave Texture',
-      description:
-        'An overview of the no-code movement and its impact on startups and entrepreneurs.',
-      date: '2024-04-01',
-      slug: 'the-rise-of-no-code-platforms'
-    },
-    {
-      title: 'Personal Branding in the Digital Age',
-      category: 'Branding',
-      imageUrl:
-        'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif',
-      altText: 'Abstract Gradient Art',
-      description:
-        'Tips and strategies for building a strong personal brand online.',
-      date: '2024-03-20',
-      slug: 'personal-branding-in-the-digital-age'
-    },
-    {
-      title: 'From Idea to Launch: My Workflow',
-      category: 'Productivity',
-      imageUrl:
-        'assets/images/Abstract-Wave-Artwork_1Abstract Wave Artwork.avif',
-      altText: 'Abstract Wave Artwork',
-      description:
-        'A behind-the-scenes look at my process for taking ideas from concept to launch.',
-      date: '2024-03-10',
-      slug: 'from-idea-to-launch-my-workflow'
-    },
-    {
-      title: 'The Power of Community',
-      category: 'Community',
-      imageUrl:
-        'assets/images/Abstract-Wave-Texture_1Abstract Wave Texture.avif',
-      altText: 'Abstract Wave Texture',
-      description:
-        'Why building and engaging with a community is essential for creators.',
-      date: '2024-02-28',
-      slug: 'the-power-of-community'
-    },
-    {
-      title: 'Learning in Public',
-      category: 'Growth',
-      imageUrl:
-        'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif',
-      altText: 'Abstract Gradient Art',
-      description:
-        'How sharing your learning journey can accelerate your growth and help others.',
-      date: '2024-02-15',
-      slug: 'learning-in-public'
+    articles: [],
+    pagination: {
+      currentPage: 0,
+      totalPages: 0,
+      totalItems: 0,
+      itemsPerPage: 0,
+      hasNextPage: false,
+      hasPrevPage: false
     }
-  ];
+  };
+  posts: Post[] = [];
 
+  // Search and pagination
   searchTerm: string = '';
-
   currentPage = 1;
   pageSize = 6;
+  totalPages = 0;
 
-  get totalPages(): number {
-    const filtered = this.posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        (post.category &&
-          post.category
-            .toLowerCase()
-            .includes(this.searchTerm.toLowerCase())) ||
-        post.description
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase()) ||
-        (post.date &&
-          post.date.toLowerCase().includes(this.searchTerm.toLowerCase()))
-    );
-    return Math.ceil(filtered.length / this.pageSize);
+  // Search debouncing
+  private searchSubject = new Subject<string>();
+
+  constructor(
+    private seoService: SEOService,
+    private blogService: BlogService
+  ) {
+    // Setup search debouncing
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((searchTerm) => {
+        this.performSearch(searchTerm);
+      });
   }
 
   get paginatedPosts(): Post[] {
-    const filtered = this.posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        (post.category &&
-          post.category
-            .toLowerCase()
-            .includes(this.searchTerm.toLowerCase())) ||
-        post.description
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase()) ||
-        (post.date &&
-          post.date.toLowerCase().includes(this.searchTerm.toLowerCase()))
-    );
-    const start = (this.currentPage - 1) * this.pageSize;
-    return filtered.slice(start, start + this.pageSize);
+    return this.posts;
   }
 
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.triggerAnimation();
-    }
+  loadBlogData(page: number = 1, search?: string): void {
+    const query = {
+      page,
+      limit: this.pageSize,
+      search: search || undefined
+    };
+
+    this.blogService.getBlogPage(query).subscribe({
+      next: (data) => {
+        this.blogPageData = data;
+        this.posts = data.articles;
+        this.currentPage = data.pagination.currentPage;
+        this.totalPages = data.pagination.totalPages;
+        this.pageSize = data.pagination.itemsPerPage;
+
+        // Update SEO data
+        this.updateSEO(data);
+
+        this.triggerAnimation();
+      },
+      error: (error) => {
+        console.error('Error loading blog data:', error);
+      }
+    });
   }
 
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.triggerAnimation();
+  private updateSEO(data: BlogPageData): void {
+    if (data.seoData) {
+      this.seoService.updatePageTitle(data.seoData.metaTitle || 'Blog');
+      this.seoService.updateMetaDescription(data.seoData.metaDescription || '');
+      this.seoService.updateMetaKeywords(data.seoData.metaKeywords || '');
+      this.seoService.updateOpenGraphTags({
+        title: data.seoData.ogTitle || data.seoData.metaTitle || 'Blog',
+        description:
+          data.seoData.ogDescription || data.seoData.metaDescription || '',
+        image: data.seoData.ogImage || '',
+        url: window.location.href,
+        type: 'website'
+      });
+
+      if (data.seoData.structuredData) {
+        this.seoService.updateStructuredData(data.seoData.structuredData);
+      }
     }
   }
 
   onSearch(term: string): void {
     this.searchTerm = term;
+    this.searchSubject.next(term);
+  }
+
+  private performSearch(term: string): void {
     this.currentPage = 1;
-    this.triggerAnimation();
+    this.loadBlogData(1, term);
   }
 
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.triggerAnimation();
+    this.loadBlogData(page, this.searchTerm || undefined);
   }
 
   private triggerAnimation(): void {
@@ -200,12 +147,7 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Set page title
-    this.seoService.updatePageTitle('Blog');
-
-    // Trigger post animations after view initialization
-    setTimeout(() => {
-      this.animationState = 'loaded';
-    }, 100);
+    // Load initial blog data
+    this.loadBlogData(1);
   }
 }

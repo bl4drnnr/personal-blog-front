@@ -1,16 +1,14 @@
 <hero-layout
-  [footerText]="'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
+  [footerText]="projectsPageData.layoutData.footerText"
   [email]="'hello at yourdomain.com'"
-  [templateLink]="'https://webflow.com/templates/designers/valdis-zhvaginsh'"
-  [logoText]="'Luch'"
-  [breadcrumbText]="'Projects'"
-  [heroImageMain]="'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
-  [heroImageSecondary]="'assets/images/Futuristic-Cabin-Landscape_1Futuristic Cabin Landscape.avif'"
-  [heroImageMainAlt]="'Abstract Gradient Art'"
-  [heroImageSecondaryAlt]="'Futuristic Cabin Landscape'"
-  [heroTitle]="'Collection of my projects'"
-  [heroDesc]="'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe voluptates sapiente reiciendis deleniti tempora eius explicabo a doloremque dolorem? Consequatur neque eaque quos mollitia alias aperiam harum iste tenetur, minima quis quo itaque, necessitatibus dolor ut. Illum odit eum, porro modi autem in magnam ex ipsum! Impedit voluptate reiciendis provident.'"
-  [showHomePageLink]="true"
+  [logoText]="projectsPageData.layoutData.logoText"
+  [breadcrumbText]="projectsPageData.layoutData.breadcrumbText"
+  [heroImageMain]="projectsPageData.layoutData.heroImageMain"
+  [heroImageSecondary]="projectsPageData.layoutData.heroImageSecondary"
+  [heroImageMainAlt]="projectsPageData.layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="projectsPageData.layoutData.heroImageSecondaryAlt"
+  [heroTitle]="projectsPageData.layoutData.heroTitle || projectsPageData.pageContent.title"
+  [heroDesc]="projectsPageData.pageContent.description"
   [hideScrollProgressBar]="true"
 >
   <div class="search-wrapper">
@@ -20,27 +18,28 @@
       (valueChange)="onSearch($event)"
     />
   </div>
-  
+
   <div
     class="projects-list-wrapper"
     *ngIf="paginatedProjects.length > 0; else noProjects"
     [@project]="animationState"
   >
-    <component-project-card 
-      *ngFor="let project of paginatedProjects" 
+    <component-project-card
+      *ngFor="let project of paginatedProjects"
       [project]="project">
     </component-project-card>
   </div>
-  
+
   <ng-template #noProjects>
     <div class="no-projects-message">
-      No projects found.
+      <p *ngIf="searchTerm">No projects found for "{{ searchTerm }}".</p>
+      <p *ngIf="!searchTerm">No projects found.</p>
     </div>
   </ng-template>
-  
+
   <div
     class="projects-pagination-wrapper"
-    *ngIf="paginatedProjects.length > 0"
+    *ngIf="paginatedProjects.length > 0 && totalPages > 1"
   >
     <component-pagination
       [currentPage]="currentPage"
@@ -48,4 +47,4 @@
       (pageChange)="onPageChange($event)">
     </component-pagination>
   </div>
-</hero-layout> 
+</hero-layout>

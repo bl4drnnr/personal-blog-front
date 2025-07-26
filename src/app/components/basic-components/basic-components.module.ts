@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { PostCardComponent } from '@components/post-card/post-card.component';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { RouterModule } from '@angular/router';
@@ -25,7 +25,7 @@ const components: any = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NgOptimizedImage],
   exports: [...components]
 })
 export class BasicComponentsModule {}

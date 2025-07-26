@@ -4,11 +4,11 @@ import { LicenseTile } from '@shared/interfaces/license-tile.interface';
 import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
 import {
-  LicenseService,
-  LicensePageData,
   LicenseLayoutData,
-  LicensePageContent
-} from '@services/license.service';
+  LicensePageContent,
+  LicensePageData
+} from '@interface/license-page-data.interface';
+import { LicenseService } from '@services/license.service';
 
 @Component({
   selector: 'page-license',
@@ -104,7 +104,8 @@ export class LicenseComponent implements OnInit {
         title: seoData.ogTitle,
         description: seoData.ogDescription,
         image: seoData.ogImage,
-        url: window.location.href
+        url: window.location.href,
+        type: 'website'
       });
     }
 
