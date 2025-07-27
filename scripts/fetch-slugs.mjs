@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { config } from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,19 +13,32 @@ const __dirname = dirname(__filename);
 
     // Determine which environment to use
     const isDevelopment = process.env.NODE_ENV !== 'production';
-    const envFile = isDevelopment ? 'environment.ts' : 'environment.prod.ts';
-    const envPath = join(__dirname, '..', 'src', 'environments', envFile);
-
-    // Read and parse the environment file
-    const envContent = fs.readFileSync(envPath, 'utf-8');
-    const apiUrlMatch = envContent.match(/apiUrl:\s*['"`]([^'"`]+)['"`]/);
 
     let API_URL;
-    if (apiUrlMatch) {
-      API_URL = apiUrlMatch[1];
-      // Handle environment variable placeholders in production
-      if (API_URL.includes('process.env')) {
-        API_URL = process.env.API_URL;
+
+    if (isDevelopment) {
+      // Read from development environment file
+      const envFile = 'environment.ts';
+      const envPath = join(__dirname, '..', 'src', 'environments', envFile);
+      const envContent = fs.readFileSync(envPath, 'utf-8');
+      const apiUrlMatch = envContent.match(/apiUrl:\s*['"`]([^'"`]+)['"`]/);
+      API_URL = apiUrlMatch ? apiUrlMatch[1] : null;
+    } else {
+      // Load production environment variables from .env.production first
+      const envPath = join(__dirname, '..', '.env.production');
+      config({ path: envPath });
+
+      // Then read from production environment file
+      const envFile = 'environment.prod.ts';
+      const prodEnvPath = join(__dirname, '..', 'src', 'environments', envFile);
+      const envContent = fs.readFileSync(prodEnvPath, 'utf-8');
+      const apiUrlMatch = envContent.match(
+        /apiUrl:\s*process\.env\[['"`]([^'"`]+)['"`]\]/
+      );
+
+      if (apiUrlMatch) {
+        const envVarName = apiUrlMatch[1];
+        API_URL = process.env[envVarName];
       }
     }
 
