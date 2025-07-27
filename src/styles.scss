@@ -1548,7 +1548,7 @@ button,
 .row-bg-image-grain {
   z-index: 3;
   opacity: .04;
-  background-image: url('src/assets/images/grain-slow.gif');
+  background-image: url('/assets/images/grain-slow.gif');
   background-position: 0 0;
   background-size: auto;
   width: 100%;
@@ -2408,7 +2408,7 @@ button,
   z-index: 2;
   opacity: 1;
   mix-blend-mode: soft-light;
-  background-image: url('src/assets/images/Sunshine_1Sunshine.avif');
+  background-image: url('/assets/images/Sunshine_1Sunshine.avif');
   background-size: cover;
   width: 100%;
   height: 100%;

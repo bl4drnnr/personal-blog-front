@@ -2,242 +2,315 @@
 
 ![Angular](https://img.shields.io/badge/Angular-17.3.0-red?style=flat-square&logo=angular)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.4.2-blue?style=flat-square&logo=typescript)
-![SSR](https://img.shields.io/badge/SSR-Enabled-green?style=flat-square)
-![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=flat-square&logo=node.js)
+![SPA](https://img.shields.io/badge/SPA-Enabled-orange?style=flat-square)
+![SSR](https://img.shields.io/badge/SSR-Enabled-blue?style=flat-square)
+![SSG](https://img.shields.io/badge/SSG-Enabled-green?style=flat-square)
 
-A modern, high-performance personal blog frontend built with Angular 17, featuring Server-Side Rendering (SSR), static prerendering, and comprehensive SEO optimization. This application integrates seamlessly with a NestJS backend API to deliver dynamic content through static generation for optimal performance and search engine visibility.
+A modern personal blog frontend built with Angular 17, supporting **three rendering strategies**: Single Page Application (SPA), Server-Side Rendering (SSR), and Static Site Generation (SSG). Choose the best approach for your deployment needs.
 
-## 🚀 Key Features
+## 🏗️ Architecture Overview
 
-- **Angular 17** with the latest features and performance optimizations
-- **Server-Side Rendering (SSR)** for improved SEO and initial load performance
-- **Static Prerendering** for all blog posts and project pages
-- **Dynamic Route Generation** from backend API content
-- **Comprehensive SEO** with meta tags, Open Graph, and structured data
-- **Mathematical Content Support** with KaTeX for LaTeX rendering
-- **Code Syntax Highlighting** with highlight.js
-- **Three-Tier Component Architecture** for scalable development
-- **Responsive Design** with modern SCSS styling
-- **Progressive Enhancement** with graceful fallbacks
+This project implements a **hybrid architecture** supporting multiple rendering strategies:
 
-## 📋 Table of Contents
+- **🔥 SPA (Single Page Application)** - Client-side rendering with dynamic routing
+- **⚡ SSR (Server-Side Rendering)** - Dynamic server-side rendering for optimal SEO and performance
+- **🚀 SSG (Static Site Generation)** - Pre-rendered static HTML files for maximum performance
 
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Development](#-development)
-- [Available Scripts](#-available-scripts)
-- [Project Architecture](#-project-architecture)
-- [Environment Configuration](#-environment-configuration)
-- [Build & Deployment](#-build--deployment)
-- [API Integration](#-api-integration)
-- [SEO & Performance](#-seo--performance)
-- [Testing](#-testing)
-- [Code Quality](#-code-quality)
-- [Contributing](#-contributing)
+### Backend Integration
+- **API-First Architecture** - All content managed through NestJS backend
+- **Dynamic Route Generation** - Routes automatically created from backend content
+- **SEO Optimization** - Complete meta tags, Open Graph, and structured data
 
-## 🔧 Prerequisites
+## 📋 Quick Start
 
-Before running this application, ensure you have the following installed:
-
+### Prerequisites
 - **Node.js** (version 18 or higher)
 - **npm** (version 9 or higher)
-- **Angular CLI** (version 17.3.4 or higher)
-- **Backend API** running on port 4201 (required for development)
+- **Backend API** running (for content fetching)
 
-### Backend Dependency
-
-This frontend application is designed to work in conjunction with the personal blog NestJS backend API. The backend must be running and accessible for:
-
-- Dynamic content fetching during build process
-- Development server API calls
-- Route generation from blog posts and projects
-
-## 🛠 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd personal-blog-front
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**
-   ```bash
-   # For development (automatic with local backend)
-   # API_URL=http://localhost:4201/api
-   # SITE_URL=http://localhost:4202
-   
-   # For production
-   export API_URL=https://your-api-domain.com/api
-   export SITE_URL=https://your-domain.com
-   ```
-
-4. **Ensure backend is running**
-   ```bash
-   # In the backend directory
-   npm run start:dev
-   ```
-
-## 🔥 Development
-
-### Quick Start
-
+### Installation
 ```bash
-# Start the development server
-npm start
+git clone <repository-url>
+cd personal-blog-front
+npm install
 ```
 
-The application will be available at `http://localhost:4202`
+## 🎯 Rendering Strategies Explained
 
-### Full Development Workflow
+### 1. 🔥 SPA (Single Page Application)
 
+**What is SPA?**
+Single Page Application loads one HTML page and dynamically updates content using JavaScript. The entire application runs in the browser, and navigation happens client-side without full page reloads.
+
+**How SPA Works:**
+1. **Initial Load** - Browser downloads HTML, CSS, and JavaScript bundles
+2. **JavaScript Execution** - Angular application initializes in browser
+3. **Client-Side Routing** - Angular Router handles navigation without page reloads
+4. **API Calls** - Dynamic content loaded via HTTP requests to backend
+5. **DOM Updates** - Content updated dynamically without refreshing page
+
+**SPA Pros:**
+- ✅ **Smooth User Experience** - No page reloads, instant navigation
+- ✅ **Interactive Features** - Rich client-side interactions and animations
+- ✅ **Reduced Server Load** - Server only provides API data, not full pages
+- ✅ **Offline Capabilities** - Can work offline with service workers
+- ✅ **Fast After Initial Load** - Subsequent navigation is instantaneous
+- ✅ **Easy Deployment** - Static files can be hosted anywhere
+
+**SPA Cons:**
+- ❌ **SEO Challenges** - Search engines may have difficulty indexing content
+- ❌ **Slow Initial Load** - Large JavaScript bundles take time to download
+- ❌ **JavaScript Dependency** - Requires JavaScript enabled in browser
+- ❌ **Performance on Slow Devices** - Heavy JavaScript execution on client
+- ❌ **Social Media Sharing** - Poor preview generation for social platforms
+
+**SPA Use Cases:**
+- 🎯 **Interactive Dashboards** - Admin panels, analytics dashboards
+- 🎯 **Web Applications** - Complex user interfaces with rich interactions
+- 🎯 **Internal Tools** - Company internal tools where SEO isn't critical
+- 🎯 **Progressive Web Apps** - Apps that need offline functionality
+
+### 2. ⚡ SSR (Server-Side Rendering)
+
+**What is SSR?**
+Server-Side Rendering generates HTML on the server for each request. The server runs the Angular application, renders the complete HTML, and sends it to the browser. JavaScript then "hydrates" the page to make it interactive.
+
+**How SSR Works:**
+1. **Request Arrives** - Browser requests a page from server
+2. **Server Rendering** - Node.js server runs Angular application
+3. **Data Fetching** - Server fetches data from APIs/database
+4. **HTML Generation** - Complete HTML with content generated on server
+5. **Response Sent** - Fully rendered HTML sent to browser
+6. **Hydration** - JavaScript loads and makes page interactive
+
+**SSR Pros:**
+- ✅ **Perfect SEO** - Search engines receive complete HTML with content
+- ✅ **Fast First Paint** - Users see content immediately
+- ✅ **Social Media Friendly** - Perfect previews for sharing on social platforms
+- ✅ **Works Without JavaScript** - Basic functionality available even if JS fails
+- ✅ **Better Performance on Slow Devices** - Server does the heavy lifting
+- ✅ **Real-time Data** - Always serves fresh content from database
+
+**SSR Cons:**
+- ❌ **Server Complexity** - Requires Node.js server infrastructure
+- ❌ **Higher Server Costs** - Server resources needed for each request
+- ❌ **Slower Navigation** - Each page navigation requires server round-trip
+- ❌ **Deployment Complexity** - Need to manage server deployments
+- ❌ **Caching Challenges** - More complex caching strategies required
+
+**SSR Use Cases:**
+- 🎯 **E-commerce Websites** - Product pages with dynamic pricing/inventory
+- 🎯 **News Websites** - Fresh content with perfect SEO requirements
+- 🎯 **Marketing Pages** - Landing pages requiring perfect SEO
+- 🎯 **Social Platforms** - Content that needs to be shared frequently
+
+### 3. 🚀 SSG (Static Site Generation)
+
+**What is SSG?**
+Static Site Generation pre-renders all pages at build time into static HTML files. Each route becomes a separate HTML file with content already embedded. No server processing needed at runtime.
+
+**How SSG Works:**
+1. **Build Process** - Generator runs during build/deployment
+2. **Content Fetching** - All content fetched from CMS/API during build
+3. **Route Discovery** - All possible routes identified (blog posts, pages, etc.)
+4. **HTML Generation** - Each route pre-rendered to static HTML file
+5. **Asset Optimization** - CSS, JS, images optimized and bundled
+6. **Static Deployment** - HTML files deployed to CDN/static hosting
+
+**SSG Pros:**
+- ✅ **Maximum Performance** - Instant loading, no server processing
+- ✅ **Perfect SEO** - Complete HTML with content pre-rendered
+- ✅ **Global CDN** - Static files cached worldwide for speed
+- ✅ **Zero Server Costs** - Host on free static hosting services
+- ✅ **Maximum Security** - No server to hack, no runtime vulnerabilities
+- ✅ **Perfect Lighthouse Scores** - Optimized for Core Web Vitals
+- ✅ **Reliability** - No servers to crash or go down
+
+**SSG Cons:**
+- ❌ **Build Time Required** - Content changes require rebuilding entire site
+- ❌ **No Real-time Content** - Content static until next build
+- ❌ **Large Sites Scale Issues** - Build time increases with number of pages
+- ❌ **Dynamic Features Limited** - Complex user interactions need additional solutions
+- ❌ **Content Update Delay** - Publishing new content requires build and deployment
+
+**SSG Use Cases:**
+- 🎯 **Personal Blogs** - Content doesn't change frequently
+- 🎯 **Documentation Sites** - Static content with perfect SEO needs
+- 🎯 **Portfolio Websites** - Personal/company showcases
+- 🎯 **Marketing Websites** - Content-focused sites with excellent performance needs
+- 🎯 **Event Websites** - Temporary sites with static information
+
+## 🛠️ Development Commands
+
+### Development Server (SPA Mode)
 ```bash
-# 1. Start backend API (in backend directory)
-npm run start:dev
+# Start development server
+npm start                    # Runs on http://localhost:4202
 
-# 2. Fetch latest content from API
-npm run fetch:slugs:dev
-
-# 3. Update Angular routes
-npm run update:routes
-
-# 4. Start frontend development server
-npm start
+# Start with SSR in development
+npm run start:ssr           # Server-side rendering in development mode
 ```
 
-### Development Features
-
-- **Hot Module Replacement** for instant code updates
-- **Source Maps** for debugging
-- **Automatic Route Generation** from backend content
-- **Real-time API Integration** with development backend
-- **Live Reload** on file changes
-
-## 📜 Available Scripts
-
-### Development Scripts
-
-| Script | Description | Usage |
-|--------|-------------|-------|
-| `npm start` | Start development server on port 4202 | Development |
-| `npm run watch` | Build with watch mode | Development |
-| `npm run fetch:slugs:dev` | Fetch API data for development routes | Development |
-
-### Build Scripts
-
-| Script | Description | Usage |
-|--------|-------------|-------|
-| `npm run build` | Client-side build only | Development |
-| `npm run build:ssr` | Full SSR build (client + server) | Development |
-| `npm run build:prerender` | Complete prerendering build | Production |
-
-### Data Management Scripts
-
-| Script | Description | Usage |
-|--------|-------------|-------|
-| `npm run fetch:slugs:prod` | Fetch API data for production routes | Production |
-| `npm run update:routes` | Update Angular route configuration | Both |
-
-### Production Scripts
-
-| Script | Description | Usage |
-|--------|-------------|-------|
-| `npm run serve:ssr:prod` | Serve SSR build in production mode | Production |
-| `npm run front:restart` | Restart PM2 process | Production |
-
-### Quality Scripts
-
-| Script | Description | Usage |
-|--------|-------------|-------|
-| `npm test` | Run unit tests via Karma | Development |
-| `npm run format` | Format with Prettier and ESLint fixes | Development |
-
-## 🏗 Project Architecture
-
-### Directory Structure
-
-```
-src/
-├── app/
-│   ├── components/           # Three-tier component architecture
-│   │   ├── basic-components/     # Reusable UI primitives
-│   │   ├── layout-components/    # Site structure components
-│   │   └── pages-components/     # Page-specific components
-│   ├── layouts/             # Page layout wrappers
-│   ├── pages/               # Route components
-│   ├── services/            # Business logic and API communication
-│   └── shared/              # Shared utilities and interfaces
-├── assets/                  # Static assets (images, icons, data)
-├── environments/            # Environment configuration
-└── styles.scss             # Global styles
+### Content Management
+```bash
+# Fetch latest content from backend
+npm run fetch:content:dev    # Development environment
+npm run fetch:content:prod   # Production environment
 ```
 
-### Component Architecture
+**What content fetching does:**
+- Downloads all blog posts and project slugs from backend API
+- Updates Angular route configuration automatically
+- Ensures all content is available for rendering
 
-#### 1. Basic Components (`src/app/components/basic-components/`)
-Reusable UI primitives that form the foundation of the application:
-- **Button & ButtonLink** - Styled action elements
-- **Input & Textarea** - Form input components
-- **PostCard & ProjectCard** - Content display cards
-- **LoadingSpinner** - Loading state indicator
-- **Pagination** - Content navigation
-- **LinkBlock** - Styled link containers
+## 🏗️ Build Commands
 
-#### 2. Layout Components (`src/app/components/layout-components/`)
-Site structure and navigation components:
-- **Header & Navigation** - Site navigation and branding
-- **Footer** - Site footer with links and information
-- **MarqueeCarousel** - Animated content carousels
-- **FAQ** - Frequently asked questions component
-- **ContactTiles** - Contact information display
-- **SectionTitle** - Standardized section headings
+### SPA (Single Page Application)
+```bash
+# Production SPA build
+npm run build:spa           # Optimized SPA for production
 
-#### 3. Page Components (`src/app/components/pages-components/`)
-Specialized components for specific page functionality:
-- **Certificates** - Professional certification display
-- **ExperienceTimeline** - Career timeline visualization
-- **WhysSection** - Feature highlights and benefits
-
-### Service Architecture
-
-#### Core Services (`src/app/services/`)
-
-| Service | Purpose | Key Features |
-|---------|---------|--------------|
-| `blog.service.ts` | Blog content management | Post fetching, slug handling, pagination |
-| `projects.service.ts` | Project portfolio management | Project data, filtering, detail views |
-| `seo.service.ts` | SEO optimization | Meta tags, structured data, Open Graph |
-| `site-config.service.ts` | Global configuration | Site settings, navigation, social links |
-| `math.service.ts` | Mathematical content | LaTeX rendering with KaTeX |
-| `about.service.ts` | About page content | Experience, certificates, personal info |
-| `home.service.ts` | Homepage content | Featured content, hero sections |
-| `loading.service.ts` | Loading state management | Global loading indicators |
-
-#### Utility Services
-
-| Service | Purpose |
-|---------|---------|
-| `scroll-animation.service.ts` | Scroll-based animations |
-| `scroll-utilities.service.ts` | Scroll position utilities |
-| `changelog.service.ts` | Platform changelog management |
-| `license.service.ts` | Legal documentation management |
-| `privacy.service.ts` | Privacy policy management |
-
-### Data Flow Architecture
-
-```
-Backend API → Frontend Services → Components → Templates
-     ↓              ↓              ↓         ↓
-Database → REST Endpoints → Observable Streams → UI Updates
+# Development SPA build
+npm run build:spa:dev       # Development build with source maps
 ```
 
-## ⚙️ Environment Configuration
+**SPA Build Output:**
+- `dist/personal-blog-front/browser/` - Static files for hosting
+- Optimized JavaScript bundles
+- CSS files with hash names for caching
+- Assets properly compressed
 
-### Development Environment (`src/environments/environment.ts`)
+### SSR (Server-Side Rendering)
+```bash
+# Production SSR build
+npm run build:ssr           # Server + client bundles for production
+
+# Development SSR build
+npm run build:ssr:dev       # Development SSR build
+```
+
+**SSR Build Output:**
+- `dist/personal-blog-front/browser/` - Client-side files
+- `dist/personal-blog-front/server/` - Server-side application
+- Node.js server bundle for deployment
+
+### SSG (Static Site Generation)
+```bash
+# Production SSG build
+npm run build:ssg           # Pre-rendered static HTML files
+
+# Development SSG build
+npm run build:ssg:dev       # Development pre-rendering
+```
+
+**SSG Build Output:**
+- `dist/personal-blog-front/browser/` - Complete static website
+- Individual HTML files for each route
+- Optimized assets and resources
+- Ready for static hosting deployment
+
+## 🚀 Testing Builds Locally
+
+### Test SPA Locally
+```bash
+npm run serve:spa           # Build and serve SPA on http://localhost:8080
+npm run serve:spa:dev       # Development version
+```
+
+### Test SSR Locally
+```bash
+npm run serve:ssr           # Build and run SSR server
+npm run serve:ssr:dev       # Development SSR server
+```
+
+### Test SSG Locally
+```bash
+npm run serve:ssg           # Build and serve static files on http://localhost:8080
+npm run serve:ssg:dev       # Development version
+```
+
+## 📦 Deployment Strategies
+
+### SPA Deployment
+**Best For:** Interactive applications, admin dashboards, internal tools
+
+**Hosting Options:**
+- **Netlify** - Automatic SPA routing support
+- **Vercel** - Built-in SPA configuration
+- **AWS S3 + CloudFront** - Configure fallback to index.html
+- **GitHub Pages** - With SPA routing configuration
+
+**Deployment Steps:**
+```bash
+npm run build:spa
+# Deploy contents of dist/personal-blog-front/browser/
+```
+
+**Netlify Configuration (_redirects file):**
+```
+/*    /index.html   200
+```
+
+### SSR Deployment
+**Best For:** Content sites requiring perfect SEO, e-commerce, news sites
+
+**Hosting Options:**
+- **Vercel** - Native Node.js support
+- **Netlify Functions** - Serverless SSR
+- **AWS Lambda** - Serverless deployment
+- **DigitalOcean** - Traditional VPS hosting
+- **Heroku** - Platform-as-a-service
+
+**Deployment Steps:**
+```bash
+npm run build:ssr
+# Deploy entire dist/ folder with Node.js runtime
+node dist/personal-blog-front/server/server.mjs
+```
+
+### SSG Deployment
+**Best For:** Blogs, documentation, portfolios, marketing sites
+
+**Hosting Options:**
+- **Netlify** - Perfect for static sites
+- **Vercel** - Excellent static hosting
+- **GitHub Pages** - Free hosting for open source
+- **AWS S3 + CloudFront** - Enterprise static hosting
+- **Surge.sh** - Simple static hosting
+
+**Deployment Steps:**
+```bash
+npm run build:ssg
+# Deploy contents of dist/personal-blog-front/browser/
+```
+
+## 🎯 Choosing the Right Strategy
+
+### When to Use SPA
+- ✅ Building interactive web applications
+- ✅ Admin dashboards or internal tools
+- ✅ Progressive Web Apps (PWAs)
+- ✅ Applications where user experience > SEO
+- ✅ Need rich client-side interactions
+
+### When to Use SSR
+- ✅ Content sites requiring perfect SEO
+- ✅ E-commerce with dynamic content
+- ✅ News sites with real-time content
+- ✅ Social platforms where sharing is important
+- ✅ Need both great UX and perfect SEO
+
+### When to Use SSG
+- ✅ Personal blogs and portfolios
+- ✅ Documentation websites
+- ✅ Marketing and landing pages
+- ✅ Content doesn't change frequently
+- ✅ Want maximum performance and minimum costs
+
+## 🔧 Environment Configuration
+
+### Development Environment
+**File:** `src/environments/environment.ts`
 ```typescript
 export const environment = {
   production: false,
@@ -246,303 +319,128 @@ export const environment = {
 };
 ```
 
-### Production Environment (`src/environments/environment.prod.ts`)
+### Production Environment
+**File:** `src/environments/environment.prod.ts`
 ```typescript
 export const environment = {
   production: true,
-  apiUrl: process.env['API_URL'] || '',
-  siteUrl: process.env['SITE_URL'] || 'https://your-domain.com'
+  apiUrl: process.env['API_URL'] || 'https://api.yourdomain.com/api',
+  siteUrl: process.env['SITE_URL'] || 'https://yourdomain.com'
 };
 ```
 
-### Required Environment Variables
+**Required Environment Variables:**
+- `API_URL` - Backend API endpoint
+- `SITE_URL` - Frontend domain for canonical URLs
 
-| Variable | Description | Development | Production |
-|----------|-------------|-------------|------------|
-| `API_URL` | Backend API base URL | `http://localhost:4201/api` | Your API domain |
-| `SITE_URL` | Frontend site URL | `http://localhost:4202` | Your site domain |
+## 📊 Performance Comparison
 
-## 🚀 Build & Deployment
+| Strategy | First Load | SEO Score | Hosting Cost | Update Speed | Complexity |
+|----------|------------|-----------|--------------|--------------|------------|
+| **SPA** | Slow | Poor | Free | Instant | Low |
+| **SSR** | Fast | Perfect | Medium | Instant | High |
+| **SSG** | Fastest | Perfect | Free | Build Required | Medium |
 
-### Development Build
+## 🛡️ SEO Features
 
-```bash
-# Standard development build
-npm run build
+All rendering strategies include:
+- **Dynamic Meta Tags** - Title, description, keywords
+- **Open Graph Tags** - Perfect social media previews
+- **Twitter Card Tags** - Optimized Twitter sharing
+- **Structured Data (JSON-LD)** - Rich search results
+- **Canonical URLs** - Prevent duplicate content issues
+- **XML Sitemap Generation** - Search engine discovery
 
-# SSR development build
-npm run build:ssr
+## 🚨 Common Issues & Solutions
+
+| Issue | Solution |
+|-------|----------|
+| **SPA pages not indexing** | Switch to SSR or SSG for better SEO |
+| **SSR server errors** | Check Node.js version and dependencies |
+| **SSG build failures** | Verify backend API connectivity during build |
+| **Content not updating** | Run `npm run fetch:content:prod` before building |
+| **Build taking too long** | Consider reducing number of pre-rendered routes |
+| **Memory issues during build** | Increase Node.js memory: `NODE_OPTIONS="--max-old-space-size=4096"` |
+
+## 📝 Complete Scripts Reference
+
+| Script | Purpose | Output |
+|--------|---------|--------|
+| `npm start` | SPA development server | Development mode on :4202 |
+| `npm run start:ssr` | SSR development server | SSR development mode |
+| `npm run build:spa` | Production SPA build | Static SPA files |
+| `npm run build:ssr` | Production SSR build | Server + client bundles |
+| `npm run build:ssg` | Production SSG build | Pre-rendered static files |
+| `npm run serve:spa` | Test SPA locally | Local SPA server :8080 |
+| `npm run serve:ssr` | Test SSR locally | Local SSR server |
+| `npm run serve:ssg` | Test SSG locally | Local static server :8080 |
+| `npm test` | Run unit tests | Test results |
+| `npm run format` | Format code | Formatted TypeScript files |
+
+## 🏗️ Project Architecture
+
 ```
-
-### Production Build
-
-```bash
-# Full production build with prerendering
-npm run build:prerender
+src/
+├── app/
+│   ├── components/
+│   │   ├── basic-components/     # Reusable UI elements
+│   │   ├── layout-components/    # Headers, footers, navigation
+│   │   └── pages-components/     # Page-specific components
+│   ├── pages/                    # Route components
+│   ├── services/                 # Business logic and API calls
+│   ├── layouts/                  # Page layout wrappers
+│   └── shared/                   # Shared utilities
+├── assets/                       # Static assets (images, fonts)
+├── environments/                 # Environment configurations
+└── styles.scss                  # Global SCSS styles
 ```
-
-This command performs the following steps:
-1. Fetches latest content from production API
-2. Updates Angular route configuration
-3. Builds client and server bundles
-4. Pre-renders all routes to static HTML
-5. Optimizes assets and generates service worker
-
-### Build Output
-
-```
-dist/personal-blog-front/
-├── browser/               # Client-side application
-├── server/               # SSR server files
-└── prerendered/          # Static HTML files
-```
-
-### Deployment Process
-
-#### 1. Static Hosting (Recommended)
-```bash
-# Build for static hosting
-npm run build:prerender
-
-# Deploy the browser/ directory to your hosting provider
-# Examples: Netlify, Vercel, AWS S3 + CloudFront
-```
-
-#### 2. SSR Hosting
-```bash
-# Build SSR version
-npm run build:ssr
-
-# Deploy and run server
-npm run serve:ssr:prod
-```
-
-#### 3. PM2 Production Management
-```bash
-# Start with PM2
-pm2 start ecosystem.config.js
-
-# Restart application
-npm run front:restart
-```
-
-## 🔌 API Integration
-
-### Backend Requirements
-
-The frontend requires a NestJS backend with the following endpoints:
-
-#### Essential Endpoints
-- `GET /site/config` - Global site configuration
-- `GET /posts/slugs` - Blog post slugs for route generation
-- `GET /posts/:slug` - Individual blog post content
-- `GET /projects/slugs` - Project slugs for route generation
-- `GET /projects/:slug` - Individual project content
-
-#### Page-Specific Endpoints
-- `GET /home` - Homepage content and featured items
-- `GET /about` - About page content and experience data
-- `GET /changelog` - Changelog entries and page content
-- `GET /license` - License information and legal content
-- `GET /privacy` - Privacy policy content
-
-### API Response Format
-
-All API endpoints return structured data with consistent formatting:
-
-```typescript
-interface ApiResponse<T> {
-  pageContent: T;
-  layoutData: LayoutData;
-  seoData: SEOData;
-  // Additional data specific to each endpoint
-}
-```
-
-### Error Handling
-
-The application implements comprehensive error handling:
-- **Network Errors** - Graceful degradation with fallback content
-- **API Unavailability** - Cached content and retry mechanisms
-- **Build-time Failures** - Fallback to default routes and content
-- **Runtime Errors** - Loading states and user feedback
-
-## 🔍 SEO & Performance
-
-### SEO Features
-
-#### Meta Tag Management
-- **Dynamic Meta Tags** - Title, description, keywords per page
-- **Open Graph Tags** - Social media sharing optimization
-- **Twitter Cards** - Enhanced Twitter sharing
-- **Canonical URLs** - Duplicate content prevention
-
-#### Structured Data
-- **JSON-LD Schema** - Rich snippets for search engines
-- **Article Schema** - Blog post structured data
-- **Organization Schema** - Business/personal information
-- **Breadcrumb Schema** - Navigation structure
-
-#### Technical SEO
-- **Server-Side Rendering** - Full HTML for search crawlers
-- **Static Prerendering** - Instant page loads
-- **Semantic HTML** - Proper heading hierarchy and landmarks
-- **Image Optimization** - Alt text and responsive images
-
-### Performance Optimizations
-
-#### Build Optimizations
-- **Tree Shaking** - Eliminate unused code
-- **Code Splitting** - Lazy-loaded route modules
-- **Bundle Analysis** - Optimize bundle sizes
-- **Asset Optimization** - Compressed images and assets
-
-#### Runtime Optimizations
-- **OnPush Change Detection** - Improved performance
-- **Lazy Loading** - Route-based code splitting
-- **Service Worker** - Caching and offline support
-- **Image Lazy Loading** - Improved page load times
-
-#### Core Web Vitals
-- **LCP (Largest Contentful Paint)** - Optimized with SSR
-- **FID (First Input Delay)** - Minimized with efficient code
-- **CLS (Cumulative Layout Shift)** - Prevented with proper sizing
-
-## 🧪 Testing
-
-### Unit Testing
-
-```bash
-# Run unit tests
-npm test
-
-# Run tests with coverage
-npm test -- --code-coverage
-
-# Run tests in watch mode
-npm test -- --watch
-```
-
-### Testing Framework
-- **Karma** - Test runner
-- **Jasmine** - Testing framework
-- **Angular Testing Utilities** - Component testing
-
-### Test Structure
-```
-src/app/
-├── components/
-│   └── **/*.spec.ts      # Component tests
-├── services/
-│   └── **/*.spec.ts      # Service tests
-└── pages/
-    └── **/*.spec.ts      # Page component tests
-```
-
-## 🔧 Code Quality
-
-### Linting and Formatting
-
-```bash
-# Format code and fix linting issues
-npm run format
-
-# Run ESLint manually
-npx eslint "src/**/*.ts" --fix
-
-# Run Prettier manually
-npx prettier --write "src/**/*.ts"
-```
-
-### Code Quality Tools
-- **ESLint** - Code linting and style enforcement
-- **Prettier** - Code formatting
-- **TypeScript** - Type checking and compile-time error detection
-- **Angular Style Guide** - Official Angular conventions
-
-### Pre-commit Hooks
-The project uses pre-commit hooks to ensure code quality:
-- Automatic formatting with Prettier
-- ESLint validation
-- TypeScript compilation check
-- Unit test execution
 
 ## 🔄 Development Workflow
 
-### 1. Content Updates
+### Daily Development
 ```bash
-# Fetch latest content from backend
-npm run fetch:slugs:dev
+# 1. Start backend API (in backend directory)
+npm run start:dev
 
-# Update route configuration
-npm run update:routes
-
-# Restart development server
+# 2. Start frontend development
 npm start
+
+# 3. When backend content changes
+npm run fetch:content:dev
+# Then restart development server
 ```
 
-### 2. Feature Development
+### Production Deployment
+
+**For SPA:**
 ```bash
-# Create feature branch
-git checkout -b feature/new-feature
-
-# Develop and test
-npm start
-npm test
-
-# Format code
-npm run format
-
-# Commit changes
-git commit -m "feat: add new feature"
+npm run build:spa
+# Deploy dist/personal-blog-front/browser/ to static hosting
 ```
 
-### 3. Production Deployment
+**For SSR:**
 ```bash
-# Build production version
-npm run build:prerender
-
-# Test production build locally
-npm run serve:ssr:prod
-
-# Deploy to hosting provider
-# (Specific deployment commands depend on hosting platform)
+npm run build:ssr
+# Deploy to Node.js hosting with:
+# node dist/personal-blog-front/server/server.mjs
 ```
 
-## 📦 Dependencies
+**For SSG:**
+```bash
+npm run build:ssg
+# Deploy dist/personal-blog-front/browser/ to static hosting
+```
 
-### Core Dependencies
-- **@angular/core** (^17.3.0) - Angular framework
-- **@angular/platform-browser** (^17.3.0) - Browser platform
-- **@angular/router** (^17.3.0) - Routing functionality
-- **@angular/animations** (^17.3.0) - Animation system
-- **@angular/ssr** (^17.3.17) - Server-side rendering
+## 🎨 Features Included
 
-### Feature Dependencies
-- **ng-katex** (^2.0.3) - LaTeX mathematical notation
-- **highlight.js** (^11.11.1) - Code syntax highlighting
-- **dayjs** (^1.11.13) - Date manipulation
-- **katex** (^0.16.22) - Math typesetting
-
-### Development Dependencies
-- **@angular/cli** (^17.3.4) - Angular CLI tools
-- **typescript** (~5.4.2) - TypeScript compiler
-- **eslint** (^9.31.0) - Code linting
-- **prettier** (^3.6.2) - Code formatting
-
-## 📄 License
-
-This project is part of a personal blog system. Please refer to the main repository for license information.
-
-## 📞 Support
-
-For questions, issues, or contributions:
-
-1. **Documentation** - Check this README and inline code comments
-2. **Issues** - Create an issue in the repository
-3. **Discussions** - Use repository discussions for questions
-4. **Code Review** - Submit pull requests for improvements
+- **Mathematical Content** - KaTeX for LaTeX formula rendering
+- **Code Highlighting** - Automatic syntax highlighting with highlight.js
+- **Responsive Design** - Mobile-first responsive layouts
+- **Dark Mode Support** - Theme switching capabilities
+- **Animation Support** - Smooth page transitions and interactions
+- **Image Optimization** - Lazy loading and responsive images
+- **Performance Monitoring** - Built-in Core Web Vitals tracking
 
 ---
 
-**Built with ❤️ using Angular 17 and modern web technologies**
+**Built with ❤️ using Angular 17 - Supporting SPA, SSR, and SSG rendering strategies**

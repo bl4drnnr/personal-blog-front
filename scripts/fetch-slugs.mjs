@@ -1,20 +1,47 @@
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 (async () => {
   try {
     let postsData = [];
     let projectsData = [];
 
-    if (!process.env.API_URL) {
-      console.error('API_URL environment variable is not set');
+    // Determine which environment to use
+    const isDevelopment = process.env.NODE_ENV !== 'production';
+    const envFile = isDevelopment ? 'environment.ts' : 'environment.prod.ts';
+    const envPath = join(__dirname, '..', 'src', 'environments', envFile);
+
+    // Read and parse the environment file
+    const envContent = fs.readFileSync(envPath, 'utf-8');
+    const apiUrlMatch = envContent.match(/apiUrl:\s*['"`]([^'"`]+)['"`]/);
+
+    let API_URL;
+    if (apiUrlMatch) {
+      API_URL = apiUrlMatch[1];
+      // Handle environment variable placeholders in production
+      if (API_URL.includes('process.env')) {
+        API_URL = process.env.API_URL;
+      }
+    }
+
+    if (!API_URL) {
+      console.error(
+        'API_URL could not be determined from environment configuration'
+      );
       process.exit(1);
     }
+
+    console.log(`Using API URL: ${API_URL}`);
 
     try {
       // Fetch from API
       const [postsResponse, projectsResponse] = await Promise.all([
-        fetch(`${process.env.API_URL}/posts/slugs`),
-        fetch(`${process.env.API_URL}/projects/slugs`)
+        fetch(`${API_URL}/posts/slugs`),
+        fetch(`${API_URL}/projects/slugs`)
       ]);
 
       if (!postsResponse.ok) {
