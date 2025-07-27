@@ -73,8 +73,10 @@ const __dirname = dirname(__filename);
       '/contact',
       '/about-me',
       '/changelog',
-      '/license',
-      '/privacy'
+      '/licenses',
+      '/privacy',
+      '/menu',
+      '/subscribe'
     ];
     const blogRoutes = postsData.map((post) => `/blog/${post.slug}`);
     const projectRoutes = projectsData.map(

@@ -8,6 +8,27 @@
 
 A modern personal blog frontend built with Angular 17, supporting **three rendering strategies**: Single Page Application (SPA), Server-Side Rendering (SSR), and Static Site Generation (SSG). Choose the best approach for your deployment needs.
 
+## 📚 Table of Contents
+
+- [🏗️ Architecture Overview](#️-architecture-overview)
+- [📋 Quick Start](#-quick-start)
+- [🎯 Rendering Strategies Explained](#-rendering-strategies-explained)
+  - [1. 🔥 SPA (Single Page Application)](#1--spa-single-page-application)
+  - [2. ⚡ SSR (Server-Side Rendering)](#2--ssr-server-side-rendering)
+  - [3. 🚀 SSG (Static Site Generation)](#3--ssg-static-site-generation)
+- [🛠️ Development Commands](#️-development-commands)
+- [🏗️ Build Commands](#️-build-commands)
+- [🚀 Testing Builds Locally](#-testing-builds-locally)
+- [🎯 Choosing the Right Strategy](#-choosing-the-right-strategy)
+- [🔧 Environment Configuration](#-environment-configuration)
+- [📊 Performance Comparison](#-performance-comparison)
+- [🛡️ SEO Features](#️-seo-features)
+- [🚨 Common Issues & Solutions](#-common-issues--solutions)
+- [📝 Complete Scripts Reference](#-complete-scripts-reference)
+- [🏗️ Project Architecture](#️-project-architecture)
+- [🔄 Development Workflow](#-development-workflow)
+- [🎨 Features Included](#-features-included)
+
 ## 🏗️ Architecture Overview
 
 This project implements a **hybrid architecture** supporting multiple rendering strategies:
@@ -229,60 +250,6 @@ npm run serve:ssg           # Build and serve static files on http://localhost:8
 npm run serve:ssg:dev       # Development version
 ```
 
-## 📦 Deployment Strategies
-
-### SPA Deployment
-**Best For:** Interactive applications, admin dashboards, internal tools
-
-**Hosting Options:**
-- **Netlify** - Automatic SPA routing support
-- **Vercel** - Built-in SPA configuration
-- **AWS S3 + CloudFront** - Configure fallback to index.html
-- **GitHub Pages** - With SPA routing configuration
-
-**Deployment Steps:**
-```bash
-npm run build:spa
-# Deploy contents of dist/personal-blog-front/browser/
-```
-
-**Netlify Configuration (_redirects file):**
-```
-/*    /index.html   200
-```
-
-### SSR Deployment
-**Best For:** Content sites requiring perfect SEO, e-commerce, news sites
-
-**Hosting Options:**
-- **Vercel** - Native Node.js support
-- **Netlify Functions** - Serverless SSR
-- **AWS Lambda** - Serverless deployment
-- **DigitalOcean** - Traditional VPS hosting
-- **Heroku** - Platform-as-a-service
-
-**Deployment Steps:**
-```bash
-npm run build:ssr
-# Deploy entire dist/ folder with Node.js runtime
-node dist/personal-blog-front/server/server.mjs
-```
-
-### SSG Deployment
-**Best For:** Blogs, documentation, portfolios, marketing sites
-
-**Hosting Options:**
-- **Netlify** - Perfect for static sites
-- **Vercel** - Excellent static hosting
-- **GitHub Pages** - Free hosting for open source
-- **AWS S3 + CloudFront** - Enterprise static hosting
-- **Surge.sh** - Simple static hosting
-
-**Deployment Steps:**
-```bash
-npm run build:ssg
-# Deploy contents of dist/personal-blog-front/browser/
-```
 
 ## 🎯 Choosing the Right Strategy
 
@@ -355,12 +322,16 @@ All rendering strategies include:
 
 | Issue | Solution |
 |-------|----------|
-| **SPA pages not indexing** | Switch to SSR or SSG for better SEO |
+| **SPA routing errors (ENAMETOOLONG)** | Use `--spa` flag with http-server instead of `-P` proxy |
+| **SPA static routes return 404 (e.g., /about-me)** | Start backend API first - static routes depend on API calls |
+| **SPA 404 on refresh/direct navigation** | Configure server fallback to serve index.html for all routes |
+| **SPA pages not indexing by search engines** | Switch to SSR or SSG for better SEO |
 | **SSR server errors** | Check Node.js version and dependencies |
 | **SSG build failures** | Verify backend API connectivity during build |
 | **Content not updating** | Run `npm run fetch:content:prod` before building |
 | **Build taking too long** | Consider reducing number of pre-rendered routes |
 | **Memory issues during build** | Increase Node.js memory: `NODE_OPTIONS="--max-old-space-size=4096"` |
+| **Routes not working in production SPA** | Ensure hosting platform supports SPA fallback routing |
 
 ## 📝 Complete Scripts Reference
 
@@ -410,6 +381,20 @@ npm run fetch:content:dev
 # Then restart development server
 ```
 
+### Testing SPA Locally
+```bash
+# IMPORTANT: Start backend API first
+# Terminal 1: Backend API
+cd ../personal-blog-api  # Navigate to backend directory
+npm run start:dev
+
+# Terminal 2: Frontend SPA
+npm run serve:spa:dev
+```
+
+**Why backend is needed for SPA testing:**
+Static routes (`/about-me`, `/blog`, `/contact`, etc.) make API calls to fetch content. Without the backend running, these routes will return 404 or fail to load.
+
 ### Production Deployment
 
 **For SPA:**
@@ -436,10 +421,8 @@ npm run build:ssg
 - **Mathematical Content** - KaTeX for LaTeX formula rendering
 - **Code Highlighting** - Automatic syntax highlighting with highlight.js
 - **Responsive Design** - Mobile-first responsive layouts
-- **Dark Mode Support** - Theme switching capabilities
 - **Animation Support** - Smooth page transitions and interactions
 - **Image Optimization** - Lazy loading and responsive images
-- **Performance Monitoring** - Built-in Core Web Vitals tracking
 
 ---
 
