@@ -3,7 +3,7 @@ import { LoadingService } from '@services/loading.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-loading-spinner',
+  selector: 'component-loading-spinner',
   templateUrl: './loading-spinner.component.html',
   styleUrls: ['./loading-spinner.component.scss']
 })

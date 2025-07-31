@@ -26,7 +26,7 @@ export class SiteConfigService {
     }
 
     this.http
-      .get<SiteConfig>(`${this.apiUrl}/site/config`)
+      .get<SiteConfig>(`${this.apiUrl}/site-config/site/config`)
       .pipe(
         catchError((error) => {
           const errorMsg = `Failed to load site config from API: ${error.message || error}`;

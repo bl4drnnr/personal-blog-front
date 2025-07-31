@@ -75,15 +75,9 @@ export class BlogService {
       params = params.set('tag', query.tag);
     }
 
-    return this.http.get<BlogPageData>(`${this.apiUrl}/blog`, { params });
-  }
-
-  getAllPosts(): Observable<Post[]> {
-    if (!this.apiUrl) {
-      return throwError(() => new Error('API URL not configured'));
-    }
-
-    return this.http.get<Post[]>(`${this.apiUrl}/posts`);
+    return this.http.get<BlogPageData>(`${this.apiUrl}/blog/articles`, {
+      params
+    });
   }
 
   getPostBySlug(slug: string): Observable<Post> {
@@ -91,6 +85,6 @@ export class BlogService {
       return throwError(() => new Error('API URL not configured'));
     }
 
-    return this.http.get<Post>(`${this.apiUrl}/posts/${slug}`);
+    return this.http.get<Post>(`${this.apiUrl}/articles/posts/${slug}`);
   }
 }

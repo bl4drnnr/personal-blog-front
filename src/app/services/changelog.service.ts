@@ -17,6 +17,8 @@ export class ChangelogService {
       return throwError(() => new Error('API URL not configured'));
     }
 
-    return this.http.get<ChangelogPageData>(`${this.apiUrl}/changelog`);
+    return this.http.get<ChangelogPageData>(
+      `${this.apiUrl}/changelog/changelog`
+    );
   }
 }

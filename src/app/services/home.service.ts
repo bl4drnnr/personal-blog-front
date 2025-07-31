@@ -17,6 +17,6 @@ export class HomeService {
       return throwError(() => new Error('API URL not configured'));
     }
 
-    return this.http.get<HomePageData>(`${this.apiUrl}/home`);
+    return this.http.get<HomePageData>(`${this.apiUrl}/home/home`);
   }
 }

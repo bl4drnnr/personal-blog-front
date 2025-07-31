@@ -17,6 +17,6 @@ export class PrivacyService {
       return throwError(() => new Error('API URL not configured'));
     }
 
-    return this.http.get<PrivacyPageData>(`${this.apiUrl}/privacy`);
+    return this.http.get<PrivacyPageData>(`${this.apiUrl}/privacy/privacy`);
   }
 }

@@ -71,7 +71,7 @@ export class ProjectsService {
       params = params.set('search', query.search);
     }
 
-    return this.http.get<ProjectsPageData>(`${this.apiUrl}/projects`, {
+    return this.http.get<ProjectsPageData>(`${this.apiUrl}/projects/projects`, {
       params
     });
   }
@@ -81,6 +81,6 @@ export class ProjectsService {
       return throwError(() => new Error('API URL not configured'));
     }
 
-    return this.http.get<Project>(`${this.apiUrl}/projects/${slug}`);
+    return this.http.get<Project>(`${this.apiUrl}/projects/projects/${slug}`);
   }
 }

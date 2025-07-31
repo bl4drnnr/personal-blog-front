@@ -17,6 +17,6 @@ export class LicenseService {
       return throwError(() => new Error('API URL not configured'));
     }
 
-    return this.http.get<LicensePageData>(`${this.apiUrl}/license`);
+    return this.http.get<LicensePageData>(`${this.apiUrl}/license/license`);
   }
 }

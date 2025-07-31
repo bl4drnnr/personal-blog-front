@@ -17,6 +17,6 @@ export class AboutService {
       return throwError(() => new Error('API URL not configured'));
     }
 
-    return this.http.get<AboutPageData>(`${this.apiUrl}/about`);
+    return this.http.get<AboutPageData>(`${this.apiUrl}/about/about`);
   }
 }

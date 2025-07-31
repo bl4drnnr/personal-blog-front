@@ -54,8 +54,8 @@ const __dirname = dirname(__filename);
     try {
       // Fetch from API
       const [postsResponse, projectsResponse] = await Promise.all([
-        fetch(`${API_URL}/posts/slugs`),
-        fetch(`${API_URL}/projects/slugs`)
+        fetch(`${API_URL}/articles/posts/slugs`),
+        fetch(`${API_URL}/projects/projects/slugs`)
       ]);
 
       if (!postsResponse.ok) {
