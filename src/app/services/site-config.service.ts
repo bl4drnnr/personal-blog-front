@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { SiteConfig } from '@interface/site-config.interface';
 
@@ -32,10 +32,7 @@ export class SiteConfigService {
           const errorMsg = `Failed to load site config from API: ${error.message || error}`;
           console.error(errorMsg);
           return throwError(() => new Error(errorMsg));
-        }),
-        tap((config) =>
-          console.log('Site config loaded successfully:', config.siteName)
-        )
+        })
       )
       .subscribe({
         next: (config) => {

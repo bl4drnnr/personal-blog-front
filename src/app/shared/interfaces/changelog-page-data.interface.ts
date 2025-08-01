@@ -1,10 +1,5 @@
 import { ChangelogEntry } from './changelog-entry.interface';
 
-export interface ChangelogPageContent {
-  title?: string;
-  content?: string;
-}
-
 export interface ChangelogLayoutData {
   footerText: string;
   heroImageMain: string;
@@ -27,7 +22,6 @@ export interface ChangelogSeoData {
 }
 
 export interface ChangelogPageData {
-  pageContent: ChangelogPageContent;
   layoutData: ChangelogLayoutData;
   seoData: ChangelogSeoData;
   entries: ChangelogEntry[];

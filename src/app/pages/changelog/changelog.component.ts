@@ -5,7 +5,6 @@ import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
 import {
   ChangelogLayoutData,
-  ChangelogPageContent,
   ChangelogPageData
 } from '@interface/changelog-page-data.interface';
 import { ChangelogService } from '@services/changelog.service';
@@ -20,12 +19,6 @@ export class ChangelogComponent implements OnInit {
   animationState = '';
   error: string | null = null;
   changelogEntries: ChangelogEntry[] = [];
-
-  // Data properties - will be populated from backend API
-  pageContent: ChangelogPageContent = {
-    title: '',
-    content: ''
-  };
 
   layoutData: ChangelogLayoutData = {
     footerText: '',
@@ -54,7 +47,6 @@ export class ChangelogComponent implements OnInit {
 
     this.changelogService.getChangelogPageData().subscribe({
       next: (data: ChangelogPageData) => {
-        this.pageContent = data.pageContent;
         this.layoutData = data.layoutData;
         this.changelogEntries = data.entries;
 
