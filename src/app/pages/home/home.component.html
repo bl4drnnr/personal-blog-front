@@ -11,6 +11,7 @@
 
   <!-- Marquee Section -->
   <component-marquee-carousel
+    *ngIf="pageContent.marqueeLeftText"
     [text]="pageContent.marqueeLeftText"
     direction="left"
     [speed]="60"
@@ -19,6 +20,7 @@
 
   <!-- Marquee Section Right -->
   <component-marquee-carousel
+    *ngIf="pageContent.marqueeRightText"
     [text]="pageContent.marqueeRightText"
     direction="right"
     [speed]="60"
