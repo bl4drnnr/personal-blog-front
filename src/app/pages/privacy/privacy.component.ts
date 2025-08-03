@@ -23,11 +23,7 @@ export class PrivacyComponent implements OnInit {
   pageContent: PrivacyPageContent = {
     title: '',
     lastUpdated: '',
-    sections: [],
-    cookiePolicy: {
-      title: '',
-      content: []
-    }
+    sections: []
   };
 
   layoutData: PrivacyLayoutData = {

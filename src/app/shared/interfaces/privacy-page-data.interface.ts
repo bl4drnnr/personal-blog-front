@@ -1,16 +1,13 @@
-import { ContentItem } from './privacy-content-item.interface';
+export interface PrivacySection {
+  id: string;
+  title: string;
+  content: string;
+}
 
 export interface PrivacyPageContent {
   title: string;
   lastUpdated: string;
-  sections: Array<{
-    title: string;
-    content: ContentItem[];
-  }>;
-  cookiePolicy: {
-    title: string;
-    content: ContentItem[];
-  };
+  sections: PrivacySection[];
 }
 
 export interface PrivacyLayoutData {

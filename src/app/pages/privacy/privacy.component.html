@@ -20,28 +20,7 @@
 
           <div *ngFor="let section of pageContent.sections">
             <h3 class="text-animate">{{ section.title }}</h3>
-            <ng-container *ngFor="let item of section.content">
-              <p class="text-animate" *ngIf="item.type === 'paragraph'">{{ item.text }}</p>
-              <p class="text-animate" *ngIf="item.type === 'paragraph_with_link'">
-                {{ item.text }} <a [href]="item.linkUrl">{{ item.linkText }}</a>.
-              </p>
-              <ul class="text-animate" *ngIf="item.type === 'list'">
-                <li *ngFor="let listItem of item.items">{{ listItem }}</li>
-              </ul>
-            </ng-container>
-          </div>
-        </div>
-
-        <div class="privacy-additional">
-          <div class="content-text">
-            <h3 class="text-animate">{{ pageContent.cookiePolicy.title }}</h3>
-            <ng-container *ngFor="let item of pageContent.cookiePolicy.content">
-              <p class="text-animate" *ngIf="item.type === 'paragraph'">{{ item.text }}</p>
-              <h4 class="text-animate" *ngIf="item.type === 'subtitle'">{{ item.text }}</h4>
-              <ul class="text-animate" *ngIf="item.type === 'list'">
-                <li *ngFor="let listItem of item.items" [innerHTML]="listItem"></li>
-              </ul>
-            </ng-container>
+            <div class="text-animate" [innerHTML]="section.content"></div>
           </div>
         </div>
       </div>
