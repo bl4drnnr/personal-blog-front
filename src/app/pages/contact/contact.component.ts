@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SEOService } from '@services/seo.service';
+import { ContactService } from '@services/contact.service';
+import { ContactPageData } from '@interface/contact-page-data.interface';
+import { ContactTile } from '@interface/contact-tile.interface';
 
 @Component({
   selector: 'page-contact',
@@ -7,59 +10,125 @@ import { SEOService } from '@services/seo.service';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  constructor(private seoService: SEOService) {}
+  contactPageData: ContactPageData | null = null;
+  loading = true;
 
-  ngOnInit() {
-    this.seoService.updatePageTitle('Contact');
-  }
+  // Form fields
   name: string = '';
   email: string = '';
   message: string = '';
+  isSubmitting: boolean = false;
   isSuccess: boolean = false;
   isError: boolean = false;
-  carouselWords: string[] = [
-    'Responsive Design',
-    'Webflow',
-    'User Experience',
-    'Page Speed',
-    'Prototyping',
-    'Frontend',
-    'Accessibility',
-    'Animation',
-    'User Interface'
-  ];
-  contactTiles = [
-    {
-      link: 'mailto:hello@luchcreative.com',
-      image: 'assets/images/mail-send-fill.svg',
-      alt: 'Mail Send',
-      label: 'Email Us',
-      sublabel: 'hello@luchcreative.com',
-      target: '_blank'
-    },
-    {
-      link: 'tel:+15551234567',
-      image: 'assets/images/phone-fill.svg',
-      alt: 'Phone',
-      label: 'Call us',
-      sublabel: '+1 (555) 123-4567',
-      target: '_blank'
-    },
-    {
-      link: 'https://t.me/LuchSupport',
-      image: 'assets/images/message-2-fill.svg',
-      alt: 'Message',
-      label: 'Let’s chat',
-      sublabel: '@LuchSupport',
-      target: '_blank'
-    },
-    {
-      link: 'https://goo.gl/maps/xyz',
-      image: 'assets/images/map-2-fill.svg',
-      alt: 'Map',
-      label: 'Visit us',
-      sublabel: 'Dreamcity, USA',
-      target: '_blank'
+
+  // Data properties (will be populated from backend)
+  carouselWords: string[] = [];
+  contactTiles: ContactTile[] = [];
+
+  constructor(
+    private seoService: SEOService,
+    private contactService: ContactService
+  ) {}
+
+  ngOnInit() {
+    this.loadContactPageData();
+  }
+
+  private loadContactPageData(): void {
+    this.contactService.getContactPageData().subscribe({
+      next: (data: ContactPageData) => {
+        this.contactPageData = data;
+        this.carouselWords = data.pageContent.carouselWords;
+        // this.contactTiles = data.contactTiles;
+        this.updateSEO(data);
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading contact page data:', error);
+        this.loading = false;
+        // Fallback data will be used from the service
+      }
+    });
+  }
+
+  private updateSEO(data: ContactPageData): void {
+    this.seoService.updatePageTitle(data.seoData.metaTitle);
+    this.seoService.updateMetaDescription(data.seoData.metaDescription);
+    this.seoService.updateMetaKeywords(data.seoData.metaKeywords);
+    // this.seoService.updateOpenGraphTags(
+    //   data.seoData.ogTitle,
+    //   data.seoData.ogDescription,
+    //   data.seoData.ogImage
+    // );
+    this.seoService.updateStructuredData(data.seoData.structuredData);
+  }
+
+  onSubmit(): void {
+    if (!this.isFormValid() || this.isSubmitting) {
+      return;
     }
-  ];
+
+    this.isSubmitting = true;
+    this.isSuccess = false;
+    this.isError = false;
+
+    const formData = {
+      name: this.name.trim(),
+      email: this.email.trim(),
+      message: this.message.trim()
+    };
+
+    this.contactService.submitContactForm(formData).subscribe({
+      next: () => {
+        this.isSuccess = true;
+        this.isError = false;
+        this.resetForm();
+        this.isSubmitting = false;
+      },
+      error: (error) => {
+        console.error('Contact form submission error:', error);
+        this.isError = true;
+        this.isSuccess = false;
+        this.isSubmitting = false;
+      }
+    });
+  }
+
+  private isFormValid(): boolean {
+    return (
+      this.name.trim().length > 0 &&
+      this.email.trim().length > 0 &&
+      this.message.trim().length > 0 &&
+      this.isValidEmail(this.email.trim())
+    );
+  }
+
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  private resetForm(): void {
+    this.name = '';
+    this.email = '';
+    this.message = '';
+  }
+
+  getSuccessMessage(): string {
+    return (
+      this.contactPageData?.pageContent.successMessage ||
+      "Thank you! Your submission has been received successfully. We'll get back to you shortly—stay tuned!"
+    );
+  }
+
+  getErrorMessage(): string {
+    return (
+      this.contactPageData?.pageContent.errorMessage ||
+      'Oops! Something went wrong while submitting the form. Please fill in all fields.'
+    );
+  }
+
+  getSubmitButtonText(): string {
+    return this.contactPageData?.pageContent.submitButtonText || 'Submit Now';
+  }
 }

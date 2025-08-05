@@ -1,19 +1,19 @@
 <hero-layout
-  [footerText]="'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
-  [logoText]="'Luch'"
-  [breadcrumbText]="'Contact'"
-  [heroImageMain]="'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
-  [heroImageSecondary]="'assets/images/Astronaut-Woman-in-Spacecraft_1Astronaut Woman in Spacecraft.avif'"
-  [heroImageMainAlt]="'Abstract Gradient Art'"
-  [heroImageSecondaryAlt]="'Astronaut in Space Suit'"
-  [heroTitle]="'Let\'s connect!'"
-  [heroDesc]="'Feel free to reach out for collaborations, inquiries or just to chat about design.'"
+  [footerText]="contactPageData?.layoutData.footerText || 'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
+  [logoText]="contactPageData?.layoutData.logoText || 'Luch'"
+  [breadcrumbText]="contactPageData?.layoutData.breadcrumbText || 'Contact'"
+  [heroImageMain]="contactPageData?.layoutData.heroImageMain || 'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
+  [heroImageSecondary]="contactPageData?.layoutData.heroImageSecondary || 'assets/images/Astronaut-Woman-in-Spacecraft_1Astronaut Woman in Spacecraft.avif'"
+  [heroImageMainAlt]="contactPageData?.layoutData.heroImageMainAlt || 'Abstract Gradient Art'"
+  [heroImageSecondaryAlt]="contactPageData?.layoutData.heroImageSecondaryAlt || 'Astronaut in Space Suit'"
+  [heroTitle]="contactPageData?.layoutData.heroTitle || 'Let\'s connect!'"
+  [heroDesc]="contactPageData?.layoutData.heroDesc || 'Feel free to reach out for collaborations, inquiries or just to chat about design.'"
   [hideScrollProgressBar]="true"
 >
   <div class="contact-section contact-section-relative">
     <component-carousel-words [words]="carouselWords" [speed]="60" />
 
-    <form class="contact-form">
+    <form class="contact-form" (ngSubmit)="onSubmit()">
       <div class="form-field">
         <component-input
           [placeholder]="'Name'"
@@ -37,15 +37,16 @@
       </div>
       <div class="form-field">
         <component-button
-          [text]="'Submit Now'"
+          [text]="getSubmitButtonText()"
           [type]="'submit'"
+          [disabled]="isSubmitting"
         ></component-button>
       </div>
       <div *ngIf="isSuccess" class="success-message">
-        Thank you! Your submission has been received successfully. We’ll get back to you shortly—stay tuned!
+        {{ getSuccessMessage() }}
       </div>
       <div *ngIf="isError" class="error-message">
-        Oops! Something went wrong while submitting the form. Please fill in all fields.
+        {{ getErrorMessage() }}
       </div>
     </form>
   </div>
