@@ -15,7 +15,6 @@ export interface AboutLayoutData {
   logoText: string;
   breadcrumbText: string;
   heroTitle: string;
-  contactTiles: any[];
 }
 
 export interface AboutSeoData {

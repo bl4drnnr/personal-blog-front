@@ -40,13 +40,11 @@ export class AboutMeComponent implements OnInit {
     heroImageSecondaryAlt: '',
     logoText: '',
     breadcrumbText: '',
-    heroTitle: '',
-    contactTiles: []
+    heroTitle: ''
   };
 
   experiences: Experience[] = [];
   certificates: Certificate[] = [];
-  contactTiles: any[] = [];
 
   ngOnInit() {
     this.loadAboutPageData();
@@ -62,7 +60,6 @@ export class AboutMeComponent implements OnInit {
         this.layoutData = data.layoutData;
         this.experiences = data.experiences;
         this.certificates = data.certificates;
-        this.contactTiles = data.layoutData.contactTiles || [];
 
         // Update SEO data
         this.updateSEOData(data.seoData);
