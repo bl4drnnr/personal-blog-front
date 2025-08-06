@@ -1,44 +1,45 @@
 <hero-layout
-  [footerText]="'Subscribe to our newsletter for exclusive updates and insights.'"
-  [logoText]="'Luch'"
-  [breadcrumbText]="'Subscribe'"
-  [heroImageMain]="'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
-  [heroImageSecondary]="'assets/images/Astronaut-Woman-in-Spacecraft_1Astronaut Woman in Spacecraft.avif'"
-  [heroImageMainAlt]="'Abstract Gradient Art'"
-  [heroImageSecondaryAlt]="'Astronaut in Space Suit'"
-  [heroTitle]="'Stay in the loop!'"
-  [heroDesc]="'Join our community to receive the latest news, articles, and resources straight to your inbox.'"
+  [footerText]="pageData.layoutData.footerText"
+  [logoText]="pageData.layoutData.logoText"
+  [breadcrumbText]="pageData.layoutData.breadcrumbText"
+  [heroImageMain]="pageData.layoutData.heroImageMain"
+  [heroImageSecondary]="pageData.layoutData.heroImageSecondary"
+  [heroImageMainAlt]="pageData.layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="pageData.layoutData.heroImageSecondaryAlt"
+  [heroTitle]="pageData.layoutData.heroTitle"
+  [heroDesc]="pageData.layoutData.heroDesc"
   [hideScrollProgressBar]="true"
 >
   <div class="subscribe-section subscribe-section-relative">
-    <component-carousel-words [words]="carouselWords" [speed]="60"/>
-    <form class="subscribe-form">
+    <component-carousel-words [words]="pageData.pageContent.carouselWords" [speed]="60"/>
+    <div class="subscribe-form">
       <div class="form-field">
         <component-input
-          [placeholder]="'Name'"
+          [placeholder]="'Name (Optional)'"
           [value]="name"
           (valueChange)="name = $event"
         ></component-input>
       </div>
       <div class="form-field">
         <component-input
-          [placeholder]="'Email Address'"
+          [placeholder]="pageData.pageContent.emailPlaceholder || 'Email Address'"
           [value]="email"
           (valueChange)="email = $event"
+          type="email"
         ></component-input>
       </div>
       <div class="form-field">
         <component-button
-          [text]="'Subscribe Now'"
-          [type]="'submit'"
+          [text]="pageData.pageContent.submitButtonText || 'Subscribe'"
+          (click)="onSubmit()"
         ></component-button>
       </div>
       <div *ngIf="isSuccess" class="success-message">
-        Thank you for subscribing! You’ll receive our next newsletter soon.
+        {{ pageData.pageContent.successMessage || 'Thank you for subscribing! You\'ll receive our next newsletter soon.' }}
       </div>
       <div *ngIf="isError" class="error-message">
-        Oops! Something went wrong. Please fill in all fields correctly.
+        {{ errorMessage }}
       </div>
-    </form>
+    </div>
   </div>
 </hero-layout>
