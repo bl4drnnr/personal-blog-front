@@ -1,19 +1,19 @@
 <hero-layout
-  [footerText]="contactPageData?.layoutData.footerText || 'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
-  [logoText]="contactPageData?.layoutData.logoText || 'Luch'"
-  [breadcrumbText]="contactPageData?.layoutData.breadcrumbText || 'Contact'"
-  [heroImageMain]="contactPageData?.layoutData.heroImageMain || 'assets/images/Abstract-Gradient-Art_1Abstract Gradient Art.avif'"
-  [heroImageSecondary]="contactPageData?.layoutData.heroImageSecondary || 'assets/images/Astronaut-Woman-in-Spacecraft_1Astronaut Woman in Spacecraft.avif'"
-  [heroImageMainAlt]="contactPageData?.layoutData.heroImageMainAlt || 'Abstract Gradient Art'"
-  [heroImageSecondaryAlt]="contactPageData?.layoutData.heroImageSecondaryAlt || 'Astronaut in Space Suit'"
-  [heroTitle]="contactPageData?.layoutData.heroTitle || 'Let\'s connect!'"
-  [heroDesc]="contactPageData?.layoutData.heroDesc || 'Feel free to reach out for collaborations, inquiries or just to chat about design.'"
+  [footerText]="contactPageData.layoutData.footerText"
+  [logoText]="contactPageData.layoutData.logoText"
+  [breadcrumbText]="contactPageData.layoutData.breadcrumbText"
+  [heroImageMain]="contactPageData.layoutData.heroImageMain"
+  [heroImageSecondary]="contactPageData.layoutData.heroImageSecondary"
+  [heroImageMainAlt]="contactPageData.layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="contactPageData.layoutData.heroImageSecondaryAlt"
+  [heroTitle]="contactPageData.layoutData.heroTitle"
+  [heroDesc]="contactPageData.layoutData.heroDesc"
   [hideScrollProgressBar]="true"
 >
   <div class="contact-section contact-section-relative">
     <component-carousel-words [words]="carouselWords" [speed]="60" />
 
-    <form class="contact-form" (ngSubmit)="onSubmit()">
+    <div class="contact-form">
       <div class="form-field">
         <component-input
           [placeholder]="'Name'"
@@ -38,8 +38,8 @@
       <div class="form-field">
         <component-button
           [text]="getSubmitButtonText()"
-          [type]="'submit'"
           [disabled]="isSubmitting"
+          (click)="onSubmit()"
         ></component-button>
       </div>
       <div *ngIf="isSuccess" class="success-message">
@@ -48,7 +48,7 @@
       <div *ngIf="isError" class="error-message">
         {{ getErrorMessage() }}
       </div>
-    </form>
+    </div>
   </div>
 
   <div class="contact-tiles-wrapper">

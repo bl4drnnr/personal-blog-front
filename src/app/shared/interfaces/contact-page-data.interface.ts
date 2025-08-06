@@ -1,11 +1,4 @@
-export interface ContactTile {
-  id?: string;
-  title: string;
-  content: string;
-  link: string;
-  iconUrl?: string | null;
-  sortOrder: number;
-}
+import { ContactTile } from './contact-tile.interface';
 
 export interface ContactPageContent {
   title: string;
@@ -19,8 +12,8 @@ export interface ContactPageContent {
 
 export interface ContactPageLayout {
   footerText: string;
-  heroImageMain: string | null;
-  heroImageSecondary: string | null;
+  heroImageMain: string;
+  heroImageSecondary: string;
   heroImageMainAlt: string;
   heroImageSecondaryAlt: string;
   logoText: string;
@@ -35,7 +28,7 @@ export interface ContactPageSeo {
   metaKeywords: string;
   ogTitle: string;
   ogDescription: string;
-  ogImage: string | null;
+  ogImage: string;
   structuredData: any;
 }
 

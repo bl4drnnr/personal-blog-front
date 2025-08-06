@@ -1,8 +1,8 @@
 export interface ContactTile {
+  id?: string;
+  title: string;
+  content: string;
   link: string;
-  image: string;
-  alt: string;
-  label: string;
-  sublabel?: string;
-  target?: string;
+  iconUrl?: string | null;
+  sortOrder: number;
 }

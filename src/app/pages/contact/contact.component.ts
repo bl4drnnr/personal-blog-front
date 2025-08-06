@@ -10,7 +10,38 @@ import { ContactTile } from '@interface/contact-tile.interface';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  contactPageData: ContactPageData | null = null;
+  contactPageData: ContactPageData = {
+    pageContent: {
+      title: '',
+      subtitle: '',
+      description: '',
+      carouselWords: [],
+      submitButtonText: '',
+      successMessage: '',
+      errorMessage: ''
+    },
+    layoutData: {
+      footerText: '',
+      heroImageMain: '',
+      heroImageSecondary: '',
+      heroImageMainAlt: '',
+      heroImageSecondaryAlt: '',
+      logoText: '',
+      breadcrumbText: '',
+      heroTitle: '',
+      heroDesc: ''
+    },
+    seoData: {
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: '',
+      ogTitle: '',
+      ogDescription: '',
+      ogImage: '',
+      structuredData: undefined
+    },
+    contactTiles: []
+  };
   loading = true;
 
   // Form fields
@@ -39,7 +70,7 @@ export class ContactComponent implements OnInit {
       next: (data: ContactPageData) => {
         this.contactPageData = data;
         this.carouselWords = data.pageContent.carouselWords;
-        // this.contactTiles = data.contactTiles;
+        this.contactTiles = data.contactTiles;
         this.updateSEO(data);
         this.loading = false;
       },
@@ -55,11 +86,13 @@ export class ContactComponent implements OnInit {
     this.seoService.updatePageTitle(data.seoData.metaTitle);
     this.seoService.updateMetaDescription(data.seoData.metaDescription);
     this.seoService.updateMetaKeywords(data.seoData.metaKeywords);
-    // this.seoService.updateOpenGraphTags(
-    //   data.seoData.ogTitle,
-    //   data.seoData.ogDescription,
-    //   data.seoData.ogImage
-    // );
+    this.seoService.updateOpenGraphTags({
+      title: data.seoData.ogTitle,
+      description: data.seoData.ogDescription,
+      image: data.seoData.ogImage,
+      url: window.location.href,
+      type: 'website'
+    });
     this.seoService.updateStructuredData(data.seoData.structuredData);
   }
 
