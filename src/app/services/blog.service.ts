@@ -44,7 +44,6 @@ export interface BlogQuery {
   page?: number;
   limit?: number;
   search?: string;
-  tag?: string;
 }
 
 @Injectable({
@@ -71,11 +70,8 @@ export class BlogService {
     if (query.search) {
       params = params.set('search', query.search);
     }
-    if (query.tag) {
-      params = params.set('tag', query.tag);
-    }
 
-    return this.http.get<BlogPageData>(`${this.apiUrl}/blog/articles`, {
+    return this.http.get<BlogPageData>(`${this.apiUrl}/articles/blog`, {
       params
     });
   }
