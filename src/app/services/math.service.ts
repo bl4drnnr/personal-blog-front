@@ -129,8 +129,12 @@ export class MathService {
   processImages(content: string): string {
     if (!content) return content;
 
-    // Add proper attributes to img tags for better loading and accessibility
+    // Add proper attributes to img tags and extract titles for captions
     content = content.replace(/<img([^>]*?)>/g, (match, attributes) => {
+      // Extract title attribute for caption
+      const titleMatch = attributes.match(/title="([^"]*)"/);
+      const captionText = titleMatch ? titleMatch[1] : '';
+
       // Add loading="lazy" if not present
       if (!attributes.includes('loading=')) {
         attributes += ' loading="lazy"';
@@ -154,10 +158,18 @@ export class MathService {
         attributes += ' style="max-width: 100%; height: auto;"';
       }
 
+      // Create image with caption wrapper if title exists
+      if (captionText) {
+        return `<div class="image-wrapper">
+          <img${attributes}>
+          <p class="image-caption">${captionText}</p>
+        </div>`;
+      }
+
       return `<img${attributes}>`;
     });
 
-    // Process image captions
+    // Process existing image captions (keep for backward compatibility)
     content = content.replace(
       /<p class="image-caption">([^<]+)<\/p>/g,
       '<p class="image-caption">$1</p>'
