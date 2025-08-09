@@ -16,15 +16,17 @@
     <div class="contact-form">
       <div class="form-field">
         <component-input
-          [placeholder]="'Name'"
+          [placeholder]="'Name *'"
           [value]="name"
+          [required]="true"
           (valueChange)="name = $event"
         ></component-input>
       </div>
       <div class="form-field">
         <component-input
-          [placeholder]="'Email Address'"
+          [placeholder]="'Email Address *'"
           [value]="email"
+          [required]="true"
           (valueChange)="email = $event"
         ></component-input>
       </div>

@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class InputComponent {
   @Input() placeholder: string = 'Search projects...';
   @Input() value: string = '';
+  @Input() required: boolean = false;
   @Output() valueChange = new EventEmitter<string>();
 
   onInput(event: Event): void {
