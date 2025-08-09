@@ -3,6 +3,7 @@ import { NewsletterService } from '@services/newsletter.service';
 import { SEOService } from '@services/seo.service';
 import { environment } from '@environments/environment';
 import { SubscribePageDataDto } from '@shared/interfaces/subscribe-page-data.interface';
+import { SubscribeInterface } from '@interface/subscribe.interface';
 
 @Component({
   selector: 'page-subscribe',
@@ -10,7 +11,6 @@ import { SubscribePageDataDto } from '@shared/interfaces/subscribe-page-data.int
   styleUrls: ['./subscribe.component.scss']
 })
 export class SubscribeComponent implements OnInit {
-  name: string = '';
   email: string = '';
   isSuccess: boolean = false;
   isError: boolean = false;
@@ -112,12 +112,15 @@ export class SubscribeComponent implements OnInit {
     this.isSuccess = false;
     this.errorMessage = '';
 
-    this.newsletterService.subscribe({ email: this.email }).subscribe({
+    const subscribePayload: SubscribeInterface = {
+      email: this.email
+    };
+
+    this.newsletterService.subscribe(subscribePayload).subscribe({
       next: () => {
         this.isSuccess = true;
         this.isError = false;
         this.email = '';
-        this.name = '';
       },
       error: (error) => {
         this.isSuccess = false;

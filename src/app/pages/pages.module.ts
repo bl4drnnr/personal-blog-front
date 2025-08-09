@@ -11,6 +11,7 @@ import { ProjectDetailComponent } from '@pages/project-detail/project-detail.com
 import { ContactComponent } from '@pages/contact/contact.component';
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { SubscribeComponent } from '@pages/subscribe/subscribe.component';
+import { NewsletterConfirmationComponent } from '@pages/newsletter-confirmation/newsletter-confirmation.component';
 import { PageMenuComponent } from '@pages/menu/page-menu.component';
 import { AboutMeComponent } from '@pages/about-me/about-me.component';
 import { ChangelogComponent } from '@pages/changelog/changelog.component';
@@ -26,6 +27,7 @@ const components: any = [
   ContactComponent,
   NotFoundComponent,
   SubscribeComponent,
+  NewsletterConfirmationComponent,
   PageMenuComponent,
   AboutMeComponent,
   ChangelogComponent,
@@ -42,6 +44,10 @@ const routes: Routes = [
   { path: 'projects/:slug', component: ProjectDetailComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'subscribe', component: SubscribeComponent },
+  {
+    path: 'newsletter-confirmation/:id',
+    component: NewsletterConfirmationComponent
+  },
   { path: 'menu', component: PageMenuComponent },
   { path: 'about-me', component: AboutMeComponent },
   { path: 'changelog', component: ChangelogComponent },

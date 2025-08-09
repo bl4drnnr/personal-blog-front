@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { SubscribePageDataDto } from '@shared/interfaces/subscribe-page-data.interface';
+import { SubscribeInterface } from '@interface/subscribe.interface';
+import { ConfirmSubscriptionEnum } from '@enums/confirm-subscription.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +26,28 @@ export class NewsletterService {
       );
   }
 
-  subscribe(subscriptionData: { email: string }): Observable<any> {
+  subscribe(subscriptionData: SubscribeInterface): Observable<any> {
     return this.http
       .post(`${this.API_URL}/newsletters/subscribe`, subscriptionData)
       .pipe(
         catchError((error) => {
           console.error('Error subscribing to newsletter:', error);
+          throw error;
+        })
+      );
+  }
+
+  confirmSubscription(
+    newslettersId: string
+  ): Observable<ConfirmSubscriptionEnum> {
+    return this.http
+      .post<ConfirmSubscriptionEnum>(
+        `${this.API_URL}/newsletters/confirm-newsletters-subscription/${newslettersId}`,
+        {}
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error confirming newsletter subscription:', error);
           throw error;
         })
       );

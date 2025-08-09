@@ -15,13 +15,6 @@
     <div class="subscribe-form">
       <div class="form-field">
         <component-input
-          [placeholder]="'Name (Optional)'"
-          [value]="name"
-          (valueChange)="name = $event"
-        ></component-input>
-      </div>
-      <div class="form-field">
-        <component-input
           [placeholder]="pageData.pageContent.emailPlaceholder || 'Email Address'"
           [value]="email"
           (valueChange)="email = $event"

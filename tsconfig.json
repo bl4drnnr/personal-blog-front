@@ -37,6 +37,7 @@
       "@assets/*": ["src/assets/*"],
       "@environments/*": ["src/environments/*"],
       "@interface/*": ["src/app/shared/interfaces/*"],
+      "@enums/*": ["src/app/shared/enums/*"],
       "@layouts/*": ["src/app/layouts/*"],
       "@animations/*": ["src/app/shared/animations/*"]
     }

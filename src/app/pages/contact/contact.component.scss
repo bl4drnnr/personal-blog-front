@@ -20,6 +20,7 @@
 }
 
 .success-message {
+  margin-top: 1rem;
   color: #1a7f37;
   background: #e6f9ed;
   border-radius: 1rem;
@@ -28,6 +29,7 @@
 }
 
 .error-message {
+  margin-top: 1rem;
   color: #b91c1c;
   background: #fbeaea;
   border-radius: 1rem;
@@ -41,7 +43,7 @@
     min-width: 0;
     max-width: 100%;
   }
-} 
+}
 
 .contact-tiles-wrapper {
   width: 100%;
