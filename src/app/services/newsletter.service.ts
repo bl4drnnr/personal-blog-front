@@ -6,6 +6,7 @@ import { environment } from '@environments/environment';
 import { SubscribePageDataDto } from '@shared/interfaces/subscribe-page-data.interface';
 import { SubscribeInterface } from '@interface/subscribe.interface';
 import { ConfirmSubscriptionEnum } from '@enums/confirm-subscription.enum';
+import { UnsubscribeNewsletterEnum } from '@enums/unsubscribe-newsletter.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,22 @@ export class NewsletterService {
       .pipe(
         catchError((error) => {
           console.error('Error confirming newsletter subscription:', error);
+          throw error;
+        })
+      );
+  }
+
+  unsubscribeFromNewsletter(
+    newslettersId: string
+  ): Observable<UnsubscribeNewsletterEnum> {
+    return this.http
+      .post<UnsubscribeNewsletterEnum>(
+        `${this.API_URL}/newsletters/unsubscribe-from-newsletters/${newslettersId}`,
+        {}
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error unsubscribing from newsletter:', error);
           throw error;
         })
       );

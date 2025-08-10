@@ -12,6 +12,7 @@ import { ContactComponent } from '@pages/contact/contact.component';
 import { NotFoundComponent } from '@pages/not-found/not-found.component';
 import { SubscribeComponent } from '@pages/subscribe/subscribe.component';
 import { NewsletterConfirmationComponent } from '@pages/newsletter-confirmation/newsletter-confirmation.component';
+import { NewslettersUnsubscribeComponent } from '@pages/newsletters-unsubscribe/newsletters-unsubscribe.component';
 import { PageMenuComponent } from '@pages/menu/page-menu.component';
 import { AboutMeComponent } from '@pages/about-me/about-me.component';
 import { ChangelogComponent } from '@pages/changelog/changelog.component';
@@ -28,6 +29,7 @@ const components: any = [
   NotFoundComponent,
   SubscribeComponent,
   NewsletterConfirmationComponent,
+  NewslettersUnsubscribeComponent,
   PageMenuComponent,
   AboutMeComponent,
   ChangelogComponent,
@@ -47,6 +49,10 @@ const routes: Routes = [
   {
     path: 'newsletter-confirmation/:id',
     component: NewsletterConfirmationComponent
+  },
+  {
+    path: 'newsletters-unsubscribe/:id',
+    component: NewslettersUnsubscribeComponent
   },
   { path: 'menu', component: PageMenuComponent },
   { path: 'about-me', component: AboutMeComponent },

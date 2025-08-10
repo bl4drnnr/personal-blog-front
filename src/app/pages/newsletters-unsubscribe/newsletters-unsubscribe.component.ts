@@ -2,20 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NewsletterService } from '@services/newsletter.service';
 import { fadeInUpStaggerAnimation } from '@animations/fade-in-up.animation';
-import { ConfirmSubscriptionEnum } from '@enums/confirm-subscription.enum';
+import { UnsubscribeNewsletterEnum } from '@enums/unsubscribe-newsletter.enum';
 
 @Component({
-  selector: 'page-newsletter-confirmation',
-  templateUrl: './newsletter-confirmation.component.html',
-  styleUrls: ['./newsletter-confirmation.component.scss'],
+  selector: 'page-newsletters-unsubscribe',
+  templateUrl: './newsletters-unsubscribe.component.html',
+  styleUrls: ['./newsletters-unsubscribe.component.scss'],
   animations: [fadeInUpStaggerAnimation]
 })
-export class NewsletterConfirmationComponent implements OnInit {
+export class NewslettersUnsubscribeComponent implements OnInit {
   animationState = '';
   isLoading: boolean = true;
   isSuccess: boolean = false;
   isError: boolean = false;
-  isAlreadyConfirmed: boolean = false;
   message: string = '';
 
   constructor(
@@ -28,10 +27,10 @@ export class NewsletterConfirmationComponent implements OnInit {
     setTimeout(() => {
       this.animationState = 'loaded';
     }, 100);
-    await this.handleConfirmation();
+    await this.handleUnsubscribe();
   }
 
-  private async handleConfirmation(): Promise<void> {
+  private async handleUnsubscribe(): Promise<void> {
     const newslettersId = this.route.snapshot.paramMap.get('id');
 
     if (!newslettersId) {
@@ -40,35 +39,31 @@ export class NewsletterConfirmationComponent implements OnInit {
       return;
     }
 
-    this.confirmSubscription(newslettersId);
+    this.unsubscribeFromNewsletter(newslettersId);
   }
 
-  private confirmSubscription(newslettersId: string): void {
-    this.newsletterService.confirmSubscription(newslettersId).subscribe({
+  private unsubscribeFromNewsletter(newslettersId: string): void {
+    this.newsletterService.unsubscribeFromNewsletter(newslettersId).subscribe({
       next: () => {
-        this.isLoading = false;
         this.isSuccess = true;
         this.message =
-          'Your newsletter subscription has been confirmed successfully!';
+          'You have been successfully unsubscribed from our newsletter!';
+        this.isLoading = false;
       },
       error: (error) => {
         this.isLoading = false;
         this.isError = true;
-        this.handleConfirmationResponse(error.error.message);
+        this.handleUnsubscribeResponse(error.error.message);
       }
     });
   }
 
-  private handleConfirmationResponse(response: string): void {
+  private handleUnsubscribeResponse(response: UnsubscribeNewsletterEnum): void {
     switch (response) {
-      case ConfirmSubscriptionEnum.SUBSCRIPTION_ALREADY_CONFIRMED:
-        this.isAlreadyConfirmed = true;
-        this.message = 'This subscription has already been confirmed.';
-        break;
-      case ConfirmSubscriptionEnum.NEWSLETTER_NOT_FOUND:
+      case UnsubscribeNewsletterEnum.NEWSLETTER_NOT_FOUND:
         this.isError = true;
         this.message =
-          'Invalid confirmation link. The subscription ID was not found.';
+          'Invalid unsubscribe link. The subscription ID was not found.';
         break;
       default:
         this.isError = true;
@@ -86,17 +81,15 @@ export class NewsletterConfirmationComponent implements OnInit {
 
   getHeroTitle(): string {
     if (this.isLoading) return 'Newsletter';
-    if (this.isSuccess) return 'Confirmed';
-    if (this.isAlreadyConfirmed) return 'Already Confirmed';
+    if (this.isSuccess) return 'Unsubscribed';
     if (this.isError) return 'Error';
     return 'Newsletter';
   }
 
   getFooterText(): string {
-    if (this.isLoading) return 'Confirming subscription...';
-    if (this.isSuccess) return 'Subscription confirmed';
-    if (this.isAlreadyConfirmed) return 'Already confirmed';
-    if (this.isError) return 'Confirmation failed';
-    return 'Newsletter confirmation';
+    if (this.isLoading) return 'Processing unsubscribe request...';
+    if (this.isSuccess) return 'Unsubscription confirmed';
+    if (this.isError) return 'Unsubscribe failed';
+    return 'Newsletter unsubscribe';
   }
 }
