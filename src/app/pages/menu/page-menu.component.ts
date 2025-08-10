@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuTile } from '@shared/interfaces/menu-tile.interface';
+import { MenuService } from '@services/menu.service';
+import { SEOService } from '@services/seo.service';
 import { menuTileAnimation } from '@shared/animations/fade-in-up.animation';
+import { Subject, takeUntil } from 'rxjs';
+import { MenuPageData } from '@interface/menu-page-data.interface';
 
 @Component({
   selector: 'page-menu',
@@ -8,94 +12,95 @@ import { menuTileAnimation } from '@shared/animations/fade-in-up.animation';
   styleUrls: ['./page-menu.component.scss'],
   animations: [menuTileAnimation]
 })
-export class PageMenuComponent implements OnInit {
+export class PageMenuComponent implements OnInit, OnDestroy {
   animationState = '';
-  menuTiles: MenuTile[] = [
-    {
-      title: 'Homepage',
-      link: '/',
-      icon: 'home-fill.svg',
-      iconAlt: 'Home',
-      image: 'Contemplative-Astronaut-Woman.webp',
-      imageAlt: 'Contemplative Astronaut Woman'
-    },
-    {
-      title: 'Projects',
-      link: '/projects',
-      icon: 'image-ai-fill.svg',
-      iconAlt: 'Image AI',
-      image: 'Abstract-Gradient-Art_1Abstract Gradient Art.avif',
-      imageAlt: 'Abstract Gradient Art'
-    },
-    {
-      title: 'Blog',
-      link: '/blog',
-      icon: 'article-fill.svg',
-      iconAlt: 'Article',
-      image:
-        'Futuristic-Attire-with-Neon-Green-Highlights_1Futuristic Attire with Neon Green Highlights.avif',
-      imageAlt: 'Futuristic Attire with Neon Green Highlights'
-    },
-    {
-      title: 'Contact',
-      link: '/contact',
-      icon: 'contacts-fill.svg',
-      iconAlt: 'Contacts',
-      image: 'Astronaut-in-Space-Suit_1Astronaut in Space Suit.webp',
-      imageAlt: 'Astronaut in Space Suit'
-    },
-    {
-      title: 'Subscribe',
-      link: '/subscribe',
-      icon: 'mail-add-fill.svg',
-      iconAlt: 'Mail Add',
-      image: 'Satellite-Orbiting-Earth.avif',
-      imageAlt: 'Satellite Orbiting Earth'
-    },
-    {
-      title: 'About Me',
-      link: '/about-me',
-      icon: 'settings-fill.svg',
-      iconAlt: 'Settings',
-      image:
-        'Confident-Female-Astronaut-Inside-Spacecraft_1Confident Female Astronaut Inside Spacecraft.avif',
-      imageAlt: 'Confident Female Astronaut Inside Spacecraft'
-    },
-    {
-      title: 'Licenses',
-      link: '/licenses',
-      icon: 'file-info-fill.svg',
-      iconAlt: 'File Info',
-      image: 'Vibrant-Abstract-Artwork_1Vibrant Abstract Artwork.avif',
-      imageAlt: 'Vibrant Abstract Artwork'
-    },
-    {
-      title: 'Privacy',
-      link: '/privacy',
-      icon: 'lock-unlock-fill.svg',
-      iconAlt: 'Privacy',
-      image: 'Astronaut-on-Barren-Landscape.jpeg',
-      imageAlt: 'Astronaut on Barren Landscape'
-    },
-    {
-      title: 'Changelog',
-      link: '/changelog',
-      icon: 'sticky-note-fill.svg',
-      iconAlt: 'Sticky Note',
-      image: 'Abstract-Wave-Artwork_1Abstract Wave Artwork.avif',
-      imageAlt: 'Abstract Wave Artwork'
-    },
-    {
-      title: 'Menu',
-      link: '/menu',
-      icon: 'layout-fill.svg',
-      iconAlt: 'Layout',
-      image: 'Futuristic-Cabin-Landscape_1Futuristic Cabin Landscape.avif',
-      imageAlt: 'Futuristic Cabin Landscape'
-    }
-  ];
+  menuTiles: MenuTile[] = [];
+  footerText = '';
+  heroImageMain = '';
+  heroImageMainAlt = '';
+  logoText = '';
+  breadcrumbText = '';
+
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private menuService: MenuService,
+    private seoService: SEOService
+  ) {}
 
   ngOnInit() {
+    this.loadMenuPageData();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private loadMenuPageData() {
+    this.menuService
+      .getMenuPageData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data: MenuPageData) => {
+          this.processMenuPageData(data);
+          this.triggerAnimations();
+        },
+        error: (error) => {
+          console.error('Error loading menu page data:', error);
+
+          // Set fallback page title even on error
+          this.seoService.updatePageTitle('Menu');
+
+          this.triggerAnimations();
+        }
+      });
+  }
+
+  private processMenuPageData(data: MenuPageData) {
+    // Set page data
+    this.footerText = data.pageContent.footerText;
+    this.heroImageMain = data.pageContent.heroImageMain;
+    this.heroImageMainAlt = data.pageContent.heroImageMainAlt;
+    this.logoText = data.pageContent.logoText;
+    this.breadcrumbText = data.pageContent.breadcrumbText;
+    this.menuTiles = data.pageContent.menuTiles;
+
+    // Update SEO data
+    this.updateSEOData(data.seoData);
+  }
+
+  private updateSEOData(seoData: any): void {
+    if (seoData.metaTitle) {
+      this.seoService.updatePageTitle(seoData.metaTitle);
+    } else {
+      this.seoService.updatePageTitle('Menu');
+    }
+
+    if (seoData.metaDescription) {
+      this.seoService.updateMetaDescription(seoData.metaDescription);
+    }
+
+    if (seoData.metaKeywords) {
+      this.seoService.updateMetaKeywords(seoData.metaKeywords);
+    }
+
+    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
+      this.seoService.updateOpenGraphTags({
+        title: seoData.ogTitle,
+        description: seoData.ogDescription,
+        image: seoData.ogImage,
+        url: window.location.href,
+        type: 'website'
+      });
+    }
+
+    if (seoData.structuredData) {
+      this.seoService.updateStructuredData(seoData.structuredData);
+    }
+  }
+
+  private triggerAnimations() {
     // Trigger tile animations after view initialization
     setTimeout(() => {
       this.animationState = 'loaded';

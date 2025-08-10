@@ -1,38 +1,38 @@
-<default-layout 
-  [footerText]="'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
-  [heroImageMain]="'assets/images/Contemplative-Astronaut-Woman.webp'"
-  [heroImageMainAlt]="'Contemplative Astronaut Woman'"
-  [logoText]="'Luch'"
-  [breadcrumbText]="'Menu'"
+<default-layout
+  [footerText]="footerText"
+  [heroImageMain]="heroImageMain"
+  [heroImageMainAlt]="heroImageMainAlt"
+  [logoText]="logoText"
+  [breadcrumbText]="breadcrumbText"
   [showHeader]="false"
   [preventPicChange]="true"
 >
   <div class="flow-grid flow-grid-menu" [@menuTile]="animationState">
-    <div 
-      class="flow-item-wrapper" 
+    <div
+      class="flow-item-wrapper"
       *ngFor="let tile of menuTiles; let i = index"
       [id]="getFlowItemId(i)"
     >
       <div class="flow-item">
         <a [routerLink]="tile.link" class="flow-link"></a>
-        
+
         <div class="flow-background-image" *ngIf="tile.image">
-          <img [src]="'assets/images/' + tile.image" [alt]="tile.imageAlt" class="background-image" />
+          <img [src]="tile.image" [alt]="tile.imageAlt" class="background-image" />
         </div>
-        
+
         <div class="flow-icon-wrapper">
           <div class="flow-icon">
-            <img [src]="'assets/images/' + tile.icon" [alt]="tile.iconAlt" class="icon-image" />
+            <img [src]="tile.icon" [alt]="tile.iconAlt" class="icon-image" />
           </div>
         </div>
-        
+
         <div class="row-content-title">
           <h3 class="tile-title">{{ tile.title }}</h3>
         </div>
-        
+
         <div class="flow-scroll"></div>
         <div class="flow-overlay"></div>
       </div>
     </div>
   </div>
-</default-layout> 
+</default-layout>
