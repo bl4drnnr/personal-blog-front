@@ -26,6 +26,7 @@ export class NavigationComponent {
   @Input() hideScrollProgressBar: boolean = false;
   @Input() heroDesc?: string;
   @Input() preventPicChange: boolean = false;
+  @Input() showNavigation: boolean = true;
 
   socialLinks: any[] = [
     {

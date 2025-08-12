@@ -28,7 +28,8 @@ export class MaintenanceService {
             heroImage: '',
             heroTitle: '',
             footerText: '',
-            title: ''
+            title: '',
+            metaTitle: ''
           });
         })
       );

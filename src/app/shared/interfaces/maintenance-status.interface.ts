@@ -7,4 +7,5 @@ export interface MaintenanceStatus {
   heroTitle: string;
   footerText: string;
   title: string;
+  metaTitle: string;
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { fadeInUpStaggerAnimation } from '@animations/fade-in-up.animation';
 import { MaintenanceService } from '@services/maintenance.service';
 import { MaintenanceStatus } from '@interface/maintenance-status.interface';
+import { SEOService } from '@services/seo.service';
 import dayjs from 'dayjs';
 
 @Component({
@@ -21,13 +22,15 @@ export class MaintenanceComponent implements OnInit {
     heroImage: '',
     heroTitle: '',
     footerText: '',
-    title: ''
+    title: '',
+    metaTitle: 'Site Under Maintenance'
   };
   isLoading = true;
 
   constructor(
     private router: Router,
-    private maintenanceService: MaintenanceService
+    private maintenanceService: MaintenanceService,
+    private seoService: SEOService
   ) {}
 
   async goToMainPage() {
@@ -45,14 +48,26 @@ export class MaintenanceComponent implements OnInit {
   private loadMaintenanceData() {
     this.maintenanceService.getMaintenanceStatus().subscribe({
       next: (data) => {
+        console.log('data', data);
         this.maintenanceData = data;
+        this.updateSEOData(data);
         this.isLoading = false;
       },
       error: (error) => {
         console.error('Failed to load maintenance data:', error);
+        // Set fallback page title even on error
+        this.seoService.updatePageTitle('Site Under Maintenance');
         this.isLoading = false;
       }
     });
+  }
+
+  private updateSEOData(data: MaintenanceStatus): void {
+    if (data.metaTitle) {
+      this.seoService.updatePageTitle(data.metaTitle);
+    } else {
+      this.seoService.updatePageTitle('Site Under Maintenance');
+    }
   }
 
   formatDate(date: string | Date): string {

@@ -21,6 +21,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
   @Input() showHeader: boolean = true;
   @Input() showFooter: boolean = true;
   @Input() preventPicChange: boolean = false;
+  @Input() showNavigation: boolean = true;
 
   scrollProgress = 0;
   isFooterReached = false;

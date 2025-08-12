@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { fadeInUpStaggerAnimation } from '@animations/fade-in-up.animation';
 import { PasswordProtectionService } from '@services/password-protection.service';
 import { PasswordProtectionStatusResponse } from '@interface/password-protection-status-response.interface';
+import { PasswordProtectionErrorEnum } from '@enums/password-protection-error.enum';
+import { SEOService } from '@services/seo.service';
 
 @Component({
   selector: 'page-password-protection',
@@ -16,7 +18,8 @@ export class PasswordProtectionComponent implements OnInit {
     isActive: false,
     heroTitle: 'Site Protected',
     footerText: 'Please contact administrator for access',
-    heroImage: ''
+    heroImage: '',
+    metaTitle: 'Site Protected'
   };
 
   passwordInput = '';
@@ -28,7 +31,8 @@ export class PasswordProtectionComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private passwordProtectionService: PasswordProtectionService
+    private passwordProtectionService: PasswordProtectionService,
+    private seoService: SEOService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +53,7 @@ export class PasswordProtectionComponent implements OnInit {
         }
 
         this.passwordProtectionData = status;
+        this.updateSEOData(status);
 
         // Check if user already has a valid token
         this.passwordProtectionService.isTokenValid().subscribe({
@@ -67,6 +72,8 @@ export class PasswordProtectionComponent implements OnInit {
       },
       error: async (error) => {
         console.error('Error loading password protection status:', error);
+        // Set fallback page title even on error
+        this.seoService.updatePageTitle('Site Protected');
         await this.router.navigate(['/']);
         this.isLoading = false;
       }
@@ -99,20 +106,33 @@ export class PasswordProtectionComponent implements OnInit {
         error: (error: any) => {
           this.hasError = true;
           this.isSubmitting = false;
-
-          // TODO CHECK THIS STUPIDITY
-          // TODO SEO TITLE OF THE PAGE
-          if (error.status === 401 || error.status === 400) {
-            this.errorMessage = 'Invalid password. Please try again.';
-          } else if (error.status === 503) {
-            this.errorMessage = 'Password protection is currently disabled.';
-          } else {
-            this.errorMessage = 'An error occurred. Please try again later.';
-          }
-
+          this.handlePasswordVerificationError(error.error.message);
           console.error('Password verification error:', error);
         }
       });
+  }
+
+  private handlePasswordVerificationError(
+    response: PasswordProtectionErrorEnum
+  ): void {
+    switch (response) {
+      case PasswordProtectionErrorEnum.WRONG_CREDENTIALS:
+        this.errorMessage = 'Invalid password. Please try again.';
+        break;
+      case PasswordProtectionErrorEnum.PASSWORD_PROTECTION_DISABLED:
+        this.errorMessage = 'Password protection is currently disabled.';
+        break;
+      default:
+        this.errorMessage = 'An error occurred. Please try again later.';
+    }
+  }
+
+  private updateSEOData(data: PasswordProtectionStatusResponse): void {
+    if (data.metaTitle) {
+      this.seoService.updatePageTitle(data.metaTitle);
+    } else {
+      this.seoService.updatePageTitle('Site Protected');
+    }
   }
 
   private redirectToHome() {
@@ -120,4 +140,6 @@ export class PasswordProtectionComponent implements OnInit {
       await this.router.navigate(['/']);
     }, 2000);
   }
+
+  protected readonly fadeInUpStaggerAnimation = fadeInUpStaggerAnimation;
 }

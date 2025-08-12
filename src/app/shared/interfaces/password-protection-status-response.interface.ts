@@ -3,4 +3,5 @@ export interface PasswordProtectionStatusResponse {
   heroTitle: string;
   footerText: string;
   heroImage: string;
+  metaTitle: string;
 }

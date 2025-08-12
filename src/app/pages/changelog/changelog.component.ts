@@ -71,6 +71,7 @@ export class ChangelogComponent implements OnInit {
     });
   }
 
+  // TODO: REPLACE ANY WITH THE ACTUAL TYPE OF THE SEO DATA
   private updateSEOData(seoData: any): void {
     if (seoData.metaTitle) {
       this.seoService.updatePageTitle(seoData.metaTitle);

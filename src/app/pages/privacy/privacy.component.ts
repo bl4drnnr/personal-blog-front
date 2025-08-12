@@ -78,11 +78,7 @@ export class PrivacyComponent implements OnInit {
   }
 
   private updateSEOData(seoData: any): void {
-    if (seoData.metaTitle) {
-      this.seoService.updatePageTitle(seoData.metaTitle);
-    } else {
-      this.seoService.updatePageTitle('Privacy Policy');
-    }
+    this.seoService.updatePageTitle(seoData.metaTitle);
 
     if (seoData.metaDescription) {
       this.seoService.updateMetaDescription(seoData.metaDescription);
