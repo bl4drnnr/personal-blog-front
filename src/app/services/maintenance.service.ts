@@ -11,7 +11,6 @@ import { MaintenanceStatus } from '@interface/maintenance-status.interface';
 export class MaintenanceService {
   private apiUrl = `${environment.apiUrl}`;
 
-  // TODO: PASSWORD PROTECTION MODE
   constructor(private http: HttpClient) {}
 
   getMaintenanceStatus(): Observable<MaintenanceStatus> {

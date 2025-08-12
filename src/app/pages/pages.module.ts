@@ -19,8 +19,10 @@ import { ChangelogComponent } from '@pages/changelog/changelog.component';
 import { LicenseComponent } from '@pages/license/license.component';
 import { PrivacyComponent } from '@pages/privacy/privacy.component';
 import { MaintenanceComponent } from '@pages/maintenance/maintenance.component';
+import { PasswordProtectionComponent } from '@pages/password-protection/password-protection.component';
 import { MaintenanceGuard } from '@guards/maintenance.guard';
 import { MaintenancePageGuard } from '@guards/maintenance-page.guard';
+import { PasswordProtectionGuard } from '@guards/password-protection.guard';
 
 const components: any = [
   HomeComponent,
@@ -38,10 +40,17 @@ const components: any = [
   ChangelogComponent,
   LicenseComponent,
   PrivacyComponent,
-  MaintenanceComponent
+  MaintenanceComponent,
+  PasswordProtectionComponent
 ];
 
 const routes: Routes = [
+  // Password protection route - no guards (must be accessible when protection is active)
+  {
+    path: 'password-protection',
+    component: PasswordProtectionComponent
+  },
+
   // Maintenance route - protected by MaintenancePageGuard (redirects to home if maintenance is off)
   {
     path: 'maintenance',
@@ -49,71 +58,83 @@ const routes: Routes = [
     canActivate: [MaintenancePageGuard]
   },
 
-  // All other routes protected by maintenance guard
-  { path: '', component: HomeComponent, canActivate: [MaintenanceGuard] },
+  // All other routes protected by password protection guard first, then maintenance guard
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
+  },
   { path: 'home', redirectTo: '', pathMatch: 'full' },
-  { path: 'blog', component: BlogComponent, canActivate: [MaintenanceGuard] },
+  {
+    path: 'blog',
+    component: BlogComponent,
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
+  },
   {
     path: 'blog/:slug',
     component: BlogDetailComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'projects',
     component: ProjectsComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'projects/:slug',
     component: ProjectDetailComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'contact',
     component: ContactComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'subscribe',
     component: SubscribeComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'newsletter-confirmation/:id',
     component: NewsletterConfirmationComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'newsletters-unsubscribe/:id',
     component: NewslettersUnsubscribeComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'menu',
     component: PageMenuComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'about-me',
     component: AboutMeComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'changelog',
     component: ChangelogComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'licenses',
     component: LicenseComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
     path: 'privacy',
     component: PrivacyComponent,
-    canActivate: [MaintenanceGuard]
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
-  { path: '**', component: NotFoundComponent, canActivate: [MaintenanceGuard] }
+  {
+    path: '**',
+    component: NotFoundComponent,
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
+  }
 ];
 
 @NgModule({
