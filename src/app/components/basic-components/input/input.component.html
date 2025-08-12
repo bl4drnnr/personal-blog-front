@@ -1,8 +1,11 @@
-<input
-  type="text"
-  class="component-input"
-  [placeholder]="placeholder"
-  [value]="value"
-  [required]="required"
-  (input)="onInput($event)"
-/> 
+<div class="input-wrapper">
+  <label *ngIf="label" class="input-label">{{ label }}</label>
+  <input
+    [type]="type"
+    class="component-input"
+    [placeholder]="placeholder"
+    [value]="value"
+    [required]="required"
+    (input)="onInput($event)"
+  />
+</div> 

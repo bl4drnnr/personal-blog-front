@@ -9,6 +9,8 @@ export class InputComponent {
   @Input() placeholder: string = 'Search projects...';
   @Input() value: string = '';
   @Input() required: boolean = false;
+  @Input() type: string = 'text';
+  @Input() label?: string;
   @Output() valueChange = new EventEmitter<string>();
 
   onInput(event: Event): void {

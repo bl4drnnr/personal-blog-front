@@ -1,0 +1,44 @@
+<default-layout
+  [hideScrollProgressBar]="true"
+  [showHeader]="false"
+  [showFooter]="false"
+  [heroImageMain]="maintenanceData.heroImage"
+  [heroImageMainAlt]="'Site Under Maintenance'"
+  [heroTitle]="maintenanceData.heroTitle"
+  [footerText]="maintenanceData.footerText">
+
+  <div class="maintenance-container">
+    <div class="maintenance-content" [@fadeInUpStagger]="animationState" *ngIf="!isLoading && maintenanceData">
+      <div class="maintenance-icon">
+        🔧
+      </div>
+      <h1 class="maintenance-title text-animate">{{ maintenanceData.title }}</h1>
+      <div class="maintenance-message text-animate" [innerHTML]="maintenanceData.message"></div>
+
+      <div class="maintenance-dates text-animate">
+        <div class="date-info">
+          <span class="date-label">From:</span>
+          <span class="date-value">{{ formatDate(maintenanceData.fromDate) }}</span>
+        </div>
+        <div class="date-info">
+          <span class="date-label">To:</span>
+          <span class="date-value">{{ formatDate(maintenanceData.toDate) }}</span>
+        </div>
+      </div>
+
+      <div class="maintenance-button">
+        <component-button-link
+            iconType="button"
+            buttonBg="#fff"
+            [title]="'Try Again'"
+            (buttonClick)="goToMainPage()"
+        ></component-button-link>
+      </div>
+    </div>
+
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loading-spinner">Loading...</div>
+    </div>
+  </div>
+
+</default-layout>
