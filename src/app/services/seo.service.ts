@@ -3,6 +3,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { SiteConfigService } from './site-config.service';
 import { SiteConfig } from '@interface/site-config.interface';
 import { environment } from '@environments/environment';
+import { StructuredData } from '@shared/interfaces/seo-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +60,7 @@ export class SEOService {
     }
   }
 
-  updateStructuredData(structuredData: any): void {
+  updateStructuredData(structuredData: StructuredData): void {
     // Remove existing structured data
     const existing = document.querySelector(
       'script[type="application/ld+json"][data-about="true"]'
@@ -107,24 +108,14 @@ export class SEOService {
     });
 
     // Add structured data for better SEO
-    const structuredData = {
+    const structuredData: StructuredData = {
       '@context': 'https://schema.org',
       '@type': type === 'blog' ? 'BlogPosting' : 'CreativeWork',
-      ...(type === 'blog' ? { headline: title } : { name: title }),
       description,
       author: {
         '@type': 'Person',
         name: this.siteConfig.siteAuthor
       },
-      ...(type === 'blog'
-        ? {
-            datePublished: date,
-            dateModified: updatedDate || date
-          }
-        : {
-            dateCreated: date,
-            datePublished: date
-          }),
       image: featuredImage || this.siteConfig.defaultImage,
       url: fullUrl,
       mainEntityOfPage: {
@@ -133,10 +124,21 @@ export class SEOService {
       },
       publisher: this.siteConfig?.organization || {
         '@type': 'Organization',
-        name: this.siteConfig?.siteName,
+        name: this.siteConfig?.siteName || '',
         url: this.siteConfig?.siteUrl || environment.siteUrl
       }
     };
+
+    // Add type-specific properties
+    if (type === 'blog') {
+      structuredData.headline = title;
+      structuredData.datePublished = date;
+      structuredData.dateModified = updatedDate || date;
+    } else {
+      structuredData.name = title;
+      structuredData.dateCreated = date;
+      structuredData.datePublished = date;
+    }
 
     this.updateStructuredData(structuredData);
   }

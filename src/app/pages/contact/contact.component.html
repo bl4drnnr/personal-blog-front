@@ -1,4 +1,5 @@
 <hero-layout
+  *ngIf="contactPageData"
   [footerText]="contactPageData.layoutData.footerText"
   [logoText]="contactPageData.layoutData.logoText"
   [breadcrumbText]="contactPageData.layoutData.breadcrumbText"
@@ -11,7 +12,7 @@
   [hideScrollProgressBar]="true"
 >
   <div class="contact-section contact-section-relative">
-    <component-carousel-words [words]="carouselWords" [speed]="60" />
+    <component-carousel-words [words]="contactPageData.pageContent.carouselWords" [speed]="60" />
 
     <div class="contact-form">
       <div class="form-field">
@@ -54,6 +55,6 @@
   </div>
 
   <div class="contact-tiles-wrapper">
-    <component-contact-tiles [tiles]="contactTiles"></component-contact-tiles>
+    <component-contact-tiles [tiles]="contactPageData.contactTiles"></component-contact-tiles>
   </div>
 </hero-layout>

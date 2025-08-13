@@ -1,4 +1,5 @@
 import { LicenseTile } from './license-tile.interface';
+import { PageSeoData } from './seo-data.interface';
 
 export interface LicensePageContent {
   title: string;
@@ -21,19 +22,9 @@ export interface LicenseLayoutData {
   heroTitle: string;
 }
 
-export interface LicenseSeoData {
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  structuredData?: any;
-}
-
 export interface LicensePageData {
   pageContent: LicensePageContent;
   layoutData: LicenseLayoutData;
-  seoData: LicenseSeoData;
+  seoData: PageSeoData;
   licenseTiles: LicenseTile[];
 }

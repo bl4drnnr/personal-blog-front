@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
-import {
-  PrivacyLayoutData,
-  PrivacyPageContent,
-  PrivacyPageData
-} from '@interface/privacy-page-data.interface';
+import { PrivacyPageData } from '@interface/privacy-page-data.interface';
 import { PrivacyService } from '@services/privacy.service';
+import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 
 @Component({
   selector: 'page-privacy',
@@ -19,23 +16,8 @@ export class PrivacyComponent implements OnInit {
   animationState = '';
   error: string | null = null;
 
-  // Data properties - will be populated from backend API
-  pageContent: PrivacyPageContent = {
-    title: '',
-    lastUpdated: '',
-    sections: []
-  };
-
-  layoutData: PrivacyLayoutData = {
-    footerText: '',
-    heroImageMain: '',
-    heroImageSecondary: '',
-    heroImageMainAlt: '',
-    heroImageSecondaryAlt: '',
-    logoText: '',
-    breadcrumbText: '',
-    heroTitle: ''
-  };
+  // Data from API - null until loaded
+  privacyPageData: PrivacyPageData | null = null;
 
   constructor(
     private seoService: SEOService,
@@ -53,8 +35,7 @@ export class PrivacyComponent implements OnInit {
 
     this.privacyService.getPrivacyPageData().subscribe({
       next: (data: PrivacyPageData) => {
-        this.pageContent = data.pageContent;
-        this.layoutData = data.layoutData;
+        this.privacyPageData = data;
 
         // Update SEO data
         this.updateSEOData(data.seoData);
@@ -66,40 +47,28 @@ export class PrivacyComponent implements OnInit {
           this.animationState = 'loaded';
         }, 100);
       },
-      error: () => {
+      error: (error) => {
+        console.error('Failed to load privacy policy content:', error);
         this.error =
           'Failed to load privacy policy content. Please try again later.';
         this.loadingService.hide();
-
-        // Set fallback page title even on error
-        this.seoService.updatePageTitle('Privacy Policy');
       }
     });
   }
 
-  private updateSEOData(seoData: any): void {
+  private updateSEOData(seoData: PageSeoData): void {
     this.seoService.updatePageTitle(seoData.metaTitle);
+    this.seoService.updateMetaDescription(seoData.metaDescription);
+    this.seoService.updateMetaKeywords(seoData.metaKeywords);
 
-    if (seoData.metaDescription) {
-      this.seoService.updateMetaDescription(seoData.metaDescription);
-    }
+    this.seoService.updateOpenGraphTags({
+      title: seoData.ogTitle,
+      description: seoData.ogDescription,
+      image: seoData.ogImage,
+      url: window.location.href,
+      type: 'website'
+    });
 
-    if (seoData.metaKeywords) {
-      this.seoService.updateMetaKeywords(seoData.metaKeywords);
-    }
-
-    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
-      this.seoService.updateOpenGraphTags({
-        title: seoData.ogTitle,
-        description: seoData.ogDescription,
-        image: seoData.ogImage,
-        url: window.location.href,
-        type: 'website'
-      });
-    }
-
-    if (seoData.structuredData) {
-      this.seoService.updateStructuredData(seoData.structuredData);
-    }
+    this.seoService.updateStructuredData(seoData.structuredData);
   }
 }

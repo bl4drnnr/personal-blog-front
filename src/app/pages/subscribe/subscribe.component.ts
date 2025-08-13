@@ -16,39 +16,8 @@ export class SubscribeComponent implements OnInit {
   isError: boolean = false;
   errorMessage: string = '';
 
-  pageData: SubscribePageDataDto = {
-    pageContent: {
-      title: '',
-      subtitle: '',
-      description: '',
-      submitButtonText: '',
-      successMessage: '',
-      errorMessage: '',
-      emailPlaceholder: '',
-      privacyText: '',
-      carouselWords: []
-    },
-    layoutData: {
-      footerText: '',
-      heroImageMain: '',
-      heroImageSecondary: '',
-      heroImageMainAlt: '',
-      heroImageSecondaryAlt: '',
-      logoText: '',
-      breadcrumbText: '',
-      heroTitle: '',
-      heroDesc: ''
-    },
-    seoData: {
-      metaTitle: '',
-      metaDescription: '',
-      metaKeywords: '',
-      ogTitle: '',
-      ogDescription: '',
-      ogImage: '',
-      structuredData: {}
-    }
-  };
+  // Data from API - null until loaded
+  pageData: SubscribePageDataDto | null = null;
 
   constructor(
     private newsletterService: NewsletterService,

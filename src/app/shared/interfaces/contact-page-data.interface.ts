@@ -1,4 +1,5 @@
 import { ContactTile } from './contact-tile.interface';
+import { PageSeoData } from './seo-data.interface';
 
 export interface ContactPageContent {
   title: string;
@@ -22,19 +23,9 @@ export interface ContactPageLayout {
   heroDesc: string;
 }
 
-export interface ContactPageSeo {
-  metaTitle: string;
-  metaDescription: string;
-  metaKeywords: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  structuredData: any;
-}
-
 export interface ContactPageData {
   pageContent: ContactPageContent;
   layoutData: ContactPageLayout;
-  seoData: ContactPageSeo;
+  seoData: PageSeoData;
   contactTiles: ContactTile[];
 }

@@ -1,12 +1,13 @@
 <default-layout
-  [footerText]="layoutData.footerText"
-  [heroImageMain]="layoutData.heroImageMain"
-  [heroImageSecondary]="layoutData.heroImageSecondary"
-  [heroImageMainAlt]="layoutData.heroImageMainAlt"
-  [heroImageSecondaryAlt]="layoutData.heroImageSecondaryAlt"
-  [logoText]="layoutData.logoText"
-  [breadcrumbText]="layoutData.breadcrumbText"
-  [heroTitle]="layoutData.heroTitle"
+  *ngIf="licensePageData"
+  [footerText]="licensePageData.layoutData.footerText"
+  [heroImageMain]="licensePageData.layoutData.heroImageMain"
+  [heroImageSecondary]="licensePageData.layoutData.heroImageSecondary"
+  [heroImageMainAlt]="licensePageData.layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="licensePageData.layoutData.heroImageSecondaryAlt"
+  [logoText]="licensePageData.layoutData.logoText"
+  [breadcrumbText]="licensePageData.layoutData.breadcrumbText"
+  [heroTitle]="licensePageData.layoutData.heroTitle"
   [showHeader]="false"
   [showFooter]="true"
   [preventPicChange]="true"
@@ -15,17 +16,17 @@
     <div class="license-content">
       <div class="license-text" [@fadeInUpStagger]="animationState">
         <div class="content-text">
-          <h2 class="text-animate">{{ pageContent.title }}</h2>
-          <p class="license-date text-animate">{{ pageContent.licenseDate }}</p>
-          <p class="text-animate" *ngFor="let paragraph of pageContent.paragraphs">
+          <h2 class="text-animate">{{ licensePageData.pageContent.title }}</h2>
+          <p class="license-date text-animate">{{ licensePageData.pageContent.licenseDate }}</p>
+          <p class="text-animate" *ngFor="let paragraph of licensePageData.pageContent.paragraphs">
             {{ paragraph }}
           </p>
         </div>
 
         <div class="license-additional">
           <div class="content-text">
-            <h3 class="text-animate">{{ pageContent.additionalInfo.title }}</h3>
-            <p class="text-animate" *ngFor="let paragraph of pageContent.additionalInfo.paragraphs">
+            <h3 class="text-animate">{{ licensePageData.pageContent.additionalInfo.title }}</h3>
+            <p class="text-animate" *ngFor="let paragraph of licensePageData.pageContent.additionalInfo.paragraphs">
               {{ paragraph }}
             </p>
 
@@ -35,7 +36,7 @@
         </div>
 
         <div class="license-tiles">
-          <div *ngFor="let tile of licenseTiles; let last = last">
+          <div *ngFor="let tile of licensePageData.licenseTiles; let last = last">
             <div class="content-text">
               <h3 class="text-animate">{{ tile.title }}</h3>
               <p class="text-animate">{{ tile.description }}</p>

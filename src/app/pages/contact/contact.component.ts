@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SEOService } from '@services/seo.service';
 import { ContactService } from '@services/contact.service';
 import { ContactPageData } from '@interface/contact-page-data.interface';
-import { ContactTile } from '@interface/contact-tile.interface';
 
 @Component({
   selector: 'page-contact',
@@ -10,38 +9,8 @@ import { ContactTile } from '@interface/contact-tile.interface';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  contactPageData: ContactPageData = {
-    pageContent: {
-      title: '',
-      subtitle: '',
-      description: '',
-      carouselWords: [],
-      submitButtonText: '',
-      successMessage: '',
-      errorMessage: ''
-    },
-    layoutData: {
-      footerText: '',
-      heroImageMain: '',
-      heroImageSecondary: '',
-      heroImageMainAlt: '',
-      heroImageSecondaryAlt: '',
-      logoText: '',
-      breadcrumbText: '',
-      heroTitle: '',
-      heroDesc: ''
-    },
-    seoData: {
-      metaTitle: '',
-      metaDescription: '',
-      metaKeywords: '',
-      ogTitle: '',
-      ogDescription: '',
-      ogImage: '',
-      structuredData: undefined
-    },
-    contactTiles: []
-  };
+  // Data from API - null until loaded
+  contactPageData: ContactPageData | null = null;
   loading = true;
 
   // Form fields
@@ -51,10 +20,6 @@ export class ContactComponent implements OnInit {
   isSubmitting: boolean = false;
   isSuccess: boolean = false;
   isError: boolean = false;
-
-  // Data properties (will be populated from backend)
-  carouselWords: string[] = [];
-  contactTiles: ContactTile[] = [];
 
   constructor(
     private seoService: SEOService,
@@ -69,8 +34,6 @@ export class ContactComponent implements OnInit {
     this.contactService.getContactPageData().subscribe({
       next: (data: ContactPageData) => {
         this.contactPageData = data;
-        this.carouselWords = data.pageContent.carouselWords;
-        this.contactTiles = data.contactTiles;
         this.updateSEO(data);
         this.loading = false;
       },

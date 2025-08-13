@@ -1,4 +1,5 @@
 <default-layout
+  *ngIf="maintenanceData"
   [hideScrollProgressBar]="true"
   [showHeader]="false"
   [showNavigation]="false"
@@ -9,7 +10,7 @@
   [footerText]="maintenanceData.footerText">
 
   <div class="maintenance-container">
-    <div class="maintenance-content" [@fadeInUpStagger]="animationState" *ngIf="!isLoading && maintenanceData">
+    <div class="maintenance-content" [@fadeInUpStagger]="animationState" *ngIf="!isLoading">
       <div class="maintenance-icon">
         🔧
       </div>

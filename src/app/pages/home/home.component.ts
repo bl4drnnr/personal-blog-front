@@ -7,15 +7,8 @@ import {
   blogPostAnimation,
   projectAnimation
 } from '@shared/animations/fade-in-up.animation';
-import {
-  HomePageData,
-  HomeLayoutData,
-  HomeFaq,
-  HomeWhysSection,
-  HomePageContent
-} from '@interface/home-page-data.interface';
-import { Project } from '@interface/project.interface';
-import { Post } from '@interface/post.interface';
+import { HomePageData } from '@interface/home-page-data.interface';
+import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 
 @Component({
   selector: 'page-home',
@@ -35,38 +28,8 @@ export class HomeComponent implements OnInit {
     private loadingService: LoadingService
   ) {}
 
-  // Data properties - will be populated from backend API
-  pageContent: HomePageContent = {
-    title: '',
-    subtitle: '',
-    description: '',
-    marqueeLeftText: '',
-    marqueeRightText: '',
-    latestProjectsTitle: '',
-    latestPostsTitle: '',
-    whySectionTitle: '',
-    faqSectionTitle: ''
-  };
-
-  layoutData: HomeLayoutData = {
-    footerText: '',
-    heroImageMain: '',
-    heroImageSecondary: '',
-    heroImageMainAlt: '',
-    heroImageSecondaryAlt: '',
-    logoText: '',
-    breadcrumbText: '',
-    heroTitle: ''
-  };
-
-  projects: Project[] = [];
-  posts: Post[] = [];
-  faqQuestions: HomeFaq[] = [];
-  whysSection: HomeWhysSection = {
-    title: '',
-    whyBlocks: [],
-    features: []
-  };
+  // Data from API - null until loaded
+  homePageData: HomePageData | null = null;
 
   ngOnInit() {
     this.loadHomePageData();
@@ -78,12 +41,7 @@ export class HomeComponent implements OnInit {
 
     this.homeService.getHomePageData().subscribe({
       next: (data: HomePageData) => {
-        this.pageContent = data.pageContent;
-        this.layoutData = data.layoutData;
-        this.projects = data.projects;
-        this.posts = data.posts;
-        this.faqQuestions = data.faqQuestions;
-        this.whysSection = data.whysSection;
+        this.homePageData = data;
 
         // Update SEO data
         this.updateSEOData(data.seoData);
@@ -105,43 +63,27 @@ export class HomeComponent implements OnInit {
           this.postsAnimationState = 'loaded';
         }, 1200);
       },
-      error: () => {
+      error: (error) => {
+        console.error('Failed to load home page content:', error);
         this.error = 'Failed to load page content. Please try again later.';
         this.loadingService.hide();
-
-        // Set fallback page title even on error
-        this.seoService.updatePageTitle('Home');
       }
     });
   }
 
-  private updateSEOData(seoData: any): void {
-    if (seoData.metaTitle) {
-      this.seoService.updatePageTitle(seoData.metaTitle);
-    } else {
-      this.seoService.updatePageTitle('Home');
-    }
+  private updateSEOData(seoData: PageSeoData): void {
+    this.seoService.updatePageTitle(seoData.metaTitle);
+    this.seoService.updateMetaDescription(seoData.metaDescription);
+    this.seoService.updateMetaKeywords(seoData.metaKeywords);
 
-    if (seoData.metaDescription) {
-      this.seoService.updateMetaDescription(seoData.metaDescription);
-    }
+    this.seoService.updateOpenGraphTags({
+      title: seoData.ogTitle,
+      description: seoData.ogDescription,
+      image: seoData.ogImage,
+      url: window.location.href,
+      type: 'website'
+    });
 
-    if (seoData.metaKeywords) {
-      this.seoService.updateMetaKeywords(seoData.metaKeywords);
-    }
-
-    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
-      this.seoService.updateOpenGraphTags({
-        title: seoData.ogTitle,
-        description: seoData.ogDescription,
-        image: seoData.ogImage,
-        url: window.location.href,
-        type: 'website'
-      });
-    }
-
-    if (seoData.structuredData) {
-      this.seoService.updateStructuredData(seoData.structuredData);
-    }
+    this.seoService.updateStructuredData(seoData.structuredData);
   }
 }

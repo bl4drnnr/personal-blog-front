@@ -2,13 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
-import { Experience } from '@interface/experience.interface';
-import { Certificate } from '@interface/certificate.interface';
 import { AboutService } from '@services/about.service';
-import {
-  AboutLayoutData,
-  AboutPageData
-} from '@interface/about-page-data.interface';
+import { AboutPageData } from '@interface/about-page-data.interface';
+import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 
 @Component({
   selector: 'page-about-me',
@@ -26,25 +22,8 @@ export class AboutMeComponent implements OnInit {
     private loadingService: LoadingService
   ) {}
 
-  // Data properties - will be populated from backend API
-  pageContent = {
-    title: '',
-    content: ''
-  };
-
-  layoutData: AboutLayoutData = {
-    footerText: '',
-    heroImageMain: '',
-    heroImageSecondary: '',
-    heroImageMainAlt: '',
-    heroImageSecondaryAlt: '',
-    logoText: '',
-    breadcrumbText: '',
-    heroTitle: ''
-  };
-
-  experiences: Experience[] = [];
-  certificates: Certificate[] = [];
+  // Data from API - null until loaded
+  aboutPageData: AboutPageData | null = null;
 
   ngOnInit() {
     this.loadAboutPageData();
@@ -56,10 +35,7 @@ export class AboutMeComponent implements OnInit {
 
     this.aboutService.getAboutPageData().subscribe({
       next: (data: AboutPageData) => {
-        this.pageContent = data.pageContent;
-        this.layoutData = data.layoutData;
-        this.experiences = data.experiences;
-        this.certificates = data.certificates;
+        this.aboutPageData = data;
 
         // Update SEO data
         this.updateSEOData(data.seoData);
@@ -71,43 +47,27 @@ export class AboutMeComponent implements OnInit {
           this.animationState = 'loaded';
         }, 100);
       },
-      error: () => {
+      error: (error) => {
+        console.error('Failed to load about page content:', error);
         this.error = 'Failed to load page content. Please try again later.';
         this.loadingService.hide();
-
-        // Set fallback page title even on error
-        this.seoService.updatePageTitle('About');
       }
     });
   }
 
-  private updateSEOData(seoData: any): void {
-    if (seoData.metaTitle) {
-      this.seoService.updatePageTitle(seoData.metaTitle);
-    } else {
-      this.seoService.updatePageTitle('About');
-    }
+  private updateSEOData(seoData: PageSeoData): void {
+    this.seoService.updatePageTitle(seoData.metaTitle);
+    this.seoService.updateMetaDescription(seoData.metaDescription);
+    this.seoService.updateMetaKeywords(seoData.metaKeywords);
 
-    if (seoData.metaDescription) {
-      this.seoService.updateMetaDescription(seoData.metaDescription);
-    }
+    this.seoService.updateOpenGraphTags({
+      title: seoData.ogTitle,
+      description: seoData.ogDescription,
+      image: seoData.ogImage,
+      url: window.location.href,
+      type: 'website'
+    });
 
-    if (seoData.metaKeywords) {
-      this.seoService.updateMetaKeywords(seoData.metaKeywords);
-    }
-
-    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
-      this.seoService.updateOpenGraphTags({
-        title: seoData.ogTitle,
-        description: seoData.ogDescription,
-        image: seoData.ogImage,
-        url: window.location.href,
-        type: 'website'
-      });
-    }
-
-    if (seoData.structuredData) {
-      this.seoService.updateStructuredData(seoData.structuredData);
-    }
+    this.seoService.updateStructuredData(seoData.structuredData);
   }
 }

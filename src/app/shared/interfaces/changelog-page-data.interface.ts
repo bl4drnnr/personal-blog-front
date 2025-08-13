@@ -1,4 +1,5 @@
 import { ChangelogEntry } from './changelog-entry.interface';
+import { PageSeoData } from './seo-data.interface';
 
 export interface ChangelogLayoutData {
   footerText: string;
@@ -11,18 +12,8 @@ export interface ChangelogLayoutData {
   heroTitle: string;
 }
 
-export interface ChangelogSeoData {
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  structuredData?: any;
-}
-
 export interface ChangelogPageData {
   layoutData: ChangelogLayoutData;
-  seoData: ChangelogSeoData;
+  seoData: PageSeoData;
   entries: ChangelogEntry[];
 }

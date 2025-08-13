@@ -1,18 +1,19 @@
 <default-layout
-  [footerText]="layoutData.footerText"
-  [heroImageMain]="layoutData.heroImageMain"
-  [heroImageSecondary]="layoutData.heroImageSecondary"
-  [heroImageMainAlt]="layoutData.heroImageMainAlt"
-  [heroImageSecondaryAlt]="layoutData.heroImageSecondaryAlt"
-  [logoText]="layoutData.logoText"
-  [breadcrumbText]="layoutData.breadcrumbText"
-  [heroTitle]="layoutData.heroTitle"
+  *ngIf="changelogPageData"
+  [footerText]="changelogPageData.layoutData.footerText"
+  [heroImageMain]="changelogPageData.layoutData.heroImageMain"
+  [heroImageSecondary]="changelogPageData.layoutData.heroImageSecondary"
+  [heroImageMainAlt]="changelogPageData.layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="changelogPageData.layoutData.heroImageSecondaryAlt"
+  [logoText]="changelogPageData.layoutData.logoText"
+  [breadcrumbText]="changelogPageData.layoutData.breadcrumbText"
+  [heroTitle]="changelogPageData.layoutData.heroTitle"
   [showHeader]="false"
 >
   <section class="changelog-section">
     <div class="changelog-content content-text">
       <div class="changelog-entries" [@changelogStagger]="animationState">
-        <div *ngFor="let entry of changelogEntries; let i = index"
+        <div *ngFor="let entry of changelogPageData.entries; let i = index"
              class="changelog-entry">
           <div class="entry-header">
             <h3 class="version-title">{{ entry.version }} - {{ entry.title }}</h3>

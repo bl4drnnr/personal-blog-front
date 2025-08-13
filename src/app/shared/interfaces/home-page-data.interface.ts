@@ -1,5 +1,6 @@
 import { Project } from './project.interface';
 import { Post } from './post.interface';
+import { PageSeoData } from './seo-data.interface';
 
 export interface HomePageContent {
   title: string;
@@ -22,16 +23,6 @@ export interface HomeLayoutData {
   logoText: string;
   breadcrumbText: string;
   heroTitle: string;
-}
-
-export interface HomeSeoData {
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  structuredData?: any;
 }
 
 export interface HomeFaq {
@@ -57,7 +48,7 @@ export interface HomePageData {
   title: string;
   pageContent: HomePageContent;
   layoutData: HomeLayoutData;
-  seoData: HomeSeoData;
+  seoData: PageSeoData;
   projects: Project[];
   posts: Post[];
   faqQuestions: HomeFaq[];

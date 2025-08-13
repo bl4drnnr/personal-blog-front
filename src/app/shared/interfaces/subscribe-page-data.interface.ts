@@ -1,3 +1,5 @@
+import { PageSeoData } from './seo-data.interface';
+
 export interface SubscribePageContentDto {
   title: string;
   subtitle: string;
@@ -22,18 +24,8 @@ export interface SubscribePageLayoutDto {
   heroDesc: string;
 }
 
-export interface SubscribePageSeoDto {
-  metaTitle: string;
-  metaDescription: string;
-  metaKeywords: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  structuredData: object;
-}
-
 export interface SubscribePageDataDto {
   pageContent: SubscribePageContentDto;
   layoutData: SubscribePageLayoutDto;
-  seoData: SubscribePageSeoDto;
+  seoData: PageSeoData;
 }

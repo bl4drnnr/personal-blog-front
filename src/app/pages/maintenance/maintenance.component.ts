@@ -14,17 +14,8 @@ import dayjs from 'dayjs';
 })
 export class MaintenanceComponent implements OnInit {
   animationState = '';
-  maintenanceData: MaintenanceStatus = {
-    isActive: false,
-    message: '',
-    fromDate: new Date(),
-    toDate: new Date(),
-    heroImage: '',
-    heroTitle: '',
-    footerText: '',
-    title: '',
-    metaTitle: 'Site Under Maintenance'
-  };
+  // Data from API - null until loaded
+  maintenanceData: MaintenanceStatus | null = null;
   isLoading = true;
 
   constructor(

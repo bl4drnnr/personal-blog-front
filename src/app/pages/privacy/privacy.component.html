@@ -1,12 +1,13 @@
 <default-layout
-  [footerText]="layoutData.footerText"
-  [heroImageMain]="layoutData.heroImageMain"
-  [heroImageSecondary]="layoutData.heroImageSecondary"
-  [heroImageMainAlt]="layoutData.heroImageMainAlt"
-  [heroImageSecondaryAlt]="layoutData.heroImageSecondaryAlt"
-  [logoText]="layoutData.logoText"
-  [breadcrumbText]="layoutData.breadcrumbText"
-  [heroTitle]="layoutData.heroTitle"
+  *ngIf="privacyPageData"
+  [footerText]="privacyPageData.layoutData.footerText"
+  [heroImageMain]="privacyPageData.layoutData.heroImageMain"
+  [heroImageSecondary]="privacyPageData.layoutData.heroImageSecondary"
+  [heroImageMainAlt]="privacyPageData.layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="privacyPageData.layoutData.heroImageSecondaryAlt"
+  [logoText]="privacyPageData.layoutData.logoText"
+  [breadcrumbText]="privacyPageData.layoutData.breadcrumbText"
+  [heroTitle]="privacyPageData.layoutData.heroTitle"
   [showHeader]="false"
   [showFooter]="true"
   [preventPicChange]="true"
@@ -15,10 +16,10 @@
     <div class="privacy-content">
       <div class="privacy-text" [@fadeInUpStagger]="animationState">
         <div class="content-text">
-          <h2 class="text-animate">{{ pageContent.title }}</h2>
-          <p class="privacy-date text-animate">{{ pageContent.lastUpdated }}</p>
+          <h2 class="text-animate">{{ privacyPageData.pageContent.title }}</h2>
+          <p class="privacy-date text-animate">{{ privacyPageData.pageContent.lastUpdated }}</p>
 
-          <div *ngFor="let section of pageContent.sections">
+          <div *ngFor="let section of privacyPageData.pageContent.sections">
             <h3 class="text-animate">{{ section.title }}</h3>
             <div class="text-animate" [innerHTML]="section.content"></div>
           </div>

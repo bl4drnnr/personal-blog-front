@@ -15,42 +15,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class ProjectsComponent implements OnInit {
   animationState = '';
 
-  // Page data from API
-  projectsPageData: ProjectsPageData = {
-    pageContent: {
-      title: '',
-      subtitle: '',
-      description: ''
-    },
-    layoutData: {
-      footerText: '',
-      heroImageMain: '',
-      heroImageSecondary: '',
-      heroImageMainAlt: '',
-      heroImageSecondaryAlt: '',
-      logoText: '',
-      breadcrumbText: '',
-      heroTitle: ''
-    },
-    seoData: {
-      metaTitle: '',
-      metaDescription: '',
-      metaKeywords: '',
-      ogTitle: '',
-      ogDescription: '',
-      ogImage: '',
-      structuredData: undefined
-    },
-    projects: [],
-    pagination: {
-      currentPage: 0,
-      totalPages: 0,
-      totalItems: 0,
-      itemsPerPage: 0,
-      hasNextPage: false,
-      hasPrevPage: false
-    }
-  };
+  // Page data from API - null until loaded
+  projectsPageData: ProjectsPageData | null = null;
   projects: Project[] = [];
 
   // Search and pagination
@@ -105,22 +71,18 @@ export class ProjectsComponent implements OnInit {
   }
 
   private updateSEO(data: ProjectsPageData): void {
-    if (data.seoData) {
-      this.seoService.updatePageTitle(data.seoData.metaTitle);
-      this.seoService.updateMetaDescription(data.seoData.metaDescription);
-      this.seoService.updateMetaKeywords(data.seoData.metaKeywords);
-      this.seoService.updateOpenGraphTags({
-        title: data.seoData.ogTitle || data.seoData.metaTitle,
-        description: data.seoData.ogDescription || data.seoData.metaDescription,
-        image: data.seoData.ogImage,
-        url: window.location.href,
-        type: 'article'
-      });
+    this.seoService.updatePageTitle(data.seoData.metaTitle);
+    this.seoService.updateMetaDescription(data.seoData.metaDescription);
+    this.seoService.updateMetaKeywords(data.seoData.metaKeywords);
+    this.seoService.updateOpenGraphTags({
+      title: data.seoData.ogTitle,
+      description: data.seoData.ogDescription,
+      image: data.seoData.ogImage,
+      url: window.location.href,
+      type: 'article'
+    });
 
-      if (data.seoData.structuredData) {
-        this.seoService.updateStructuredData(data.seoData.structuredData);
-      }
-    }
+    this.seoService.updateStructuredData(data.seoData.structuredData);
   }
 
   onSearch(term: string): void {

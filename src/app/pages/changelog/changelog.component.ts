@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ChangelogEntry } from '@shared/interfaces/changelog-entry.interface';
 import { changelogStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
-import {
-  ChangelogLayoutData,
-  ChangelogPageData
-} from '@interface/changelog-page-data.interface';
+import { ChangelogPageData } from '@interface/changelog-page-data.interface';
+import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 import { ChangelogService } from '@services/changelog.service';
 
 @Component({
@@ -18,18 +15,9 @@ import { ChangelogService } from '@services/changelog.service';
 export class ChangelogComponent implements OnInit {
   animationState = '';
   error: string | null = null;
-  changelogEntries: ChangelogEntry[] = [];
 
-  layoutData: ChangelogLayoutData = {
-    footerText: '',
-    heroImageMain: '',
-    heroImageSecondary: '',
-    heroImageMainAlt: '',
-    heroImageSecondaryAlt: '',
-    logoText: '',
-    breadcrumbText: '',
-    heroTitle: ''
-  };
+  // Data from API - null until loaded
+  changelogPageData: ChangelogPageData | null = null;
 
   constructor(
     private seoService: SEOService,
@@ -47,8 +35,7 @@ export class ChangelogComponent implements OnInit {
 
     this.changelogService.getChangelogPageData().subscribe({
       next: (data: ChangelogPageData) => {
-        this.layoutData = data.layoutData;
-        this.changelogEntries = data.entries;
+        this.changelogPageData = data;
 
         // Update SEO data
         this.updateSEOData(data.seoData);
@@ -60,45 +47,28 @@ export class ChangelogComponent implements OnInit {
           this.animationState = 'loaded';
         }, 100);
       },
-      error: () => {
+      error: (error) => {
+        console.error('Failed to load changelog content:', error);
         this.error =
           'Failed to load changelog content. Please try again later.';
         this.loadingService.hide();
-
-        // Set fallback page title even on error
-        this.seoService.updatePageTitle('Changelog');
       }
     });
   }
 
-  // TODO: REPLACE ANY WITH THE ACTUAL TYPE OF THE SEO DATA
-  private updateSEOData(seoData: any): void {
-    if (seoData.metaTitle) {
-      this.seoService.updatePageTitle(seoData.metaTitle);
-    } else {
-      this.seoService.updatePageTitle('Changelog');
-    }
+  private updateSEOData(seoData: PageSeoData): void {
+    this.seoService.updatePageTitle(seoData.metaTitle);
+    this.seoService.updateMetaDescription(seoData.metaDescription);
+    this.seoService.updateMetaKeywords(seoData.metaKeywords);
 
-    if (seoData.metaDescription) {
-      this.seoService.updateMetaDescription(seoData.metaDescription);
-    }
+    this.seoService.updateOpenGraphTags({
+      title: seoData.ogTitle,
+      description: seoData.ogDescription,
+      image: seoData.ogImage,
+      url: window.location.href,
+      type: 'website'
+    });
 
-    if (seoData.metaKeywords) {
-      this.seoService.updateMetaKeywords(seoData.metaKeywords);
-    }
-
-    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
-      this.seoService.updateOpenGraphTags({
-        title: seoData.ogTitle,
-        description: seoData.ogDescription,
-        image: seoData.ogImage,
-        url: window.location.href,
-        type: 'website'
-      });
-    }
-
-    if (seoData.structuredData) {
-      this.seoService.updateStructuredData(seoData.structuredData);
-    }
+    this.seoService.updateStructuredData(seoData.structuredData);
   }
 }

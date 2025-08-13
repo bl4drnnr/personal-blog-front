@@ -5,6 +5,7 @@ import { SEOService } from '@services/seo.service';
 import { menuTileAnimation } from '@shared/animations/fade-in-up.animation';
 import { Subject, takeUntil } from 'rxjs';
 import { MenuPageData } from '@interface/menu-page-data.interface';
+import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 
 @Component({
   selector: 'page-menu',
@@ -70,34 +71,20 @@ export class PageMenuComponent implements OnInit, OnDestroy {
     this.updateSEOData(data.seoData);
   }
 
-  private updateSEOData(seoData: any): void {
-    if (seoData.metaTitle) {
-      this.seoService.updatePageTitle(seoData.metaTitle);
-    } else {
-      this.seoService.updatePageTitle('Menu');
-    }
+  private updateSEOData(seoData: PageSeoData): void {
+    this.seoService.updatePageTitle(seoData.metaTitle);
+    this.seoService.updateMetaDescription(seoData.metaDescription);
+    this.seoService.updateMetaKeywords(seoData.metaKeywords);
 
-    if (seoData.metaDescription) {
-      this.seoService.updateMetaDescription(seoData.metaDescription);
-    }
+    this.seoService.updateOpenGraphTags({
+      title: seoData.ogTitle,
+      description: seoData.ogDescription,
+      image: seoData.ogImage,
+      url: window.location.href,
+      type: 'website'
+    });
 
-    if (seoData.metaKeywords) {
-      this.seoService.updateMetaKeywords(seoData.metaKeywords);
-    }
-
-    if (seoData.ogTitle || seoData.ogDescription || seoData.ogImage) {
-      this.seoService.updateOpenGraphTags({
-        title: seoData.ogTitle,
-        description: seoData.ogDescription,
-        image: seoData.ogImage,
-        url: window.location.href,
-        type: 'website'
-      });
-    }
-
-    if (seoData.structuredData) {
-      this.seoService.updateStructuredData(seoData.structuredData);
-    }
+    this.seoService.updateStructuredData(seoData.structuredData);
   }
 
   private triggerAnimations() {

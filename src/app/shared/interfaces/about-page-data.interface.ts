@@ -1,5 +1,6 @@
 import { Experience } from './experience.interface';
 import { Certificate } from './certificate.interface';
+import { PageSeoData } from './seo-data.interface';
 
 export interface AboutPageContent {
   title: string;
@@ -17,20 +18,10 @@ export interface AboutLayoutData {
   heroTitle: string;
 }
 
-export interface AboutSeoData {
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  structuredData?: any;
-}
-
 export interface AboutPageData {
   pageContent: AboutPageContent;
   layoutData: AboutLayoutData;
-  seoData: AboutSeoData;
+  seoData: PageSeoData;
   experiences: Experience[];
   certificates: Certificate[];
 }

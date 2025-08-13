@@ -10,8 +10,8 @@ export interface SiteConfig {
     github?: string;
   };
   organization?: {
+    '@type': string;
     name: string;
     url: string;
-    logo?: string;
   };
 }

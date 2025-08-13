@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '@environments/environment';
 import { Project } from '@interface/project.interface';
+import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 
 export interface ProjectsPageData {
   pageContent: {
@@ -20,15 +21,7 @@ export interface ProjectsPageData {
     breadcrumbText: string;
     heroTitle: string;
   };
-  seoData: {
-    metaTitle: string;
-    metaDescription: string;
-    metaKeywords: string;
-    ogTitle: string;
-    ogDescription: string;
-    ogImage: string;
-    structuredData: any;
-  };
+  seoData: PageSeoData;
   projects: Project[];
   pagination: {
     currentPage: number;

@@ -1,4 +1,5 @@
 import { MenuTile } from '@interface/menu-tile.interface';
+import { PageSeoData } from './seo-data.interface';
 
 export interface MenuPageData {
   pageContent: {
@@ -16,13 +17,5 @@ export interface MenuPageData {
     logoText: string;
     breadcrumbText: string;
   };
-  seoData: {
-    metaTitle: string;
-    metaDescription: string;
-    metaKeywords: string;
-    ogTitle: string;
-    ogDescription: string;
-    ogImage: string;
-    structuredData: any;
-  };
+  seoData: PageSeoData;
 }

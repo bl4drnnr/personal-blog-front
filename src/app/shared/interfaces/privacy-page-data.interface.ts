@@ -1,3 +1,5 @@
+import { PageSeoData } from './seo-data.interface';
+
 export interface PrivacySection {
   id: string;
   title: string;
@@ -21,18 +23,8 @@ export interface PrivacyLayoutData {
   heroTitle: string;
 }
 
-export interface PrivacySeoData {
-  metaTitle?: string;
-  metaDescription?: string;
-  metaKeywords?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  structuredData?: any;
-}
-
 export interface PrivacyPageData {
   pageContent: PrivacyPageContent;
   layoutData: PrivacyLayoutData;
-  seoData: PrivacySeoData;
+  seoData: PageSeoData;
 }
