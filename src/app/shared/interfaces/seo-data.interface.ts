@@ -17,10 +17,10 @@ export interface StructuredData {
     '@type': string;
     '@id': string;
   };
-  publisher: {
-    '@type': string;
-    name: string;
+  organization: {
     url: string;
+    name: string;
+    logo: string;
   };
   // Allow additional properties for dynamic structured data
   [key: string]: any;

@@ -122,8 +122,8 @@ export class SEOService {
         '@type': 'WebPage',
         '@id': fullUrl
       },
-      publisher: this.siteConfig?.organization || {
-        '@type': 'Organization',
+      organization: this.siteConfig?.organization || {
+        logo: 'Organization',
         name: this.siteConfig?.siteName || '',
         url: this.siteConfig?.siteUrl || environment.siteUrl
       }
