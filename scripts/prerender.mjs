@@ -34,7 +34,13 @@ try {
     '/about-me',
     '/changelog',
     '/license',
-    '/privacy'
+    '/privacy',
+    '/menu',
+    '/subscribe',
+    '/maintenance',
+    '/newsletter-confirmation',
+    '/newsletters-unsubscribe',
+    '/password-protection'
   ];
 }
 
