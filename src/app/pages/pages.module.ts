@@ -96,12 +96,12 @@ const routes: Routes = [
     canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
-    path: 'newsletter-confirmation/:id',
+    path: 'newsletter-confirmation',
     component: NewsletterConfirmationComponent,
     canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {
-    path: 'newsletters-unsubscribe/:id',
+    path: 'newsletters-unsubscribe',
     component: NewslettersUnsubscribeComponent,
     canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
@@ -128,6 +128,11 @@ const routes: Routes = [
   {
     path: 'privacy',
     component: PrivacyComponent,
+    canActivate: [PasswordProtectionGuard, MaintenanceGuard]
+  },
+  {
+    path: '404',
+    component: NotFoundComponent,
     canActivate: [PasswordProtectionGuard, MaintenanceGuard]
   },
   {

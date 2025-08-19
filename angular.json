@@ -143,6 +143,7 @@
               "/licenses",
               "/privacy",
               "/menu",
+              "/404",
               "/subscribe",
               "/maintenance",
               "/newsletter-confirmation",
@@ -153,7 +154,9 @@
               "/blog/introduction-to-cybersecurity",
               "/projects/security-monitoring-dashboard",
               "/projects/automated-vulnerability-scanner"
-            ]
+            ],
+            "outputMode": "static",
+            "generateErrorPages": true
           },
           "configurations": {
             "production": {

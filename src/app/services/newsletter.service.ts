@@ -43,7 +43,7 @@ export class NewsletterService {
   ): Observable<ConfirmSubscriptionEnum> {
     return this.http
       .post<ConfirmSubscriptionEnum>(
-        `${this.API_URL}/newsletters/confirm-newsletters-subscription/${newslettersId}`,
+        `${this.API_URL}/newsletters/confirm-newsletters-subscription?id=${newslettersId}`,
         {}
       )
       .pipe(
@@ -59,7 +59,7 @@ export class NewsletterService {
   ): Observable<UnsubscribeNewsletterEnum> {
     return this.http
       .post<UnsubscribeNewsletterEnum>(
-        `${this.API_URL}/newsletters/unsubscribe-from-newsletters/${newslettersId}`,
+        `${this.API_URL}/newsletters/unsubscribe-from-newsletters?id=${newslettersId}`,
         {}
       )
       .pipe(

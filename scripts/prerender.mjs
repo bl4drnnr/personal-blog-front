@@ -36,6 +36,7 @@ try {
     '/license',
     '/privacy',
     '/menu',
+    '/404',
     '/subscribe',
     '/maintenance',
     '/newsletter-confirmation',
@@ -67,6 +68,11 @@ routes.forEach((route) => {
 
   console.log(`Generated: ${outputFile}`);
 });
+
+// Create 404.html file in the root for static hosting services
+const notFoundHtml = join(distDir, '404.html');
+writeFileSync(notFoundHtml, indexHtml);
+console.log(`Generated: ${notFoundHtml}`);
 
 console.log('✅ Static site generation completed!');
 console.log('📁 Files are available in: dist/personal-blog-front/browser/');

@@ -32,7 +32,7 @@ export class NewsletterConfirmationComponent implements OnInit {
   }
 
   private async handleConfirmation(): Promise<void> {
-    const newslettersId = this.route.snapshot.paramMap.get('id');
+    const newslettersId = this.route.snapshot.queryParamMap.get('id');
 
     if (!newslettersId) {
       // No ID provided, redirect to main page

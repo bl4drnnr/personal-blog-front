@@ -80,8 +80,6 @@ const __dirname = dirname(__filename);
     }
 
     // Generate routes for Angular prerendering
-    // TODO: I NEED TO MAKE SURE THAT 404 WORKS BETTER THAN RIGHT NOW
-    // TODO: HOW DO I HANDLE SUBSCRIPTION PAGES CONSIDERING I PRERENDER ALL THE PAGES?
     const staticRoutes = [
       '/',
       '/blog',
@@ -92,6 +90,7 @@ const __dirname = dirname(__filename);
       '/licenses',
       '/privacy',
       '/menu',
+      '/404',
       '/subscribe',
       '/maintenance',
       '/newsletter-confirmation',
