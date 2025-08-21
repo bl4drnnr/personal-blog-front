@@ -138,7 +138,8 @@ export class BlogDetailComponent
       date: this.post.publishDate,
       slug: this.post.slug,
       type: 'blog',
-      updatedDate: this.post.updatedDate
+      updatedDate: this.post.updatedDate,
+      metaKeywords: this.post.metaKeywords
     });
   }
 

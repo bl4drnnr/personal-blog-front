@@ -6,6 +6,7 @@ export interface Post {
   publishDate: string;
   updatedDate: string;
   tags: string[];
+  metaKeywords: string;
   featuredImage: string;
   excerpt: string;
 }

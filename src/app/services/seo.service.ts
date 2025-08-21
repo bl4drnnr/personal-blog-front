@@ -85,11 +85,20 @@ export class SEOService {
     slug: string;
     type: 'blog' | 'project';
     updatedDate?: string;
+    metaKeywords?: string;
   }): void {
     if (!this.siteConfig) return;
 
-    const { title, description, featuredImage, date, slug, type, updatedDate } =
-      params;
+    const {
+      title,
+      description,
+      featuredImage,
+      date,
+      slug,
+      type,
+      updatedDate,
+      metaKeywords
+    } = params;
     const urlPath = type === 'blog' ? 'blog' : 'projects';
     const fullUrl = `${environment.siteUrl}/${urlPath}/${slug}`;
     const suffix = type === 'blog' ? 'Blog' : 'Project';
@@ -97,6 +106,9 @@ export class SEOService {
     // Update basic SEO
     this.updatePageTitle(`${title} - ${suffix}`);
     this.updateMetaDescription(description);
+    if (metaKeywords) {
+      this.updateMetaKeywords(metaKeywords);
+    }
 
     // Update Open Graph tags
     this.updateOpenGraphTags({
