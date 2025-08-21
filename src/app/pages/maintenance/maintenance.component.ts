@@ -39,7 +39,6 @@ export class MaintenanceComponent implements OnInit {
   private loadMaintenanceData() {
     this.maintenanceService.getMaintenanceStatus().subscribe({
       next: (data) => {
-        console.log('data', data);
         this.maintenanceData = data;
         this.updateSEOData(data);
         this.isLoading = false;

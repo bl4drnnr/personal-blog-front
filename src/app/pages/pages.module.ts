@@ -142,8 +142,9 @@ const routes: Routes = [
   }
 ];
 
-// TODO: SEO FOR THE 404 PAGE
 // TODO: EDIT OF THE KEYWORDS FOR BLOG AND PROJECTS
+// TODO: TURN OFF SOME API REQUESTS ON THE FRONT WHEN THE PROJECT IS BUILT
+// TODO: CHECK LOADING SERVICE AND TEST IT
 // Full SEO Implementation (Complete SEO metadata)
 //
 // Static Pages with Complete SEO Fields:
