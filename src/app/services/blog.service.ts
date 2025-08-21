@@ -43,7 +43,7 @@ export interface BlogQuery {
   providedIn: 'root'
 })
 export class BlogService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

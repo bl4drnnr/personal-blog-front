@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from '@interface/project.interface';
 import { SEOService } from '@services/seo.service';
+import { LoadingService } from '@services/loading.service';
 import { ProjectsService, ProjectsPageData } from '@services/projects.service';
 import { projectAnimation } from '@shared/animations/fade-in-up.animation';
 import { Subject } from 'rxjs';
@@ -30,7 +31,8 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private seoService: SEOService,
-    private projectsService: ProjectsService
+    private projectsService: ProjectsService,
+    private loadingService: LoadingService
   ) {
     // Setup search debouncing
     this.searchSubject
@@ -45,6 +47,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   loadProjectsData(page: number = 1, search?: string): void {
+    this.loadingService.show();
+
     const query = {
       page,
       limit: this.pageSize,
@@ -62,10 +66,12 @@ export class ProjectsComponent implements OnInit {
         // Update SEO data
         this.updateSEO(data);
 
+        this.loadingService.hide();
         this.triggerAnimation();
       },
       error: (error) => {
         console.error('Error loading projects data:', error);
+        this.loadingService.hide();
       }
     });
   }

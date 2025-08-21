@@ -8,7 +8,7 @@ import { PrivacyPageData } from '@interface/privacy-page-data.interface';
   providedIn: 'root'
 })
 export class PrivacyService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

@@ -8,7 +8,7 @@ import { ChangelogPageData } from '@interface/changelog-page-data.interface';
   providedIn: 'root'
 })
 export class ChangelogService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

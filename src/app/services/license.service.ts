@@ -8,7 +8,7 @@ import { LicensePageData } from '@interface/license-page-data.interface';
   providedIn: 'root'
 })
 export class LicenseService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

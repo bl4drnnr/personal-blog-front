@@ -9,7 +9,7 @@ import { SiteConfig } from '@interface/site-config.interface';
   providedIn: 'root'
 })
 export class SiteConfigService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
   private configSubject = new BehaviorSubject<SiteConfig | null>(null);
   public config$ = this.configSubject.asObservable();
 

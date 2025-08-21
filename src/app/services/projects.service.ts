@@ -43,7 +43,7 @@ export interface ProjectsQuery {
   providedIn: 'root'
 })
 export class ProjectsService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

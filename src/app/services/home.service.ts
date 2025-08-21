@@ -8,7 +8,7 @@ import { HomePageData } from '@interface/home-page-data.interface';
   providedIn: 'root'
 })
 export class HomeService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

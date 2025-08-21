@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '@interface/post.interface';
 import { SEOService } from '@services/seo.service';
+import { LoadingService } from '@services/loading.service';
 import { BlogService, BlogPageData } from '@services/blog.service';
 import { blogPostAnimation } from '@shared/animations/fade-in-up.animation';
 import { Subject } from 'rxjs';
@@ -30,7 +31,8 @@ export class BlogComponent implements OnInit {
 
   constructor(
     private seoService: SEOService,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private loadingService: LoadingService
   ) {
     // Setup search debouncing
     this.searchSubject
@@ -45,6 +47,8 @@ export class BlogComponent implements OnInit {
   }
 
   loadBlogData(page: number = 1, search?: string): void {
+    this.loadingService.show();
+
     const query = {
       page,
       limit: this.pageSize,
@@ -62,10 +66,12 @@ export class BlogComponent implements OnInit {
         // Update SEO data
         this.updateSEO(data);
 
+        this.loadingService.hide();
         this.triggerAnimation();
       },
       error: (error) => {
         console.error('Error loading blog data:', error);
+        this.loadingService.hide();
       }
     });
   }

@@ -19,6 +19,7 @@ import {
 } from '@services/scroll-utilities.service';
 import { MathService } from '@services/math.service';
 import { BlogService } from '@services/blog.service';
+import { LoadingService } from '@services/loading.service';
 import { Post } from '@interface/post.interface';
 import { SEOService } from '@services/seo.service';
 import { Subscription } from 'rxjs';
@@ -81,6 +82,7 @@ export class BlogDetailComponent
     private scrollUtilitiesService: ScrollUtilitiesService,
     private mathService: MathService,
     private blogService: BlogService,
+    private loadingService: LoadingService,
     private seoService: SEOService
   ) {}
 
@@ -110,10 +112,14 @@ export class BlogDetailComponent
   }
 
   private loadPost(slug: string): void {
+    this.loadingService.show();
+
     this.blogService.getPostBySlug(slug).subscribe({
       next: (post) => {
         this.post = post;
         this.updateSEO();
+
+        this.loadingService.hide();
 
         // Trigger content processing after data is loaded
         setTimeout(() => {
@@ -124,6 +130,7 @@ export class BlogDetailComponent
       },
       error: async (error) => {
         console.error('Error loading post:', error);
+        this.loadingService.hide();
         // Navigate to 404 if post not found
         await this.router.navigate(['/404']);
       }

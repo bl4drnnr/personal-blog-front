@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsletterService } from '@services/newsletter.service';
 import { SEOService } from '@services/seo.service';
+import { LoadingService } from '@services/loading.service';
 import { environment } from '@environments/environment';
 import { SubscribePageDataDto } from '@shared/interfaces/subscribe-page-data.interface';
 import { SubscribeInterface } from '@interface/subscribe.interface';
@@ -21,7 +22,8 @@ export class SubscribeComponent implements OnInit {
 
   constructor(
     private newsletterService: NewsletterService,
-    private seoService: SEOService
+    private seoService: SEOService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -29,13 +31,17 @@ export class SubscribeComponent implements OnInit {
   }
 
   private loadPageData(): void {
+    this.loadingService.show();
+
     this.newsletterService.getSubscribePageData().subscribe({
       next: (data) => {
         this.pageData = data;
         this.updateSEO();
+        this.loadingService.hide();
       },
       error: (error) => {
         console.error('Error loading subscribe page data:', error);
+        this.loadingService.hide();
       }
     });
   }

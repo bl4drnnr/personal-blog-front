@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SEOService } from '@services/seo.service';
+import { LoadingService } from '@services/loading.service';
 import { ContactService } from '@services/contact.service';
 import { ContactPageData } from '@interface/contact-page-data.interface';
 
@@ -11,7 +12,6 @@ import { ContactPageData } from '@interface/contact-page-data.interface';
 export class ContactComponent implements OnInit {
   // Data from API - null until loaded
   contactPageData: ContactPageData | null = null;
-  loading = true;
 
   // Form fields
   name: string = '';
@@ -23,7 +23,8 @@ export class ContactComponent implements OnInit {
 
   constructor(
     private seoService: SEOService,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -31,15 +32,17 @@ export class ContactComponent implements OnInit {
   }
 
   private loadContactPageData(): void {
+    this.loadingService.show();
+
     this.contactService.getContactPageData().subscribe({
       next: (data: ContactPageData) => {
         this.contactPageData = data;
         this.updateSEO(data);
-        this.loading = false;
+        this.loadingService.hide();
       },
       error: (error) => {
         console.error('Error loading contact page data:', error);
-        this.loading = false;
+        this.loadingService.hide();
         // Fallback data will be used from the service
       }
     });
@@ -74,18 +77,22 @@ export class ContactComponent implements OnInit {
       message: this.message.trim()
     };
 
+    this.loadingService.show();
+
     this.contactService.submitContactForm(formData).subscribe({
       next: () => {
         this.isSuccess = true;
         this.isError = false;
         this.resetForm();
         this.isSubmitting = false;
+        this.loadingService.hide();
       },
       error: (error) => {
         console.error('Contact form submission error:', error);
         this.isError = true;
         this.isSuccess = false;
         this.isSubmitting = false;
+        this.loadingService.hide();
       }
     });
   }

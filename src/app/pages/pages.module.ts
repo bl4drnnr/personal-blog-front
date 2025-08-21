@@ -142,53 +142,6 @@ const routes: Routes = [
   }
 ];
 
-// TODO: TURN OFF SOME API REQUESTS ON THE FRONT WHEN THE PROJECT IS BUILT
-// TODO: CHECK LOADING SERVICE AND TEST IT
-// Full SEO Implementation (Complete SEO metadata)
-//
-// Static Pages with Complete SEO Fields:
-//
-//   1. HomePage (src/models/home-page.model.ts)
-// 2. AboutPage (src/models/about-page.model.ts)
-// 3. ChangelogPage (src/models/changelog-page.model.ts)
-// 4. LicensePage (src/models/license-page.model.ts)
-// 5. PrivacyPage (src/models/privacy-page.model.ts)
-// 6. BlogPage (src/models/blog-page.model.ts)
-// 7. ContactPage (src/models/contact-page.model.ts)
-// 8. ProjectsPage (src/models/projects-page.model.ts)
-// 9. SubscribePage (src/models/subscribe-page.model.ts)
-// 10. MenuPage (src/models/menu-page.model.ts)
-//
-// Complete SEO fields include:
-//   - metaTitle - HTML meta title
-// - metaDescription - HTML meta description
-// - metaKeywords - HTML meta keywords
-// - ogTitle - Open Graph title
-// - ogDescription - Open Graph description
-// - ogImageId - Open Graph image
-// - structuredData - JSON-LD structured data
-//
-// Semi-Full SEO Implementation (Basic SEO only)
-//
-// Content Models with Basic SEO:
-//
-//   1. ArticleModel (src/models/article.model.ts)
-// 2. ProjectModel (src/models/project.model.ts)
-//
-// Basic SEO fields include:
-//   - title - Used for meta title and Open Graph
-// - description - Used for meta description and Open Graph
-// - featuredImageId - Used for Open Graph image
-// - slug - SEO-friendly URLs
-//
-// Missing advanced SEO fields:
-//   - No dedicated metaTitle, ogTitle fields
-// - No metaKeywords field
-// - No structuredData field
-//
-// The static pages have comprehensive SEO implementations with all modern SEO requirements, while the content models
-// (articles/projects) have basic SEO that would benefit from enhanced meta tag control and structured data support.
-
 @NgModule({
   declarations: [...components],
   imports: [

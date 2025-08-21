@@ -19,6 +19,7 @@ import {
 } from '@services/scroll-utilities.service';
 import { MathService } from '@services/math.service';
 import { ProjectsService } from '@services/projects.service';
+import { LoadingService } from '@services/loading.service';
 import { Project } from '@interface/project.interface';
 import { SEOService } from '@services/seo.service';
 import { Subscription } from 'rxjs';
@@ -81,6 +82,7 @@ export class ProjectDetailComponent
     private scrollUtilitiesService: ScrollUtilitiesService,
     private mathService: MathService,
     private projectsService: ProjectsService,
+    private loadingService: LoadingService,
     private seoService: SEOService
   ) {}
 
@@ -111,10 +113,14 @@ export class ProjectDetailComponent
   }
 
   private loadProject(slug: string): void {
+    this.loadingService.show();
+
     this.projectsService.getProjectBySlug(slug).subscribe({
       next: (project) => {
         this.project = project;
         this.updateSEO();
+
+        this.loadingService.hide();
 
         // Trigger content processing after data is loaded
         setTimeout(() => {
@@ -125,6 +131,7 @@ export class ProjectDetailComponent
       },
       error: async (error) => {
         console.error('Error loading project:', error);
+        this.loadingService.hide();
         // Navigate to 404 for invalid slugs
         await this.router.navigate(['/404']);
       }

@@ -8,7 +8,7 @@ import { AboutPageData } from '@interface/about-page-data.interface';
   providedIn: 'root'
 })
 export class AboutService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

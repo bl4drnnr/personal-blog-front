@@ -8,7 +8,7 @@ import { NotFoundPageData } from '@interface/not-found-page-data.interface';
   providedIn: 'root'
 })
 export class NotFoundService {
-  private readonly apiUrl = environment.apiUrl || '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
