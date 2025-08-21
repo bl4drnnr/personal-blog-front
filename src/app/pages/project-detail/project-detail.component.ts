@@ -138,7 +138,8 @@ export class ProjectDetailComponent
       featuredImage: this.project.featuredImage,
       date: this.project.date,
       slug: this.project.slug,
-      type: 'project'
+      type: 'project',
+      metaKeywords: this.project.metaKeywords
     });
   }
 

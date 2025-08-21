@@ -5,5 +5,6 @@ export interface Project {
   content: string;
   date: string;
   tags: string[];
+  metaKeywords: string;
   featuredImage: string;
 }
