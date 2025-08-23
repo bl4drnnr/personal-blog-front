@@ -28,6 +28,11 @@ export class NavigationComponent {
   @Input() preventPicChange: boolean = false;
   @Input() showNavigation: boolean = true;
 
+  // TODO: GET RID OF LUCH MENTIONS AND CHECK FOR THE USAGE OF HARDCODED TEXT
+  // TODO: PROJECTS AND BLOGS TAGS AND TILES
+  // TODO: CLEAR THE ASSETS
+  // TODO: DEPLOYMENT
+  // TODO: SOCIAL LINKS
   socialLinks: any[] = [
     {
       url: 'https://twitter.com/',
