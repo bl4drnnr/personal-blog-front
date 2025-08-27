@@ -3,26 +3,28 @@ import {
   BrowserModule,
   provideClientHydration
 } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PagesModule } from '@pages/pages.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentsModule } from '@components/components.module';
+import { LayoutsModule } from '@layouts/layouts.module';
 import {
   HttpClientModule,
   provideHttpClient,
   withFetch
 } from '@angular/common/http';
-import { ComponentsModule } from '@components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     HttpClientModule,
-    BrowserAnimationsModule,
     BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
+    RouterModule,
     PagesModule,
-    ComponentsModule
+    ComponentsModule,
+    LayoutsModule
   ],
   providers: [provideHttpClient(withFetch()), provideClientHydration()],
   bootstrap: [AppComponent]

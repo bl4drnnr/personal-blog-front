@@ -1,0 +1,39 @@
+<section class="section">
+  <div class="global-wrapper">
+    <div class="row-wrapper row-wrapper-sticky">
+      <component-navigation
+        [showNavigation]="showNavigation"
+        [footerText]="footerText"
+        [heroImageMain]="heroImageMain"
+        [heroImageSecondary]="heroImageSecondary"
+        [heroImageMainAlt]="heroImageMainAlt"
+        [heroImageSecondaryAlt]="heroImageSecondaryAlt"
+        [logoText]="logoText"
+        [breadcrumbText]="breadcrumbText"
+        [heroTitle]="heroTitle"
+        [scrollProgress]="scrollProgress"
+        [isFooterReached]="isFooterReached"
+        [hideScrollProgressBar]="hideScrollProgressBar"
+        [preventPicChange]="preventPicChange"
+      >
+      </component-navigation>
+    </div>
+
+    <div class="row-wrapper row-wrapper-alt">
+      <div id="content-row" class="row">
+        <div class="row-item">
+          <div class="row-content row-content-sticky">
+            <component-header *ngIf="showHeader"/>
+
+            <!-- Content projection -->
+            <ng-content></ng-content>
+
+            <div class="footer-section">
+              <component-footer *ngIf="showFooter"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

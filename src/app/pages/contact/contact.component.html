@@ -1,58 +1,60 @@
-<layout-default [showNewsletter]="false" [showHeaderBurger]="false">
-  <div class="hero-section">
-    <div class="hero-content-wrapper">
-      <div class="left-hero-section">
-        <h1 class="heading-xxl">The Robot-ic Receptionists</h1>
+<hero-layout
+  *ngIf="contactPageData"
+  [footerText]="contactPageData.layoutData.footerText"
+  [logoText]="contactPageData.layoutData.logoText"
+  [breadcrumbText]="contactPageData.layoutData.breadcrumbText"
+  [heroImageMain]="contactPageData.layoutData.heroImageMain"
+  [heroImageSecondary]="contactPageData.layoutData.heroImageSecondary"
+  [heroImageMainAlt]="contactPageData.layoutData.heroImageMainAlt"
+  [heroImageSecondaryAlt]="contactPageData.layoutData.heroImageSecondaryAlt"
+  [heroTitle]="contactPageData.layoutData.heroTitle"
+  [heroDesc]="contactPageData.layoutData.heroDesc"
+  [hideScrollProgressBar]="true"
+>
+  <div class="contact-section contact-section-relative">
+    <component-carousel-words [words]="contactPageData.pageContent.carouselWords" [speed]="60" />
+
+    <div class="contact-form">
+      <div class="form-field">
+        <component-input
+          [placeholder]="'Name *'"
+          [value]="name"
+          [required]="true"
+          (valueChange)="name = $event"
+        ></component-input>
       </div>
-      <div class="right-hero-section">
-        <div class="intro-wrapper">
-          <p class="intro-paragraph">Our &#x27;Contact Us&#x27; page is manned by our trusty team of robotic receptionists, who are tirelessly standing by to assist you with your queries, comments, or the occasional interstellar travel plan. <br><br>Don&#x27;t be alarmed by their metallic charm; they&#x27;re programmed to provide human-level customer support, albeit with a bit of robotic humor. <br><br>Drop us a message, and these friendly bots will ensure your request gets zapped to the right department faster than you can say &#x27;binary code.</p>
-        </div>
+      <div class="form-field">
+        <component-input
+          [placeholder]="'Email Address *'"
+          [value]="email"
+          [required]="true"
+          (valueChange)="email = $event"
+        ></component-input>
+      </div>
+      <div class="form-field">
+        <component-textarea
+          [placeholder]="'Message'"
+          [value]="message"
+          (valueChange)="message = $event"
+        ></component-textarea>
+      </div>
+      <div class="form-field">
+        <component-button
+          [text]="getSubmitButtonText()"
+          [disabled]="isSubmitting"
+          (click)="onSubmit()"
+        ></component-button>
+      </div>
+      <div *ngIf="isSuccess" class="success-message">
+        {{ getSuccessMessage() }}
+      </div>
+      <div *ngIf="isError" class="error-message">
+        {{ getErrorMessage() }}
       </div>
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <div class="contact-form-section">
-    <div class="form-block w-form">
-      <div class="form">
-        <div class="form-holder">
-          <basic-input
-            [label]="'What is your name?'"
-            [placeholder]="'Your name'"
-            [value]="name"
-            (valueChange)="name = $event"
-          />
-          <basic-input
-            type="email"
-            [label]="'What is your email address?'"
-            [placeholder]="'Your email'"
-            [value]="email"
-            (valueChange)="email = $event"
-          />
-          <basic-textarea
-            [label]="'What would you like to inquire about?'"
-            [placeholder]="'Write whatever you want'"
-            [value]="message"
-            (valueChange)="message = $event"
-          />
-          <div class="submit-btn-wrapper">
-            <div class="submit-btn-container">
-              <basic-button
-                [label]="'Submit'"
-                (buttonClick)="contact()"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-<!--      <div class="success-message w-form-done">-->
-<!--        <div class="message white">Thank you! Your submission has been received!</div>-->
-<!--      </div>-->
-<!--      <div class="w-form-fail">-->
-<!--        <div class="message">Oops! Something went wrong while submitting the form.</div>-->
-<!--      </div>-->
-    </div>
+  <div class="contact-tiles-wrapper">
+    <component-contact-tiles [tiles]="contactPageData.contactTiles"></component-contact-tiles>
   </div>
-</layout-default>
+</hero-layout>

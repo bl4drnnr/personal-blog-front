@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
@@ -18,53 +17,34 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "strictPropertyInitialization": false,
     "lib": [
       "ES2022",
       "dom"
     ],
+    "types": [],
+    "baseUrl": "./",
     "paths": {
+      "@app/*": ["src/app/*"],
       "@components/*": [
         "src/app/components/*",
         "src/app/components/basic-components/*",
-        "src/app/components/pages-components/*",
         "src/app/components/layout-components/*",
-        "src/app/components/dashboard-components/*"
+        "src/app/components/pages-components/*"
       ],
-      "@env/*": ["src/app/environments/*"],
-      "@pages/*": [
-        "src/app/pages/*"
-      ],
-      "@shared/*": [
-        "src/app/shared/*",
-        "src/app/shared/api/*",
-        "src/app/shared/global-components-services/*"
-      ],
-      "@interfaces/*": [
-        "src/libs/interfaces/*",
-        "src/libs/interfaces/components/*",
-        "src/libs/interfaces/pages/*",
-        "src/libs/interfaces/api/*",
-        "src/libs/types/components/*",
-        "src/libs/types/api/*",
-        "src/libs/types/translations/*",
-        "src/libs/api/controllers/*",
-        "src/libs/api/endpoints/*",
-        "src/libs/api/methods/*",
-        "src/libs/api/errors/*",
-        "src/libs/enums/api/*"
-      ],
-      "@payloads/*": [
-        "src/libs/api/payloads/contact/*"
-      ],
-      "@responses/*": [
-        "src/libs/api/responses/newsletters/*",
-        "src/libs/api/responses/contact/*"
-      ],
-      "@layouts/*": ["src/app/layouts/*"]
+      "@pages/*": ["src/app/pages/*"],
+      "@services/*": ["src/app/services/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@assets/*": ["src/assets/*"],
+      "@environments/*": ["src/environments/*"],
+      "@interface/*": ["src/app/shared/interfaces/*"],
+      "@guards/*": ["src/app/guards/*"],
+      "@enums/*": ["src/app/shared/enums/*"],
+      "@layouts/*": ["src/app/layouts/*"],
+      "@animations/*": ["src/app/shared/animations/*"]
     }
   },
   "angularCompilerOptions": {
+    "enableIvy": false,
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,

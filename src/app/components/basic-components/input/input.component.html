@@ -1,14 +1,11 @@
-<div class="input-container">
-  <label
-    class="field-label"
-    *ngIf="label"
-  >{{ label }}</label>
-
+<div class="input-wrapper">
+  <label *ngIf="label" class="input-label">{{ label }}</label>
   <input
-    class="form-input-field w-input"
-    [(ngModel)]="value"
-    [placeholder]="placeholder || ''"
     [type]="type"
-    (input)="onInput()"
+    class="component-input"
+    [placeholder]="placeholder"
+    [value]="value"
+    [required]="required"
+    (input)="onInput($event)"
   />
-</div>
+</div> 

@@ -1,19 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'basic-textarea',
+  selector: 'component-textarea',
   templateUrl: './textarea.component.html',
-  styleUrl: './textarea.component.scss'
+  styleUrls: ['./textarea.component.scss']
 })
 export class TextareaComponent {
-  @Input() label: string;
-  @Input() type = 'text';
-  @Input() placeholder: string;
-  @Input() value: string;
-
+  @Input() placeholder: string = '';
+  @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>();
 
-  onInput() {
+  onInput(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    this.value = textarea.value;
     this.valueChange.emit(this.value);
   }
 }

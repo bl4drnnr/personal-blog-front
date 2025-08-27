@@ -1,21 +1,31 @@
-import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { PostCardComponent } from '@components/post-card/post-card.component';
+import { ProjectCardComponent } from '@components/project-card/project-card.component';
+import { RouterModule } from '@angular/router';
+import { LinkBlockComponent } from '@app/components/basic-components/link-block/link-block.component';
+import { ButtonLinkComponent } from '@components/button-link/button-link.component';
+import { PaginationComponent } from '@components/pagination/pagination.component';
 import { InputComponent } from '@components/input/input.component';
-import { TextareaComponent } from '@components/textarea/textarea.component';
 import { ButtonComponent } from '@components/button/button.component';
-import { SocialLinkComponent } from '@components/social-link/social-link.component';
+import { TextareaComponent } from '@components/textarea/textarea.component';
+import { LoadingSpinnerComponent } from '@components/loading-spinner/loading-spinner.component';
 
-const components = [
+const components: any = [
+  PostCardComponent,
+  ProjectCardComponent,
+  LinkBlockComponent,
+  ButtonLinkComponent,
+  PaginationComponent,
   InputComponent,
-  TextareaComponent,
   ButtonComponent,
-  SocialLinkComponent
+  TextareaComponent,
+  LoadingSpinnerComponent
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, RouterModule, NgOptimizedImage],
   exports: [...components]
 })
 export class BasicComponentsModule {}

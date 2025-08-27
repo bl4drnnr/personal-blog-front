@@ -1,16 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'basic-button',
+  selector: 'component-button',
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
-  @Input() label: string;
+  @Input() text: string = 'Submit';
+  @Input() disabled: boolean = false;
+  @Input() type: 'button' | 'submit' = 'button';
+  @Output() clicked = new EventEmitter<Event>();
 
-  @Output() buttonClick = new EventEmitter<void>();
-
-  onClick() {
-    this.buttonClick.emit();
+  onClick(event: Event) {
+    if (!this.disabled) {
+      this.clicked.emit(event);
+    }
   }
 }

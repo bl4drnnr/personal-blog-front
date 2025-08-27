@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const sourcePath = 'src/proxy-server.mjs';
-const destinationPath = 'dist/bahdashych-on-security-front/proxy-server.mjs';
+const destinationPath = 'dist/personal-blog-front/proxy-server.mjs';
 
 // Check if the source file exists
 if (fs.existsSync(sourcePath)) {

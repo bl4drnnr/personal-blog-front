@@ -1,56 +1,89 @@
-import dayjs from 'dayjs';
-import { Component } from '@angular/core';
-import { LinksListInterface } from '@interfaces/links-list.interface';
-import { Router } from '@angular/router';
-import { FavoriteArticleInterface } from '@interfaces/favorite-article.interface';
+import { Component, OnInit } from '@angular/core';
+import { SEOService } from '@services/seo.service';
+import { LoadingService } from '@services/loading.service';
+import { HomeService } from '@services/home.service';
+import {
+  fadeInUpStaggerAnimation,
+  blogPostAnimation,
+  projectAnimation
+} from '@shared/animations/fade-in-up.animation';
+import { HomePageData } from '@interface/home-page-data.interface';
+import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 
 @Component({
   selector: 'page-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss'],
+  animations: [fadeInUpStaggerAnimation, blogPostAnimation, projectAnimation]
 })
-export class HomeComponent {
-  categoriesList: Array<LinksListInterface> = [
-    {
-      link: 'implementation',
-      value: 'Implementation'
-    },
-    {
-      link: 'security',
-      value: 'Security'
-    },
-    {
-      link: 'trends',
-      value: 'Trends'
-    }
-  ];
+export class HomeComponent implements OnInit {
+  animationState = '';
+  projectsAnimationState = '';
+  postsAnimationState = '';
+  error: string | null = null;
 
-  favoriteArticles: Array<FavoriteArticleInterface> = [
-    {
-      category: 'Security',
-      categoryLink: 'security',
-      image:
-        'https://assets-global.website-files.com/64f8a5805a1caa95358b298b/64f8aab91657617febc2e016_image3.jpeg',
-      date: new Date(),
-      title: 'Digital Transformation Implementation: A Roadmap for Success',
-      slug: 'digital-transformation-implementation-a-roadmap-for-success'
-    },
-    {
-      category: 'Trends',
-      categoryLink: 'trends',
-      image:
-        'https://assets-global.website-files.com/64f8a5805a1caa95358b298b/6533656d54614fc8ab8ffa62_jason-dent-3wPJxh-piRw-unsplash.jpg',
-      date: new Date(),
-      title: 'Emerging Trends in the IT Space: Navigating the Digital Future',
-      slug: 'emerging-trends-in-the-it-space-navigating-the-digital-future'
-    }
-  ];
+  constructor(
+    private seoService: SEOService,
+    private homeService: HomeService,
+    private loadingService: LoadingService
+  ) {}
 
-  constructor(private readonly router: Router) {}
+  // Data from API - null until loaded
+  homePageData: HomePageData | null = null;
 
-  async handleRedirect(path: string) {
-    await this.router.navigate([path]);
+  ngOnInit() {
+    this.loadHomePageData();
   }
 
-  protected readonly dayjs = dayjs;
+  loadHomePageData(): void {
+    this.loadingService.show();
+    this.error = null;
+
+    this.homeService.getHomePageData().subscribe({
+      next: (data: HomePageData) => {
+        this.homePageData = data;
+
+        // Update SEO data
+        this.updateSEOData(data.seoData);
+
+        this.loadingService.hide();
+
+        // Trigger animations after data is loaded with staggered timing
+        setTimeout(() => {
+          this.animationState = 'loaded';
+        }, 100);
+
+        // Stagger project animations to start after other content
+        setTimeout(() => {
+          this.projectsAnimationState = 'loaded';
+        }, 600);
+
+        // Stagger post animations to start after projects
+        setTimeout(() => {
+          this.postsAnimationState = 'loaded';
+        }, 1200);
+      },
+      error: (error) => {
+        console.error('Failed to load home page content:', error);
+        this.error = 'Failed to load page content. Please try again later.';
+        this.loadingService.hide();
+      }
+    });
+  }
+
+  private updateSEOData(seoData: PageSeoData): void {
+    this.seoService.updatePageTitle(seoData.metaTitle);
+    this.seoService.updateMetaDescription(seoData.metaDescription);
+    this.seoService.updateMetaKeywords(seoData.metaKeywords);
+
+    this.seoService.updateOpenGraphTags({
+      title: seoData.ogTitle,
+      description: seoData.ogDescription,
+      image: seoData.ogImage,
+      url: window.location.href,
+      type: 'website'
+    });
+
+    this.seoService.updateStructuredData(seoData.structuredData);
+  }
 }
