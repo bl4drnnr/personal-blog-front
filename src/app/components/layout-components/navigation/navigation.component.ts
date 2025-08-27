@@ -41,9 +41,7 @@ export class NavigationComponent implements OnInit {
 
   // TODO: GET RID OF LUCH MENTIONS AND CHECK FOR THE USAGE OF HARDCODED TEXT
   // TODO: PROJECTS AND BLOGS TAGS AND TILES
-  // TODO: CLEAR THE ASSETS
   // TODO: DEPLOYMENT
-  // TODO: SRC TO NGSRC
   socialLinks: SocialLink[] = [];
   links: NavigationLink[] = [
     {
