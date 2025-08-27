@@ -12,7 +12,6 @@ export interface BlogPageData {
     description: string;
   };
   layoutData: {
-    footerText: string;
     heroImageMain: string;
     heroImageSecondary: string;
     heroImageMainAlt: string;

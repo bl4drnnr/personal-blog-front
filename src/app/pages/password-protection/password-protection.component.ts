@@ -17,7 +17,6 @@ export class PasswordProtectionComponent implements OnInit {
   passwordProtectionData: PasswordProtectionStatusResponse = {
     isActive: false,
     heroTitle: 'Site Protected',
-    footerText: 'Please contact administrator for access',
     heroImage: '',
     metaTitle: 'Site Protected'
   };

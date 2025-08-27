@@ -12,7 +12,6 @@ export interface LicensePageContent {
 }
 
 export interface LicenseLayoutData {
-  footerText: string;
   heroImageMain: string;
   heroImageSecondary: string;
   heroImageMainAlt: string;

@@ -12,7 +12,6 @@ export interface ContactPageContent {
 }
 
 export interface ContactPageLayout {
-  footerText: string;
   heroImageMain: string;
   heroImageSecondary: string;
   heroImageMainAlt: string;

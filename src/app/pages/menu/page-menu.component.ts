@@ -16,7 +16,6 @@ import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 export class PageMenuComponent implements OnInit, OnDestroy {
   animationState = '';
   menuTiles: MenuTile[] = [];
-  footerText = '';
   heroImageMain = '';
   heroImageMainAlt = '';
   logoText = '';
@@ -60,7 +59,6 @@ export class PageMenuComponent implements OnInit, OnDestroy {
 
   private processMenuPageData(data: MenuPageData) {
     // Set page data
-    this.footerText = data.pageContent.footerText;
     this.heroImageMain = data.pageContent.heroImageMain;
     this.heroImageMainAlt = data.pageContent.heroImageMainAlt;
     this.logoText = data.pageContent.logoText;

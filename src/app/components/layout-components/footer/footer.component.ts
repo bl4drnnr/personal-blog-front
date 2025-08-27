@@ -1,17 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SocialLink } from '@interface/social-link.interface';
 import { FooterLink } from '@interface/footer-link.interface';
-import { SocialLinksService } from '@services/social-links.service';
+import { CopyrightLink } from '@interface/copyright.interface';
 
 @Component({
   selector: 'component-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
-  @Input() footerText = 'Default footer text';
+export class FooterComponent {
+  @Input() footerText = '';
+  @Input() socialLinks: SocialLink[] = [];
+  @Input() copyrightLinks: Array<CopyrightLink> = [];
 
-  socialLinks: SocialLink[] = [];
   footerNavigationLinks: FooterLink[] = [
     { title: 'Homepage', link: '/' },
     { title: 'Projects', link: '/projects' },
@@ -30,31 +31,6 @@ export class FooterComponent implements OnInit {
   hoveredNavigationIndex: number | null = null;
   hoveredLegalIndex: number | null = null;
   hoveredCopyrightIndex: number | null = null;
-
-  constructor(private socialLinksService: SocialLinksService) {}
-
-  ngOnInit(): void {
-    this.loadSocialLinks();
-  }
-
-  private loadSocialLinks(): void {
-    this.socialLinksService.getPublicSocialLinks().subscribe({
-      next: (response) => {
-        this.socialLinks = response;
-      },
-      error: (error) => {
-        console.error('Failed to load social links:', error);
-      }
-    });
-  }
-
-  copyrightLinks: FooterLink[] = [
-    { title: 'By Valdis Zhvaginsh', link: 'https://webflow.com/@thevaldis' },
-    {
-      title: 'Powered by Webflow',
-      link: 'https://try.webflow.com/9wyc5a5fesf6'
-    }
-  ];
 
   onNavigationLinkHover(index: number | null) {
     this.hoveredNavigationIndex = index;

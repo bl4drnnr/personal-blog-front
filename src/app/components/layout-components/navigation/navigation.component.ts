@@ -1,17 +1,10 @@
-import {
-  Component,
-  Input,
-  ElementRef,
-  HostListener,
-  OnInit
-} from '@angular/core';
+import { Component, Input, ElementRef, HostListener } from '@angular/core';
 import { NavigationLink } from '@interface/navigation-link.interface';
 import {
   navMenuSlideAnimation,
   burgerMenuAnimation
 } from '@shared/animations/fade-in-up.animation';
 import { SocialLink } from '@interface/social-link.interface';
-import { SocialLinksService } from '@services/social-links.service';
 
 @Component({
   selector: 'component-navigation',
@@ -19,30 +12,29 @@ import { SocialLinksService } from '@services/social-links.service';
   styleUrls: ['./navigation.component.scss'],
   animations: [navMenuSlideAnimation, burgerMenuAnimation]
 })
-export class NavigationComponent implements OnInit {
-  constructor(
-    private elementRef: ElementRef,
-    private socialLinksService: SocialLinksService
-  ) {}
-  @Input() footerText = 'Default footer text';
-  @Input() logoText = 'LUCH';
-  @Input() breadcrumbText = 'Home';
+export class NavigationComponent {
+  constructor(private elementRef: ElementRef) {}
+  @Input() footerText = '';
+  @Input() logoText = '';
+  @Input() breadcrumbText = '';
   @Input() heroImageMain = '';
   @Input() heroImageSecondary = '';
   @Input() heroImageMainAlt = '';
   @Input() heroImageSecondaryAlt = '';
-  @Input() heroTitle = 'Welcome to LUCH';
+  @Input() heroTitle = '';
   @Input() isFooterReached = false;
   @Input() scrollProgress: number = 0;
   @Input() hideScrollProgressBar: boolean = false;
   @Input() heroDesc?: string;
   @Input() preventPicChange: boolean = false;
   @Input() showNavigation: boolean = true;
+  @Input() socialLinks: SocialLink[] = [];
+  @Input() copyrightEmail: string = '';
+  @Input() copyrightText: string = '';
 
-  // TODO: GET RID OF LUCH MENTIONS AND CHECK FOR THE USAGE OF HARDCODED TEXT
   // TODO: PROJECTS AND BLOGS TAGS AND TILES
+  // TODO: REFACTOR BLOG/PROJECTS FIELDS FOR THE CARDS
   // TODO: DEPLOYMENT
-  socialLinks: SocialLink[] = [];
   links: NavigationLink[] = [
     {
       title: 'Home',
@@ -75,28 +67,16 @@ export class NavigationComponent implements OnInit {
       link: '/about-me'
     }
   ];
-  email = 'info@example.com';
-  copyrightText = '© LUCH — 2025';
 
   hoveredNavFooterIndex: number | null = null;
-  navFooterLinks: any[] = [{ title: this.email, link: 'mailto:' + this.email }];
+
+  get navFooterLinks(): any[] {
+    return this.copyrightEmail
+      ? [{ title: this.copyrightEmail, link: 'mailto:' + this.copyrightEmail }]
+      : [];
+  }
 
   isMenuOpen = false;
-
-  ngOnInit(): void {
-    this.loadSocialLinks();
-  }
-
-  private loadSocialLinks(): void {
-    this.socialLinksService.getPublicSocialLinks().subscribe({
-      next: (response) => {
-        this.socialLinks = response;
-      },
-      error: (error) => {
-        console.error('Failed to load social links:', error);
-      }
-    });
-  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
