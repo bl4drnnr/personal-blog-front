@@ -1,33 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SocialLink } from '@interface/social-link.interface';
 import { FooterLink } from '@interface/footer-link.interface';
+import { SocialLinksService } from '@services/social-links.service';
 
 @Component({
   selector: 'component-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit {
   @Input() footerText = 'Default footer text';
 
-  copyrightText = '© LUCH — 2025';
-  socialLinks: SocialLink[] = [
-    {
-      url: 'https://twitter.com/',
-      alt: 'Twitter X',
-      icon: 'assets/images/twitter-x-line.svg'
-    },
-    {
-      url: 'https://instagram.com/',
-      alt: 'Instagram',
-      icon: 'assets/images/instagram-line.svg'
-    },
-    {
-      url: 'https://dribbble.com/',
-      alt: 'Dribbble',
-      icon: 'assets/images/dribbble-line.svg'
-    }
-  ];
+  socialLinks: SocialLink[] = [];
   footerNavigationLinks: FooterLink[] = [
     { title: 'Homepage', link: '/' },
     { title: 'Projects', link: '/projects' },
@@ -46,6 +30,23 @@ export class FooterComponent {
   hoveredNavigationIndex: number | null = null;
   hoveredLegalIndex: number | null = null;
   hoveredCopyrightIndex: number | null = null;
+
+  constructor(private socialLinksService: SocialLinksService) {}
+
+  ngOnInit(): void {
+    this.loadSocialLinks();
+  }
+
+  private loadSocialLinks(): void {
+    this.socialLinksService.getPublicSocialLinks().subscribe({
+      next: (response) => {
+        this.socialLinks = response;
+      },
+      error: (error) => {
+        console.error('Failed to load social links:', error);
+      }
+    });
+  }
 
   copyrightLinks: FooterLink[] = [
     { title: 'By Valdis Zhvaginsh', link: 'https://webflow.com/@thevaldis' },

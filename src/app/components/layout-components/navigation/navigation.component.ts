@@ -1,9 +1,17 @@
-import { Component, Input, ElementRef, HostListener } from '@angular/core';
+import {
+  Component,
+  Input,
+  ElementRef,
+  HostListener,
+  OnInit
+} from '@angular/core';
 import { NavigationLink } from '@interface/navigation-link.interface';
 import {
   navMenuSlideAnimation,
   burgerMenuAnimation
 } from '@shared/animations/fade-in-up.animation';
+import { SocialLink } from '@interface/social-link.interface';
+import { SocialLinksService } from '@services/social-links.service';
 
 @Component({
   selector: 'component-navigation',
@@ -11,8 +19,11 @@ import {
   styleUrls: ['./navigation.component.scss'],
   animations: [navMenuSlideAnimation, burgerMenuAnimation]
 })
-export class NavigationComponent {
-  constructor(private elementRef: ElementRef) {}
+export class NavigationComponent implements OnInit {
+  constructor(
+    private elementRef: ElementRef,
+    private socialLinksService: SocialLinksService
+  ) {}
   @Input() footerText = 'Default footer text';
   @Input() logoText = 'LUCH';
   @Input() breadcrumbText = 'Home';
@@ -32,24 +43,8 @@ export class NavigationComponent {
   // TODO: PROJECTS AND BLOGS TAGS AND TILES
   // TODO: CLEAR THE ASSETS
   // TODO: DEPLOYMENT
-  // TODO: SOCIAL LINKS
-  socialLinks: any[] = [
-    {
-      url: 'https://twitter.com/',
-      alt: 'Twitter X',
-      icon: 'assets/images/twitter-x-line.svg'
-    },
-    {
-      url: 'https://instagram.com/',
-      alt: 'Instagram',
-      icon: 'assets/images/instagram-line.svg'
-    },
-    {
-      url: 'https://dribbble.com/',
-      alt: 'Dribbble',
-      icon: 'assets/images/dribbble-line.svg'
-    }
-  ];
+  // TODO: SRC TO NGSRC
+  socialLinks: SocialLink[] = [];
   links: NavigationLink[] = [
     {
       title: 'Home',
@@ -89,6 +84,21 @@ export class NavigationComponent {
   navFooterLinks: any[] = [{ title: this.email, link: 'mailto:' + this.email }];
 
   isMenuOpen = false;
+
+  ngOnInit(): void {
+    this.loadSocialLinks();
+  }
+
+  private loadSocialLinks(): void {
+    this.socialLinksService.getPublicSocialLinks().subscribe({
+      next: (response) => {
+        this.socialLinks = response;
+      },
+      error: (error) => {
+        console.error('Failed to load social links:', error);
+      }
+    });
+  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
