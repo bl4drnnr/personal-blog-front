@@ -34,7 +34,6 @@ export class NavigationComponent {
 
   // TODO: PROJECTS AND BLOGS TAGS AND TILES
   // TODO: REFACTOR BLOG/PROJECTS FIELDS FOR THE CARDS
-  // TODO: DEPLOYMENT
   links: NavigationLink[] = [
     {
       title: 'Home',
