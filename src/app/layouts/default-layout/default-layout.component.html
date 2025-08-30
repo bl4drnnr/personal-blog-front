@@ -15,6 +15,9 @@
         [isFooterReached]="isFooterReached"
         [hideScrollProgressBar]="hideScrollProgressBar"
         [preventPicChange]="preventPicChange"
+        [socialLinks]="socialLinks"
+        [copyrightEmail]="copyrightData.copyrightEmail"
+        [copyrightText]="copyrightData.copyrightText"
       >
       </component-navigation>
     </div>
@@ -29,7 +32,7 @@
             <ng-content></ng-content>
 
             <div class="footer-section">
-              <component-footer *ngIf="showFooter"/>
+              <component-footer *ngIf="showFooter" [socialLinks]="socialLinks" [copyrightLinks]="copyrightData.copyrightLinks"/>
             </div>
           </div>
         </div>

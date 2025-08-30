@@ -13,7 +13,6 @@ export interface SubscribePageContentDto {
 }
 
 export interface SubscribePageLayoutDto {
-  footerText: string;
   heroImageMain: string;
   heroImageSecondary: string;
   heroImageMainAlt: string;

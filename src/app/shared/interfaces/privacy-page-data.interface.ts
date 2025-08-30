@@ -13,7 +13,6 @@ export interface PrivacyPageContent {
 }
 
 export interface PrivacyLayoutData {
-  footerText: string;
   heroImageMain: string;
   heroImageSecondary: string;
   heroImageMainAlt: string;

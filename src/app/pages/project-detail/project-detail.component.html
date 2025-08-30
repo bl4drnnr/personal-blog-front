@@ -14,6 +14,9 @@
         [scrollProgress]="scrollProgress"
         [isFooterReached]="isFooterReached"
         [preventPicChange]="true"
+        [socialLinks]="socialLinks"
+        [copyrightEmail]="copyrightData.copyrightEmail"
+        [copyrightText]="copyrightData.copyrightText"
       >
       </component-navigation>
     </div>
@@ -61,7 +64,7 @@
             </div>
 
             <div class="footer-section">
-              <component-footer/>
+              <component-footer [socialLinks]="socialLinks" [copyrightLinks]="copyrightData.copyrightLinks"/>
             </div>
           </div>
         </div>

@@ -2,7 +2,6 @@ import { ChangelogEntry } from './changelog-entry.interface';
 import { PageSeoData } from './seo-data.interface';
 
 export interface ChangelogLayoutData {
-  footerText: string;
   heroImageMain: string;
   heroImageSecondary: string;
   heroImageMainAlt: string;

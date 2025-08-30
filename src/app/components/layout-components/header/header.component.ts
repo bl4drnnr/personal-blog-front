@@ -7,7 +7,7 @@ import { HeaderLink } from '@interface/header-link.interface';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Input() heroTitle = 'Welcome to LUCH';
+  @Input() heroTitle = '';
   @Input() navigationLinks: HeaderLink[] = [
     { title: 'Home', link: '/home' },
     { title: 'Projects', link: '/projects' },

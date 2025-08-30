@@ -66,18 +66,23 @@
             </div>
           </div>
           <div class="nav-socials-wrapper">
-            <a href="https://try.webflow.com/9wyc5a5fesf6" target="_blank" class="nav-socials-link w-inline-block">
-              <div class="nav-socials-link-icon"><img width="24" loading="lazy" alt="Twitter X" src="assets/images/twitter-x-line.svg" class="nav-socials-link-image"></div>
-            </a>
-            <a href="https://try.webflow.com/9wyc5a5fesf6" target="_blank" class="nav-socials-link w-inline-block">
-              <div class="nav-socials-link-icon"><img width="24" loading="lazy" alt="Instagram" src="assets/images/instagram-line.svg" class="nav-socials-link-image"></div>
-            </a>
-            <a href="https://try.webflow.com/9wyc5a5fesf6" target="_blank" class="nav-socials-link w-inline-block">
-              <div class="nav-socials-link-icon"><img width="24" loading="lazy" alt="Dribbble" src="assets/images/dribbble-line.svg" class="nav-socials-link-image"></div>
+            <a
+              *ngFor="let socialLink of socialLinks"
+              [href]="socialLink.url"
+              target="_blank"
+              class="nav-socials-link w-inline-block">
+              <div class="nav-socials-link-icon">
+                <img
+                  width="24"
+                  loading="lazy"
+                  [alt]="socialLink.alt"
+                  [src]="socialLink.icon"
+                  class="nav-socials-link-image">
+              </div>
             </a>
           </div>
         </div>
       </div>
     </div>
   </footer>
-</section> 
+</section>

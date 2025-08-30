@@ -4,6 +4,7 @@ import {
   navMenuSlideAnimation,
   burgerMenuAnimation
 } from '@shared/animations/fade-in-up.animation';
+import { SocialLink } from '@interface/social-link.interface';
 
 @Component({
   selector: 'component-navigation',
@@ -13,43 +14,26 @@ import {
 })
 export class NavigationComponent {
   constructor(private elementRef: ElementRef) {}
-  @Input() footerText = 'Default footer text';
-  @Input() logoText = 'LUCH';
-  @Input() breadcrumbText = 'Home';
+  @Input() footerText = '';
+  @Input() logoText = '';
+  @Input() breadcrumbText = '';
   @Input() heroImageMain = '';
   @Input() heroImageSecondary = '';
   @Input() heroImageMainAlt = '';
   @Input() heroImageSecondaryAlt = '';
-  @Input() heroTitle = 'Welcome to LUCH';
+  @Input() heroTitle = '';
   @Input() isFooterReached = false;
   @Input() scrollProgress: number = 0;
   @Input() hideScrollProgressBar: boolean = false;
   @Input() heroDesc?: string;
   @Input() preventPicChange: boolean = false;
   @Input() showNavigation: boolean = true;
+  @Input() socialLinks: SocialLink[] = [];
+  @Input() copyrightEmail: string = '';
+  @Input() copyrightText: string = '';
 
-  // TODO: GET RID OF LUCH MENTIONS AND CHECK FOR THE USAGE OF HARDCODED TEXT
   // TODO: PROJECTS AND BLOGS TAGS AND TILES
-  // TODO: CLEAR THE ASSETS
-  // TODO: DEPLOYMENT
-  // TODO: SOCIAL LINKS
-  socialLinks: any[] = [
-    {
-      url: 'https://twitter.com/',
-      alt: 'Twitter X',
-      icon: 'assets/images/twitter-x-line.svg'
-    },
-    {
-      url: 'https://instagram.com/',
-      alt: 'Instagram',
-      icon: 'assets/images/instagram-line.svg'
-    },
-    {
-      url: 'https://dribbble.com/',
-      alt: 'Dribbble',
-      icon: 'assets/images/dribbble-line.svg'
-    }
-  ];
+  // TODO: REFACTOR BLOG/PROJECTS FIELDS FOR THE CARDS
   links: NavigationLink[] = [
     {
       title: 'Home',
@@ -82,11 +66,14 @@ export class NavigationComponent {
       link: '/about-me'
     }
   ];
-  email = 'info@example.com';
-  copyrightText = '© LUCH — 2025';
 
   hoveredNavFooterIndex: number | null = null;
-  navFooterLinks: any[] = [{ title: this.email, link: 'mailto:' + this.email }];
+
+  get navFooterLinks(): any[] {
+    return this.copyrightEmail
+      ? [{ title: this.copyrightEmail, link: 'mailto:' + this.copyrightEmail }]
+      : [];
+  }
 
   isMenuOpen = false;
 

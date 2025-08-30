@@ -8,7 +8,6 @@ export interface AboutPageContent {
 }
 
 export interface AboutLayoutData {
-  footerText: string;
   heroImageMain: string;
   heroImageSecondary: string;
   heroImageMainAlt: string;

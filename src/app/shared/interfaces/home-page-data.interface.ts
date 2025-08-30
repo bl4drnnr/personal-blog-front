@@ -15,7 +15,6 @@ export interface HomePageContent {
 }
 
 export interface HomeLayoutData {
-  footerText: string;
   heroImageMain: string;
   heroImageSecondary: string;
   heroImageMainAlt: string;

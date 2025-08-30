@@ -1,6 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ScrollAnimationService } from '@services/scroll-animation.service';
 import { ScrollUtilitiesService } from '@services/scroll-utilities.service';
+import { SocialLinksService } from '@services/social-links.service';
+import { SocialLink } from '@interface/social-link.interface';
+import { CopyrightService } from '@services/copyright.service';
+import { Copyright } from '@interface/copyright.interface';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -24,11 +28,20 @@ export class HeroLayoutComponent implements OnInit, OnDestroy {
 
   scrollProgress = 0;
   isFooterReached = false;
+  socialLinks: SocialLink[] = [];
+  copyrightData: Copyright = {
+    copyrightLinks: [],
+    copyrightEmail: '',
+    copyrightText: ''
+  };
+
   private subscription: Subscription = new Subscription();
 
   constructor(
     private scrollAnimationService: ScrollAnimationService,
-    private scrollUtilitiesService: ScrollUtilitiesService
+    private scrollUtilitiesService: ScrollUtilitiesService,
+    private socialLinksService: SocialLinksService,
+    private copyrightService: CopyrightService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +57,31 @@ export class HeroLayoutComponent implements OnInit, OnDestroy {
         this.isFooterReached = isReached;
       })
     );
+
+    this.loadSocialLinks();
+    this.loadCopyrightData();
+  }
+
+  private loadSocialLinks(): void {
+    this.socialLinksService.getPublicSocialLinks().subscribe({
+      next: (response) => {
+        this.socialLinks = response;
+      },
+      error: (error) => {
+        console.error('Failed to load social links:', error);
+      }
+    });
+  }
+
+  private loadCopyrightData(): void {
+    this.copyrightService.getCopyrightData().subscribe({
+      next: (response) => {
+        this.copyrightData = response;
+      },
+      error: (error) => {
+        console.error('Failed to load copyright data:', error);
+      }
+    });
   }
 
   ngOnDestroy(): void {

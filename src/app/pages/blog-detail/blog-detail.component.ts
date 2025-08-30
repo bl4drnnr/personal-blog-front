@@ -22,6 +22,10 @@ import { BlogService } from '@services/blog.service';
 import { LoadingService } from '@services/loading.service';
 import { Post } from '@interface/post.interface';
 import { SEOService } from '@services/seo.service';
+import { SocialLinksService } from '@services/social-links.service';
+import { SocialLink } from '@interface/social-link.interface';
+import { CopyrightService } from '@services/copyright.service';
+import { Copyright } from '@interface/copyright.interface';
 import { Subscription } from 'rxjs';
 import { fadeInUpStaggerAnimation } from '@shared/animations/fade-in-up.animation';
 
@@ -66,6 +70,12 @@ export class BlogDetailComponent
   isFooterReached = false;
   toc: TocItem[] = [];
   isFullscreen = false;
+  socialLinks: SocialLink[] = [];
+  copyrightData: Copyright = {
+    copyrightLinks: [],
+    copyrightEmail: '',
+    copyrightText: ''
+  };
   @ViewChild('contentRef', { static: false }) contentRef!: ElementRef;
   private lastContent: string = '';
   private subscription: Subscription = new Subscription();
@@ -83,7 +93,9 @@ export class BlogDetailComponent
     private mathService: MathService,
     private blogService: BlogService,
     private loadingService: LoadingService,
-    private seoService: SEOService
+    private seoService: SEOService,
+    private socialLinksService: SocialLinksService,
+    private copyrightService: CopyrightService
   ) {}
 
   ngOnInit(): void {
@@ -99,6 +111,9 @@ export class BlogDetailComponent
         this.isFooterReached = isReached;
       })
     );
+
+    this.loadSocialLinks();
+    this.loadCopyrightData();
 
     // Load post data based on route parameter
     this.route.params.subscribe(async (params) => {
@@ -147,6 +162,28 @@ export class BlogDetailComponent
       type: 'blog',
       updatedDate: this.post.updatedDate,
       metaKeywords: this.post.metaKeywords
+    });
+  }
+
+  private loadSocialLinks(): void {
+    this.socialLinksService.getPublicSocialLinks().subscribe({
+      next: (response) => {
+        this.socialLinks = response;
+      },
+      error: (error) => {
+        console.error('Failed to load social links:', error);
+      }
+    });
+  }
+
+  private loadCopyrightData(): void {
+    this.copyrightService.getCopyrightData().subscribe({
+      next: (response) => {
+        this.copyrightData = response;
+      },
+      error: (error) => {
+        console.error('Failed to load copyright data:', error);
+      }
     });
   }
 
