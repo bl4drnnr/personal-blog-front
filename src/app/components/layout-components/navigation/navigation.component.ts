@@ -32,8 +32,6 @@ export class NavigationComponent {
   @Input() copyrightEmail: string = '';
   @Input() copyrightText: string = '';
 
-  // TODO: PROJECTS AND BLOGS TAGS AND TILES
-  // TODO: REFACTOR BLOG/PROJECTS FIELDS FOR THE CARDS
   links: NavigationLink[] = [
     {
       title: 'Home',
