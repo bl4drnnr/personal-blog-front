@@ -40,7 +40,7 @@
   overflow: hidden;
   transition: box-shadow 0.375s cubic-bezier(0.165, 0.84, 0.44, 1);
   cursor: pointer;
-  
+
   &:hover {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   }
@@ -73,7 +73,7 @@
 
 .card-button {
   transition: transform 0.375s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   .card-row-item:hover & {
     transform: translateY(-4px);
   }
@@ -81,7 +81,7 @@
 
 .card-row-text {
   transition: transform 0.375s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   .card-row-item:hover & {
     transform: translateY(-2px);
   }
@@ -89,7 +89,7 @@
 
 .card-icon-line {
   transition: transform 0.375s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   .card-row-item:hover & {
     transform: translateX(4px);
   }
@@ -97,7 +97,7 @@
 
 .property-item {
   transition: transform 0.375s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   .card-row-item:hover & {
     transform: translateY(-2px);
   }
@@ -121,7 +121,7 @@
   background: linear-gradient(90deg, transparent, var(--colors-global--primary-color), transparent);
   transform: scaleX(0);
   transition: transform 0.375s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   .card-row-item:hover & {
     transform: scaleX(1);
   }
@@ -136,11 +136,11 @@
 }
 
 .property-item-bg-gradient {
-  opacity: 0;
+  opacity: 1;
 }
 
 .card-row-item:hover .property-item-bg-primary {
-  opacity: 0;
+  opacity: 1;
 }
 
 .card-row-item:hover .property-item-bg-gradient {
@@ -155,8 +155,15 @@
   transform: translateY(-16px);
 }
 
+.property-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .card-row-item:hover {
     transform: translateY(-4px);
   }
-} 
+}

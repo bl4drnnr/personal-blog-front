@@ -33,16 +33,32 @@
               </div>
             </div>
           </div>
-          <div class="property-content">
-            <div class="property-item">
-              <div class="property-item-bg property-item-bg-primary"></div>
-              <div class="property-item-bg property-item-bg-gradient"></div>
-              <div class="property-text-wrapper">
-                <div class="property-name">
-                  <div>Date</div>
+          <div class="property-group">
+            <div class="property-content">
+              <div class="property-item">
+                <div class="property-item-bg property-item-bg-primary"></div>
+                <div class="property-item-bg property-item-bg-gradient"></div>
+                <div class="property-text-wrapper">
+                  <div class="property-name">
+                    <div>Date</div>
+                  </div>
+                  <div class="property-value">
+                    <div>{{ post.createdAt | date:'longDate' }}</div>
+                  </div>
                 </div>
-                <div class="property-value">
-                  <div>{{ post.createdAt | date:'longDate' }}</div>
+              </div>
+            </div>
+            <div class="property-content">
+              <div class="property-item">
+                <div class="property-item-bg property-item-bg-primary"></div>
+                <div class="property-item-bg property-item-bg-gradient"></div>
+                <div class="property-text-wrapper">
+                  <div class="property-name">
+                    <div>Tags</div>
+                  </div>
+                  <div class="property-value">
+                    <div>{{ post.tags.join(', ') }}</div>
+                  </div>
                 </div>
               </div>
             </div>

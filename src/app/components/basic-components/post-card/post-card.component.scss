@@ -157,6 +157,13 @@
   transform: translateY(-16px);
 }
 
+.property-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .card-row-item:hover {
     transform: translateY(-4px);
