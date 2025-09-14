@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Component, Input } from '@angular/core';
 import { Project } from '@interface/project.interface';
 
@@ -8,4 +9,8 @@ import { Project } from '@interface/project.interface';
 })
 export class ProjectCardComponent {
   @Input() project!: Project;
+
+  get formattedDate() {
+    return dayjs(this.project.createdAt).format('MMMM D, YYYY');
+  }
 }
