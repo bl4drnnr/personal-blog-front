@@ -10,6 +10,7 @@ import {
 import { HomePageData } from '@interface/home-page-data.interface';
 import { PageSeoData } from '@shared/interfaces/seo-data.interface';
 
+// TODO: INTRODUCE THE SEARCH FUNCTIONALITY BY CLICKING ON TAGS AND MAKE THEM UPPER CASE
 @Component({
   selector: 'page-home',
   templateUrl: './home.component.html',
