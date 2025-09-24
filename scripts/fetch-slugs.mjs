@@ -82,8 +82,8 @@ const __dirname = dirname(__filename);
     // Generate routes for Angular prerendering
     const staticRoutes = [
       '/',
-      '/blog',
-      '/projects',
+      // '/blog',
+      // '/projects',
       '/contact',
       '/about-me',
       '/changelog',
