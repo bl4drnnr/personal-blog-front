@@ -240,6 +240,10 @@ export class ProjectDetailComponent
     }, 10);
   }
 
+  navigateToTaggedProjects(tag: string) {
+    this.router.navigate(['/projects'], { queryParams: { tag } });
+  }
+
   private highlightAllCode() {
     if (this.contentRef) {
       const blocks = this.contentRef.nativeElement.querySelectorAll('pre code');

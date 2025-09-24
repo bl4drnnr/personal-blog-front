@@ -240,6 +240,10 @@ export class BlogDetailComponent
     }, 10);
   }
 
+  navigateToTaggedBlog(tag: string) {
+    this.router.navigate(['/blog'], { queryParams: { tag } });
+  }
+
   private highlightAllCode() {
     if (this.contentRef) {
       const blocks = this.contentRef.nativeElement.querySelectorAll('pre code');

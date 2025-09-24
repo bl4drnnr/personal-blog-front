@@ -36,6 +36,7 @@ export interface ProjectsQuery {
   page?: number;
   limit?: number;
   search?: string;
+  tag?: string;
 }
 
 @Injectable({
@@ -61,6 +62,9 @@ export class ProjectsService {
     }
     if (query.search) {
       params = params.set('search', query.search);
+    }
+    if (query.tag) {
+      params = params.set('tag', query.tag);
     }
 
     return this.http.get<ProjectsPageData>(`${this.apiUrl}/projects/projects`, {
