@@ -2,13 +2,13 @@
   <div class="global-wrapper">
     <div class="row-wrapper row-wrapper-sticky">
       <component-navigation
-        [footerText]="'LUCH is a fresh and innovative CMS template ideal for creating a portfolio or personal blog.'"
         [heroImageMain]="featuredImage"
         [heroImageSecondary]="featuredImage"
         [heroImageMainAlt]="title"
         [heroImageSecondaryAlt]="title"
-        [logoText]="'Luch'"
+        [logoText]="'Home'"
         [breadcrumbText]="'Blog'"
+        [breadcrumbTextUrl]="'blog'"
         [heroTitle]="title"
         [heroDesc]="description"
         [scrollProgress]="scrollProgress"
@@ -63,7 +63,7 @@
               </div>
             </div>
             <div class="footer-section">
-              <component-footer [socialLinks]="socialLinks" [copyrightLinks]="copyrightData.copyrightLinks"/>
+              <component-footer [socialLinks]="socialLinks" [copyrightLinks]="copyrightData.copyrightLinks" [copyrightText]="copyrightData.copyrightText"/>
             </div>
           </div>
         </div>

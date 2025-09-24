@@ -12,6 +12,7 @@ export class FooterComponent {
   @Input() footerText = '';
   @Input() socialLinks: SocialLink[] = [];
   @Input() copyrightLinks: Array<CopyrightLink> = [];
+  @Input() copyrightText = '';
 
   footerNavigationLinks: FooterLink[] = [
     { title: 'Homepage', link: '/' },
