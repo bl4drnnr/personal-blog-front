@@ -17,14 +17,20 @@
       <h1 class="maintenance-title text-animate">{{ maintenanceData.title }}</h1>
       <div class="maintenance-message text-animate" [innerHTML]="maintenanceData.message"></div>
 
-      <div class="maintenance-dates text-animate">
+      <div class="maintenance-dates text-animate" *ngIf="!maintenanceData.isPermanent">
         <div class="date-info">
           <span class="date-label">From:</span>
-          <span class="date-value">{{ formatDate(maintenanceData.fromDate) }}</span>
+          <span
+            *ngIf="maintenanceData.fromDate"
+            class="date-value"
+          >{{ formatDate(maintenanceData.fromDate) }}</span>
         </div>
         <div class="date-info">
           <span class="date-label">To:</span>
-          <span class="date-value">{{ formatDate(maintenanceData.toDate) }}</span>
+          <span
+            *ngIf="maintenanceData.toDate"
+            class="date-value"
+          >{{ formatDate(maintenanceData.toDate) }}</span>
         </div>
       </div>
 
