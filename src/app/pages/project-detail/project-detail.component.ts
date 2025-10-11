@@ -50,7 +50,7 @@ export class ProjectDetailComponent
   }
 
   get formattedDate() {
-    return dayjs(this.project.date).format('MMMM D, YYYY');
+    return dayjs(this.project.createdAt).format('MMMM D, YYYY');
   }
 
   get tags() {
@@ -158,7 +158,7 @@ export class ProjectDetailComponent
       title: this.project.title,
       description: this.project.description,
       featuredImage: this.project.featuredImage,
-      date: this.project.date,
+      date: this.project.createdAt,
       slug: this.project.slug,
       type: 'project',
       metaKeywords: this.project.metaKeywords
@@ -238,6 +238,10 @@ export class ProjectDetailComponent
         document.body.classList.remove('blog-fullscreen-active');
       }
     }, 10);
+  }
+
+  navigateToTaggedProjects(tag: string) {
+    this.router.navigate(['/projects'], { queryParams: { tag } });
   }
 
   private highlightAllCode() {

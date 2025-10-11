@@ -17,6 +17,7 @@ export class NavigationComponent {
   @Input() footerText = '';
   @Input() logoText = '';
   @Input() breadcrumbText = '';
+  @Input() breadcrumbTextUrl = '';
   @Input() heroImageMain = '';
   @Input() heroImageSecondary = '';
   @Input() heroImageMainAlt = '';
@@ -32,22 +33,20 @@ export class NavigationComponent {
   @Input() copyrightEmail: string = '';
   @Input() copyrightText: string = '';
 
-  // TODO: PROJECTS AND BLOGS TAGS AND TILES
-  // TODO: REFACTOR BLOG/PROJECTS FIELDS FOR THE CARDS
   links: NavigationLink[] = [
     {
       title: 'Home',
-      description: 'LUCH Framework',
+      description: 'Main start point',
       link: '/home'
     },
     {
       title: 'Projects',
-      description: 'A collection of AI-driven designs',
+      description: 'A collection of my projects and implemented ideas',
       link: '/projects'
     },
     {
       title: 'Blog',
-      description: 'Thoughts, insights and ideas on AI, design and creativity',
+      description: 'Thoughts, insights and ideas on AI, IT and cybersecurity',
       link: '/blog'
     },
     {

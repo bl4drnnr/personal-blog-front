@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Post } from '@interface/post.interface';
 import { SEOService } from '@services/seo.service';
 import { LoadingService } from '@services/loading.service';
@@ -20,8 +21,9 @@ export class BlogComponent implements OnInit {
   blogPageData: BlogPageData | null = null;
   posts: Post[] = [];
 
-  // Search and pagination
+  // Search, tag filtering and pagination
   searchTerm: string = '';
+  currentTag: string = '';
   currentPage = 1;
   pageSize = 6;
   totalPages = 0;
@@ -32,7 +34,8 @@ export class BlogComponent implements OnInit {
   constructor(
     private seoService: SEOService,
     private blogService: BlogService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private route: ActivatedRoute
   ) {
     // Setup search debouncing
     this.searchSubject
@@ -46,13 +49,14 @@ export class BlogComponent implements OnInit {
     return this.posts;
   }
 
-  loadBlogData(page: number = 1, search?: string): void {
+  loadBlogData(page: number = 1, search?: string, tag?: string): void {
     this.loadingService.show();
 
     const query = {
       page,
       limit: this.pageSize,
-      search: search || undefined
+      search: search || undefined,
+      tag: tag || this.currentTag || undefined
     };
 
     this.blogService.getBlogPage(query).subscribe({
@@ -103,7 +107,11 @@ export class BlogComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.loadBlogData(page, this.searchTerm || undefined);
+    this.loadBlogData(
+      page,
+      this.searchTerm || undefined,
+      this.currentTag || undefined
+    );
   }
 
   private triggerAnimation(): void {
@@ -114,7 +122,15 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Load initial blog data
-    this.loadBlogData(1);
+    // Check for tag query parameter
+    this.route.queryParams.subscribe((params) => {
+      const tag = params['tag'];
+      if (tag) {
+        this.currentTag = tag;
+      }
+
+      // Load initial blog data with tag filter if present
+      this.loadBlogData(1, undefined, this.currentTag || undefined);
+    });
   }
 }

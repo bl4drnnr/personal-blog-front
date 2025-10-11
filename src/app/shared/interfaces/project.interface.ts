@@ -3,8 +3,9 @@ export interface Project {
   title: string;
   description: string;
   content: string;
-  date: string;
   tags: string[];
   metaKeywords: string;
+  projectType: string;
   featuredImage: string;
+  createdAt: string;
 }

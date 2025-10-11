@@ -12,9 +12,6 @@
                   <div class="property-name">
                     <div>Project</div>
                   </div>
-                  <div class="property-value">
-<!--                    <div>{{ project.type }}</div>-->
-                  </div>
                 </div>
               </div>
             </div>
@@ -32,43 +29,50 @@
             <div class="row-text-wrapper">
               <div class="row-text">
                 <h3 class="row-heading">{{ project.title }}</h3>
+                <div>{{ project.description }}</div>
               </div>
             </div>
           </div>
-          <div class="property-content">
-            <div class="property-item">
-              <div class="property-item-bg property-item-bg-primary"></div>
-              <div class="property-item-bg property-item-bg-gradient"></div>
-              <div class="property-text-wrapper">
-                <div class="property-name">
-                  <div>AI Model</div>
-                </div>
-                <div class="property-value">
-<!--                  <div>{{ project.aiModel }}</div>-->
-                </div>
-              </div>
-            </div>
-            <div class="property-item">
-              <div class="property-item-bg property-item-bg-primary"></div>
-              <div class="property-item-bg property-item-bg-gradient"></div>
-              <div class="property-text-wrapper">
-                <div class="property-name">
-                  <div>Client</div>
-                </div>
-                <div class="property-value">
-<!--                  <div>{{ project.client }}</div>-->
+          <div class="property-group">
+            <div class="property-content">
+              <div class="property-item">
+                <div class="property-item-bg property-item-bg-primary"></div>
+                <div class="property-item-bg property-item-bg-gradient"></div>
+                <div class="property-text-wrapper">
+                  <div class="property-name">
+                    <div>Type</div>
+                  </div>
+                  <div class="property-value">
+                    <div>{{ project.projectType }}</div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="property-item">
-              <div class="property-item-bg property-item-bg-primary"></div>
-              <div class="property-item-bg property-item-bg-gradient"></div>
-              <div class="property-text-wrapper">
-                <div class="property-name">
-                  <div>Date</div>
+            <div class="property-content">
+              <div class="property-item">
+                <div class="property-item-bg property-item-bg-primary"></div>
+                <div class="property-item-bg property-item-bg-gradient"></div>
+                <div class="property-text-wrapper">
+                  <div class="property-name">
+                    <div>Date</div>
+                  </div>
+                  <div class="property-value">
+                    <div>{{ formattedDate }}</div>
+                  </div>
                 </div>
-                <div class="property-value">
-                  <div>{{ project.date }}</div>
+              </div>
+            </div>
+            <div class="property-content">
+              <div class="property-item">
+                <div class="property-item-bg property-item-bg-primary"></div>
+                <div class="property-item-bg property-item-bg-gradient"></div>
+                <div class="property-text-wrapper">
+                  <div class="property-name">
+                    <div>Tags</div>
+                  </div>
+                  <div class="property-value">
+                    <div>{{ project.tags.join(', ') }}</div>
+                  </div>
                 </div>
               </div>
             </div>

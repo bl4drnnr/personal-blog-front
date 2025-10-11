@@ -29,7 +29,8 @@ export class MaintenanceService {
             heroTitle: '',
             footerText: '',
             title: '',
-            metaTitle: ''
+            metaTitle: '',
+            isPermanent: false
           });
         })
       );

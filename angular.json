@@ -145,10 +145,9 @@
         "prerender": {
           "builder": "@angular-devkit/build-angular:prerender",
           "options": {
+            "routesFile": "src/prerender-routes.ts",
             "routes": [
               "/",
-              "/blog",
-              "/projects",
               "/contact",
               "/about-me",
               "/changelog",
@@ -166,9 +165,7 @@
               "/blog/introduction-to-cybersecurity",
               "/projects/security-monitoring-dashboard",
               "/projects/automated-vulnerability-scanner"
-            ],
-            "outputMode": "static",
-            "generateErrorPages": true
+            ]
           },
           "configurations": {
             "production": {

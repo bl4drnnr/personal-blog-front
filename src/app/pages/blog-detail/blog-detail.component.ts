@@ -50,7 +50,7 @@ export class BlogDetailComponent
   }
 
   get formattedDate() {
-    return this.post ? dayjs(this.post.publishDate).format('MMMM D, YYYY') : '';
+    return this.post ? dayjs(this.post.createdAt).format('MMMM D, YYYY') : '';
   }
 
   get tags() {
@@ -157,10 +157,10 @@ export class BlogDetailComponent
       title: this.post.title,
       description: this.post.description,
       featuredImage: this.post.featuredImage,
-      date: this.post.publishDate,
+      date: this.post.createdAt,
       slug: this.post.slug,
       type: 'blog',
-      updatedDate: this.post.updatedDate,
+      updatedDate: this.post.updatedAt,
       metaKeywords: this.post.metaKeywords
     });
   }
@@ -238,6 +238,10 @@ export class BlogDetailComponent
         document.body.classList.remove('blog-fullscreen-active');
       }
     }, 10);
+  }
+
+  navigateToTaggedBlog(tag: string) {
+    this.router.navigate(['/blog'], { queryParams: { tag } });
   }
 
   private highlightAllCode() {

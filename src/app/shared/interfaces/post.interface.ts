@@ -3,8 +3,8 @@ export interface Post {
   title: string;
   description: string;
   content: string;
-  publishDate: string;
-  updatedDate: string;
+  createdAt: string;
+  updatedAt: string;
   tags: string[];
   metaKeywords: string;
   featuredImage: string;
