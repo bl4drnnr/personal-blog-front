@@ -97,6 +97,13 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 4202,
+            "host": "0.0.0.0",
+            "allowedHosts": [
+              "mikhailbahdashych.me"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "personal-blog-front:build:production"
