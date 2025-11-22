@@ -32,13 +32,21 @@ const __dirname = dirname(__filename);
       const envFile = 'environment.prod.ts';
       const prodEnvPath = join(__dirname, '..', 'src', 'environments', envFile);
       const envContent = fs.readFileSync(prodEnvPath, 'utf-8');
-      const apiUrlMatch = envContent.match(
+
+      // Try to match process.env pattern first
+      let apiUrlMatch = envContent.match(
         /apiUrl:\s*process\.env\[['"`]([^'"`]+)['"`]\]/
       );
 
       if (apiUrlMatch) {
         const envVarName = apiUrlMatch[1];
         API_URL = process.env[envVarName];
+      } else {
+        // Fall back to hardcoded string pattern
+        apiUrlMatch = envContent.match(/apiUrl:\s*['"`]([^'"`]+)['"`]/);
+        if (apiUrlMatch) {
+          API_URL = apiUrlMatch[1];
+        }
       }
     }
 
