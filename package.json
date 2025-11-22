@@ -2,7 +2,7 @@
   "name": "personal-blog-front",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve --port 4202",
+    "start": "ng serve --configuration development",
     "start:ssr": "ng run personal-blog-front:serve-ssr:development",
     "fetch:content:dev": "NODE_ENV=development node scripts/fetch-slugs.mjs && node scripts/update-angular-routes.mjs",
     "fetch:content:prod": "NODE_ENV=production node scripts/fetch-slugs.mjs && node scripts/update-angular-routes.mjs",
