@@ -20,6 +20,11 @@
     "serve:ssr:dev": "npm run build:ssr:dev && node dist/personal-blog-front/server/main.js",
     "serve:ssg:dev": "npm run build:ssg:dev && npx http-server dist/personal-blog-front/browser --port 8080 --cors",
     "test": "ng test",
+    "front:spa:process-start": "pm2 start npm --name \"personal-blog-front\" -- run serve:spa",
+    "front:ssr:process-start": "pm2 start npm --name \"personal-blog-front\" -- run serve:ssr",
+    "front:ssg:process-start": "pm2 start npm --name \"personal-blog-front\" -- run serve:ssg",
+    "front:restart": "pm2 restart personal-blog-front",
+    "api:process-start": "NODE_ENV=production pm2 start npm --name \"personal-blog-api\" -- run prod",
     "format": "prettier --write \"{src,packages}/**/*.ts\" \"scripts/**/*.mjs\" && eslint \"{src,packages}/**/*.ts\" --fix"
   },
   "private": true,
