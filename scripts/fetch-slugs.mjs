@@ -29,7 +29,7 @@ const __dirname = dirname(__filename);
       config({ path: envPath });
 
       // Then read from production environment file
-      const envFile = 'environment.prod.ts';
+      const envFile = 'environment.production.ts';
       const prodEnvPath = join(__dirname, '..', 'src', 'environments', envFile);
       const envContent = fs.readFileSync(prodEnvPath, 'utf-8');
 

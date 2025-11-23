@@ -574,7 +574,7 @@ personal-blog-front/
 │   │   └── slugs-data.json             # Generated route data
 │   ├── environments/                   # Environment configs
 │   │   ├── environment.ts              # Development
-│   │   └── environment.prod.ts         # Production
+│   │   └── environment.production.ts         # Production
 │   ├── index.html                      # HTML entry point
 │   ├── main.ts                         # Application bootstrap
 │   ├── main.server.ts                  # SSR entry point
@@ -789,7 +789,7 @@ export const environment = {
 };
 ```
 
-**Production** (`src/environments/environment.prod.ts`):
+**Production** (`src/environments/environment.production.ts`):
 ```typescript
 export const environment = {
   production: true,
