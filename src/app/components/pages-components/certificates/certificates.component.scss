@@ -29,11 +29,6 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
-    &.expiring-soon {
-      border-color: #ffc107;
-      background: #fffbf0;
-    }
-
     .certificate-header {
       display: flex;
       gap: 1rem;
@@ -126,17 +121,3 @@
   }
 }
 
-.certificate-card.expiring-soon::before {
-  content: 'Expiring Soon';
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: #ffc107;
-  color: #000;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}

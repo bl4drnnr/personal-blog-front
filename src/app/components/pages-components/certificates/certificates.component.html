@@ -3,7 +3,6 @@
     <div
       class="certificate-card"
       *ngFor="let certificate of certificates"
-      [class.expiring-soon]="isExpiringSoon(certificate.expirationDate)"
     >
       <div class="certificate-header">
         <div class="certificate-logo">
